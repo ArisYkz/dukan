@@ -5,10 +5,10 @@ import { test, expect, type Page } from "@playwright/test";
 // ============================================================================
 // Uses the test account to discover a valid store slug, then tests the
 // public storefront experience.
-// Base URL: http://localhost:8081
+// Base URL: http://localhost:8082
 // ============================================================================
 
-test.use({ baseURL: "http://localhost:8081" });
+test.use({ baseURL: "http://localhost:8082" });
 
 // ---------------------------------------------------------------------------
 // Helper: Discover a valid store slug by logging in
@@ -17,7 +17,7 @@ test.use({ baseURL: "http://localhost:8081" });
 async function getStoreSlug(page: Page): Promise<string | null> {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-  await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -34,7 +34,7 @@ async function getStoreSlug(page: Page): Promise<string | null> {
 
   // Fallback: check page content for slug patterns
   const bodyText = await page.locator("body").innerText();
-  const slugMatch = bodyText.match(/duken\.com\.kz\/s\/([\w-]+)/);
+  const slugMatch = bodyText.match(/dukan\.example\.com\/s\/([\w-]+)/);
   if (slugMatch) return slugMatch[1];
 
   return null;
@@ -47,7 +47,7 @@ async function getStoreSlug(page: Page): Promise<string | null> {
 async function login(page: Page) {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-  await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -100,7 +100,7 @@ test.describe("Storefront — Valid Store", () => {
       await page.waitForTimeout(800);
 
       // Product detail modal/sheet should open — look for price or product name
-      const priceLabel = page.getByText(/₸|\d+\s*₸/);
+      const priceLabel = page.getByText(/৳|\d+\s*৳/);
       const productDetail = page.locator('[class*="ProductDetail"], [class*="product-detail"], [role="dialog"]');
       await expect(
         priceLabel.first().or(productDetail.first())
@@ -128,7 +128,7 @@ test.describe("Storefront — Valid Store", () => {
       // Cart count badge should increment
       const cartBadge = page.locator("header span, [class*='cart-count'], [class*='badge']").filter({ hasText: /^\d+$/ }).first();
       // Or check localStorage for cart items
-      const cartData = await page.evaluate(() => localStorage.getItem("duken-cart")).catch(() => null);
+      const cartData = await page.evaluate(() => localStorage.getItem("dukan-cart")).catch(() => null);
       if (cartData) {
         const cart = JSON.parse(cartData);
         expect(cart.length).toBeGreaterThan(0);
@@ -141,7 +141,7 @@ test.describe("Storefront — Valid Store", () => {
     await page.waitForLoadState("networkidle");
 
     // Clear any existing cart
-    await page.evaluate(() => localStorage.removeItem("duken-cart")).catch(() => {});
+    await page.evaluate(() => localStorage.removeItem("dukan-cart")).catch(() => {});
 
     const addToCartBtn = page.getByRole("button", { name: /add to cart|в корзину|себетке/i }).first();
     if (await addToCartBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {

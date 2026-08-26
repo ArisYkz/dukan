@@ -83,8 +83,6 @@ const StoreDetailSheet = ({ storeId, onClose }: StoreDetailSheetProps) => {
             {[
               ["Status", subscriptionStatus],
               ["Plan", planType],
-              ["Verified", store.is_verified ? "Yes" : "No"],
-              ["Verify Status", store.verification_status],
               ["Paused", store.is_paused ? "Yes" : "No"],
               ["Views", store.total_views],
               ["Orders", store.total_sales_count],

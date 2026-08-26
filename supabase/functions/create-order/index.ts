@@ -189,8 +189,10 @@ Deno.serve(async (req) => {
 
     const { data: order, error: oErr } = await supabase.from("orders").insert({
       store_id: store.id,
+      customer_name: input.customerName,
       customer_phone: input.customerPhone.slice(0, 4) + "***" + input.customerPhone.slice(-2),
       customer_phone_hash: phoneHash,
+      customer_address: input.customerAddress,
       subtotal: totalPrice,
       tax_amount: taxAmount,
       total_price: finalPrice,
@@ -218,63 +220,6 @@ Deno.serve(async (req) => {
     if (input.promoCode) {
       const { error: rpcErr } = await supabase.rpc("increment_promo_usage", { _store_id: input.storeId, _code: input.promoCode });
       if (rpcErr) console.error("Promo usage increment error:", JSON.stringify(rpcErr));
-    }
-
-    // Forward order PII to Hoster.kz bridge (data-localization compliance)
-    // Non-blocking — never fails the order, but logs delivery to bridge_delivery_log.
-    const bridgeUrl = Deno.env.get("KZ_BRIDGE_URL");
-    const bridgeKey = Deno.env.get("KZ_BRIDGE_KEY");
-    if (bridgeUrl && bridgeKey) {
-      const bridgeBody = JSON.stringify({
-        storeId: store.id,
-        orderId: order.id,
-        customerName: input.customerName,
-        customerPhone: normalizePhone(input.customerPhone),
-        customerAddress: input.customerAddress,
-      });
-
-      const deliverToBridge = async (attempt: number) => {
-        try {
-          const res = await fetch(`${bridgeUrl}/order-pii`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "x-bridge-key": bridgeKey },
-            body: bridgeBody,
-          });
-          if (!res.ok) {
-            const errBody = await res.text().catch(() => "no body");
-            throw new Error(`${res.status} ${res.statusText} — ${errBody}`);
-          }
-          return { ok: true };
-        } catch (e) {
-          if (attempt < 2) {
-            await new Promise(r => setTimeout(r, 1000));
-            return deliverToBridge(attempt + 1);
-          }
-          return { ok: false, error: (e as Error).message };
-        }
-      };
-
-      // Fire and forget — never blocks checkout
-      deliverToBridge(1).then(async (result) => {
-        try {
-          await supabase.from("bridge_delivery_log").insert({
-            order_id: order.id,
-            store_id: store.id,
-            status: result.ok ? "success" : "failed",
-            error_msg: result.ok ? null : (result.error || null),
-            attempts: result.ok ? 1 : 2,
-          });
-        } catch (logErr: any) {
-          console.error(`[bridge] failed to log delivery: ${logErr?.message}`);
-        }
-        if (result.ok) {
-          console.log(`[bridge] order-pii ok for order ${order.id}`);
-        } else {
-          console.error(`[bridge] order-pii failed after retries: ${result.error}`);
-        }
-      }).catch(() => {});
-    } else {
-      console.warn("[bridge] KZ_BRIDGE_URL or KZ_BRIDGE_KEY not set — skipping PII forward");
     }
 
     // Notify seller via Telegram — completely non-blocking, never fails the order

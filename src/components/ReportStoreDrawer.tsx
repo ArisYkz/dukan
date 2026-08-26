@@ -110,7 +110,7 @@ const ReportStoreDrawer = ({ storeId, open, onClose }: ReportStoreDrawerProps) =
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+7 777 123 4567"
+                  placeholder="+880 1XXX-XXXXXX"
                   className="w-full px-4 py-2.5 font-mono text-xs border border-border bg-transparent focus:border-foreground outline-none transition-colors"
                 />
               </div>

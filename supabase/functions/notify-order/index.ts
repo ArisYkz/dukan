@@ -16,28 +16,6 @@ const ok = (data: Record<string, unknown> = { ok: true }) =>
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 
-/** Read order PII from the KZ bridge, falling back to what's in Supabase. */
-async function getOrderPii(orderId: string, fallbackPhone: string): Promise<{ name: string; phone: string; address: string }> {
-  const bridgeUrl = Deno.env.get('KZ_BRIDGE_URL');
-  const bridgeKey = Deno.env.get('KZ_BRIDGE_KEY');
-  if (!bridgeUrl || !bridgeKey) return { name: '—', phone: fallbackPhone, address: '—' };
-
-  try {
-    const res = await fetch(`${bridgeUrl}/order-pii/${encodeURIComponent(orderId)}`, {
-      headers: { 'x-bridge-key': bridgeKey },
-    });
-    if (!res.ok) return { name: '—', phone: fallbackPhone, address: '—' };
-    const data = await res.json();
-    if (!data.success) return { name: '—', phone: fallbackPhone, address: '—' };
-    return {
-      name: data.data.customer_name || '—',
-      phone: data.data.customer_phone || fallbackPhone,
-      address: data.data.customer_address || '—',
-    };
-  } catch {
-    return { name: '—', phone: fallbackPhone, address: '—' };
-  }
-}
 
 async function sendTelegramMessage(chatId: string | number, text: string) {
   if (!TELEGRAM_URL) {
@@ -71,7 +49,7 @@ Deno.serve(async (req) => {
 
     if (body.message && body.message.chat) {
       const chatId = body.message.chat.id;
-      const reply = `✦  <b>Duken</b>  ✦\n\n🆔  Сіздің ID нөміріңіз / Ваш ID:\n<code>${chatId}</code>\n\nCopy this ID and paste it into your Store Branding settings to activate instant order alerts.`;
+      const reply = `✦  <b>Dukan</b>  ✦\n\n🆔  Your ID:\n<code>${chatId}</code>\n\nCopy this ID and paste it into your Store Branding settings to activate instant order alerts.`;
 
       await fetch(`${TELEGRAM_URL}/sendMessage`, {
         method: 'POST',
@@ -108,7 +86,7 @@ Deno.serve(async (req) => {
 
           if (error) {
             console.error('Order update error:', error.message);
-            statusText = `⚠️ Қате: ${error.message}`;
+            statusText = `⚠️ Error: ${error.message}`;
           } else {
             await supabase
               .from('payment_attempts')
@@ -120,8 +98,8 @@ Deno.serve(async (req) => {
               .in('status', ['pending', 'suspicious']);
 
             statusText = action === 'confirm'
-              ? '✅ Төлем расталды'
-              : '❌ Төлем қабылданбады';
+              ? '✅ Payment confirmed'
+              : '❌ Payment rejected';
           }
         }
       } else if (action === 'approve') {
@@ -144,14 +122,14 @@ Deno.serve(async (req) => {
 
         if (error) {
           console.error('Store approve error:', error.message);
-          statusText = `⚠️ Қате: ${error.message}`;
+          statusText = `⚠️ Error: ${error.message}`;
         } else {
-          statusText = `✅ Мақұлданды (${requestedPlan === 'pro_year' ? 'Жылдық' : 'Айлық'})`;
+          statusText = `✅ Approved (${requestedPlan === 'pro_year' ? 'Yearly' : 'Monthly'})`;
         }
       } else if (action === 'ban') {
         const storeId = parts[1];
         await supabase.from('stores').update({ subscription_status: 'banned' }).eq('id', storeId);
-        statusText = '🚫 Бұғатталды';
+        statusText = '🚫 Banned';
       } else {
         statusText = 'Unknown action';
       }
@@ -167,7 +145,7 @@ Deno.serve(async (req) => {
           body: JSON.stringify({
             chat_id: chatId,
             message_id: messageId,
-            [textField]: `${originalText}\n\n📌 <b>Шешім:</b> ${statusText}`,
+            [textField]: `${originalText}\n\n📌 <b>Decision:</b> ${statusText}`,
             parse_mode: 'HTML',
           }),
         });
@@ -206,7 +184,7 @@ Deno.serve(async (req) => {
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     const { data: order, error: orderErr } = await supabase
       .from('orders')
-      .select('id, public_order_id, customer_phone, total_price, reference_code, discount_amount, store_id')
+      .select('id, public_order_id, customer_name, customer_phone, customer_address, total_price, reference_code, discount_amount, store_id')
       .eq('id', order_id)
       .single();
 
@@ -233,31 +211,34 @@ Deno.serve(async (req) => {
     if (!store || !proPlans.includes(store.plan_type)) return ok({ success: true, message: 'Not a Pro plan, skipped' });
     if (!store.telegram_chat_id) return ok({ success: true, message: 'No Telegram connected' });
 
-    // Read order PII from KZ bridge (source of truth for customer info)
-    const pii = await getOrderPii(order.id, order.customer_phone || '—');
+    const pii = {
+      name: order.customer_name || '—',
+      phone: order.customer_phone || '—',
+      address: order.customer_address || '—',
+    };
 
     const itemLines = (items ?? []).map(
-      (i: any) => `    ◦ ${i.product_name}  ×${i.quantity}  —  ${(i.product_price * i.quantity).toLocaleString()} ₸`
+      (i: any) => `    ◦ ${i.product_name}  ×${i.quantity}  —  ${(i.product_price * i.quantity).toLocaleString()} ৳`
     ).join('\n');
 
     const discountLine = order.discount_amount && order.discount_amount > 0
-      ? `\n🏷  <b>Жеңілдік:</b>  −${order.discount_amount.toLocaleString()} ₸`
+      ? `\n🏷  <b>Discount:</b>  −${order.discount_amount.toLocaleString()} ৳`
       : '';
 
     const caption = `
-✦  <b>ЖАҢА ТАПСЫРЫС</b>  ✦
+✦  <b>NEW ORDER</b>  ✦
 ━━━━━━━━━━━━━━━━━━
-📦  <b>№:</b>  <code>${order.public_order_id}</code>
-👤  <b>Клиент:</b>  ${pii.name}
-📞  <b>Тел:</b>  <code>${pii.phone}</code>
-📍  <b>Мекенжай:</b>  ${pii.address}
+📦  <b>No:</b>  <code>${order.public_order_id}</code>
+👤  <b>Customer:</b>  ${pii.name}
+📞  <b>Phone:</b>  <code>${pii.phone}</code>
+📍  <b>Address:</b>  ${pii.address}
 ━━━━━━━━━━━━━━━━━━
-🛍  <b>Тауарлар:</b>
+🛍  <b>Items:</b>
 ${itemLines}${discountLine}
 
-💎  <b>ЖАЛПЫ:</b>  ${order.total_price.toLocaleString()} ₸
+💎  <b>TOTAL:</b>  ${order.total_price.toLocaleString()} ৳
 ━━━━━━━━━━━━━━━━━━
-ℹ️  <i>Клиент төлем жасап жатыр. Төлем түскенде батырмалары бар хабарлама келеді.</i>
+ℹ️  <i>The customer is making a payment. You'll get a message with buttons once the payment arrives.</i>
     `.trim();
 
     console.log('Sending order alert to chat_id:', store.telegram_chat_id);

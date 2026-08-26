@@ -17,24 +17,17 @@ interface ReauthenticationEmailProps {
 }
 
 export const ReauthenticationEmail = ({ token }: ReauthenticationEmailProps) => (
-  <Html lang="kk" dir="ltr">
+  <Html lang="en" dir="ltr">
     <Head />
-    <Preview>🇰🇿 Растау коды / 🇷🇺 Код подтверждения — Duken</Preview>
+    <Preview>Confirmation code — Dukan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKEN</Text>
-        <Text style={localeLabel}>🇰🇿 ҚАЗАҚША</Text>
-        <Heading style={title}>Растау коды</Heading>
-        <Text style={text}>Жеке басыңызды растау үшін төмендегі кодты пайдаланыңыз:</Text>
-        <Text style={codeStyle}>{token}</Text>
-        <Text style={localeLabel}>🇷🇺 РУССКИЙ</Text>
-        <Heading style={title}>Код подтверждения</Heading>
-        <Text style={text}>Используйте код ниже для подтверждения вашей личности:</Text>
+        <Text style={brandLabel}>DUKAN</Text>
+        <Heading style={title}>Confirmation code</Heading>
+        <Text style={text}>Use the code below to confirm your identity:</Text>
         <Text style={codeStyle}>{token}</Text>
         <Text style={footer}>
-          Егер сіз бұл сұранымды жібермесеңіз, бұл хатты елемеуіңізге болады.
-          <br />
-          Если вы не отправляли этот запрос, просто проигнорируйте это письмо.
+          If you did not request this, you can safely ignore this email.
         </Text>
       </Container>
     </Body>
@@ -46,7 +39,6 @@ export default ReauthenticationEmail
 const main = { backgroundColor: '#ffffff', fontFamily: "'Manrope', Arial, sans-serif", margin: 0, padding: '32px 0' }
 const container = { border: '1px solid hsl(40 18% 86%)', borderRadius: '4px', maxWidth: '560px', padding: '40px' }
 const brandLabel = { color: 'hsl(28 45% 42%)', fontSize: '12px', letterSpacing: '0.18em', margin: '0 0 24px', textAlign: 'center' as const }
-const localeLabel = { color: 'hsl(28 45% 42%)', fontSize: '12px', letterSpacing: '0.1em', margin: '0 0 8px' }
 const title = { color: 'hsl(0 0% 15%)', fontFamily: "'Playfair Display', Georgia, serif", fontSize: '24px', fontWeight: 500, margin: '0 0 12px' }
 const text = {
   fontSize: '14px',

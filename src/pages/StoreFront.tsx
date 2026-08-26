@@ -200,31 +200,6 @@ const StoreFront = () => {
 
   if (!store) return null;
 
-  // Block storefront if seller isn't verified (unverified, mismatch, manual_review, suspended)
-  if (store.verification_status !== "verified") {
-    const isSuspended = store.verification_status === "suspended";
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background px-4">
-        <div className="border border-border rounded-none p-12 max-w-md text-center space-y-4">
-          {isSuspended ? (
-            <>
-              <h1 className="font-mono text-2xl font-bold">{STOREFRONT.STORE_UNAVAILABLE}</h1>
-              <p className="font-mono text-sm text-muted-foreground">{STOREFRONT.CONTACT_SUPPORT}</p>
-            </>
-          ) : (
-            <>
-              <h1 className="font-mono text-2xl font-bold">{STOREFRONT.STORE_NOT_PUBLISHED}</h1>
-              <p className="font-mono text-sm text-muted-foreground">{STOREFRONT.STORE_NOT_PUBLISHED_DESC}</p>
-            </>
-          )}
-          <a href="/" className="inline-block font-mono text-xs tracking-wide uppercase border border-border px-4 py-2 hover:bg-muted transition-colors">
-            {STOREFRONT.RETURN_TO_QALTA}
-          </a>
-        </div>
-      </div>
-    );
-  }
-
   // Banned store check (subscription_status is on profiles, not stores)
   if (ownerProfile?.subscription_status === "banned") {
     return (
@@ -289,7 +264,7 @@ const StoreFront = () => {
         <div className="container flex items-center justify-between h-14">
           <div className="flex items-center gap-3 shrink-0 min-w-0">
             <Link to="/" className="shrink-0">
-              <img src={dukenLogo} alt="Duken" className="h-5 sm:h-6 dark:invert" />
+              <img src={dukenLogo} alt="Dukan" className="h-5 sm:h-6 dark:invert" />
             </Link>
             <span className="font-mono text-sm font-medium truncate max-w-[140px] sm:max-w-[200px]">{store.name}</span>
             {store.is_verified && (

@@ -150,8 +150,6 @@ project_id = "bot"
     verify_jwt = false
   [functions.store-pii]
     verify_jwt = false
-  [functions.kazpost-track]
-    verify_jwt = false
   [functions.downgrade-expired]
     verify_jwt = false
 

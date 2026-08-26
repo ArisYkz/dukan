@@ -39,7 +39,7 @@ Deno.serve(async (req) => {
 
     if (payload.message && payload.message.chat) {
       const chatId = payload.message.chat.id;
-      const reply = `✦  <b>Duken Admin</b>  ✦\n\n🆔  Сіздің ID:\n<code>${chatId}</code>`;
+      const reply = `✦  <b>Dukan Admin</b>  ✦\n\n🆔  Your ID:\n<code>${chatId}</code>`;
       await sendTelegramMessage(chatId, reply);
       return ok();
     }
@@ -78,14 +78,14 @@ Deno.serve(async (req) => {
           .eq('user_id', userId);
 
         statusText = error
-          ? `⚠️ Қате: ${error.message}`
-          : `✅ Мақұлданды (${requestedPlan === 'pro_year' ? 'Жылдық' : 'Айлық'})`;
+          ? `⚠️ Error: ${error.message}`
+          : `✅ Approved (${requestedPlan === 'pro_year' ? 'Yearly' : 'Monthly'})`;
       } else if (action === 'reject') {
-        statusText = '❌ Бас тартылды';
+        statusText = '❌ Rejected';
       } else if (action === 'ban') {
         const userId = parts[1];
         await supabase.from('profiles').update({ subscription_status: 'banned' }).eq('user_id', userId);
-        statusText = '🚫 Бұғатталды';
+        statusText = '🚫 Banned';
       } else {
         statusText = 'Unknown action';
       }
@@ -101,7 +101,7 @@ Deno.serve(async (req) => {
           body: JSON.stringify({
             chat_id: chatId,
             message_id: messageId,
-            [textField]: `${originalText}\n\n📌 <b>Шешім:</b> ${statusText}`,
+            [textField]: `${originalText}\n\n📌 <b>Decision:</b> ${statusText}`,
             parse_mode: 'HTML',
           }),
         });
@@ -140,17 +140,17 @@ Deno.serve(async (req) => {
       return ok({ success: true, message: 'Keys missing, skipped' });
     }
 
-    const planDisplay = plan_type === 'pro_year' ? '🏆 Жылдық (Pro Year)' : '⚡ Айлық (Pro Month)';
+    const planDisplay = plan_type === 'pro_year' ? '🏆 Yearly (Pro Year)' : '⚡ Monthly (Pro Month)';
 
     const caption = `
-🚀 <b>Qalta Pro жазылымына өтінім</b>
+🚀 <b>Dukan Pro subscription request</b>
 ━━━━━━━━━━━━━━━━━━
 👤 <b>User ID:</b> <code>${user_id}</code>
-💰 <b>Сомасы:</b> ${amount || 'N/A'} ₸
-📅 <b>Тариф:</b> ${planDisplay}
-🔢 <b>Код:</b> <code>${code || 'N/A'}</code>
+💰 <b>Amount:</b> ${amount || 'N/A'} ৳
+📅 <b>Plan:</b> ${planDisplay}
+🔢 <b>Code:</b> <code>${code || 'N/A'}</code>
 ━━━━━━━━━━━━━━━━━━
-⚠️ <b>Төлемді Kaspi-ден тексеріңіз!</b>
+⚠️ <b>Check the payment in your app!</b>
     `.trim();
 
     const res = await fetch(`${TELEGRAM_URL}/sendPhoto`, {
@@ -164,11 +164,11 @@ Deno.serve(async (req) => {
         reply_markup: {
           inline_keyboard: [
             [
-              { text: '✅ Мақұлдау', callback_data: `approve:${user_id}:${plan_type}` },
-              { text: '❌ Бас тарту', callback_data: `reject:${user_id}` },
+              { text: '✅ Approve', callback_data: `approve:${user_id}:${plan_type}` },
+              { text: '❌ Reject', callback_data: `reject:${user_id}` },
             ],
             [
-              { text: '🚫 Бұғаттау (BAN)', callback_data: `ban:${user_id}` },
+              { text: '🚫 Ban', callback_data: `ban:${user_id}` },
             ],
           ],
         },

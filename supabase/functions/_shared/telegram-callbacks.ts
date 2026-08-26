@@ -37,8 +37,8 @@ export async function processOrderCallback(
     .in("status", ["pending", "suspicious"]);
 
   const statusText = action === "confirm"
-    ? "✅ Төлем расталды"
-    : "❌ Төлем қабылданбады";
+    ? "✅ Payment confirmed"
+    : "❌ Payment rejected";
 
   return { statusText, error: null };
 }
@@ -71,7 +71,7 @@ export async function processStoreApprove(
 
   return {
     error: null,
-    statusText: `✅ Мақұлданды (${isYear ? "Жылдық" : "Айлық"})`,
+    statusText: `✅ Approved (${isYear ? "Yearly" : "Monthly"})`,
   };
 }
 
@@ -111,7 +111,7 @@ export async function editTelegramCallbackMessage(
     body: JSON.stringify({
       chat_id: chatId,
       message_id: messageId,
-      [textField]: `${originalText}\n\n📌 <b>Шешім:</b> ${statusText}`,
+      [textField]: `${originalText}\n\n📌 <b>Decision:</b> ${statusText}`,
       parse_mode: "HTML",
     }),
   });

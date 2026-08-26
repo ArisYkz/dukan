@@ -70,4 +70,4 @@ export const DASHBOARD_ORDER_LIMIT = 200;
 export const PAYMENT_WINDOW_MS = 30 * 60 * 1000;
 
 // ─── External Links ────────────────────────────────────────────
-export const SUPPORT_TELEGRAM = "https://t.me/qaborasupport";
+export const SUPPORT_TELEGRAM = "https://t.me/dukan_support";

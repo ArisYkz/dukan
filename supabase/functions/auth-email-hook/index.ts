@@ -17,12 +17,12 @@ const corsHeaders = {
 }
 
 const EMAIL_SUBJECTS: Record<string, string> = {
-  signup: '🇰🇿 Тіркелуді растау / 🇷🇺 Подтверждение регистрации — Duken',
-  invite: '🇰🇿 Шақыру / 🇷🇺 Приглашение — Duken',
-  magiclink: '🇰🇿 Кіру сілтемесі / 🇷🇺 Ссылка для входа — Duken',
-  recovery: '🇰🇿 Құпия сөзді қалпына келтіру / 🇷🇺 Сброс пароля — Duken',
-  email_change: '🇰🇿 Поштаны өзгерту / 🇷🇺 Смена почты — Duken',
-  reauthentication: '🇰🇿 Растау коды / 🇷🇺 Код подтверждения — Duken',
+  signup: 'Confirm your registration — Dukan',
+  invite: 'You are invited — Dukan',
+  magiclink: 'Your sign-in link — Dukan',
+  recovery: 'Reset your password — Dukan',
+  email_change: 'Confirm your email change — Dukan',
+  reauthentication: 'Confirmation code — Dukan',
 }
 
 // Template mapping
@@ -36,17 +36,17 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 }
 
 // Configuration
-const SITE_NAME = "Duken"
-const SENDER_DOMAIN = "mg.duken.com.kz"
-const ROOT_DOMAIN = "duken.com.kz"
-const FROM_DOMAIN = "mg.duken.com.kz" // Domain shown in From address (may be root or sender subdomain)
+const SITE_NAME = "Dukan"
+const SENDER_DOMAIN = "mg.dukan.example.com"
+const ROOT_DOMAIN = "dukan.example.com"
+const FROM_DOMAIN = "mg.dukan.example.com" // Domain shown in From address (may be root or sender subdomain)
 
 // Sample data for preview mode ONLY (not used in actual email sending).
 // URLs are baked in at scaffold time from the project's real data.
 // The sample email uses a fixed placeholder (RFC 6761 .test TLD) so the Go backend
 // can always find-and-replace it with the actual recipient when sending test emails,
 // even if the project's domain has changed since the template was scaffolded.
-const SAMPLE_PROJECT_URL = "https://duken.com.kz"
+const SAMPLE_PROJECT_URL = "https://dukan.example.com"
 const SAMPLE_EMAIL = "user@example.test"
 const SAMPLE_DATA: Record<string, object> = {
   signup: {

@@ -61,7 +61,7 @@ const DashboardSidebar = ({
       {/* Logo area — minimal, breathing */}
       <SidebarHeader className="px-0 pt-0">
         <Link to="/" className="flex items-center gap-2.5 px-4 pt-5 pb-6 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2">
-          <img src={dukenLogo} alt="Duken" className="h-5 dark:invert shrink-0" />
+          <img src={dukenLogo} alt="Dukan" className="h-5 dark:invert shrink-0" />
           <span className="font-mono text-xs tracking-[0.25em] uppercase text-foreground/50 group-data-[collapsible=icon]:hidden">
             Duken
           </span>

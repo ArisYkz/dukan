@@ -23,7 +23,7 @@ interface DashboardHeaderProps {
 const DashboardHeader = ({ store, stores, currentStoreId, onStoreChange, onCreateStore, isPro, isAdmin, onLogout }: DashboardHeaderProps) => {
   const { MESSAGES } = useLabels();
   const copyStoreLink = () => {
-    const url = `https://duken.com.kz/s/${store.slug}`;
+    const url = `https://dukan.example.com/s/${store.slug}`;
     navigator.clipboard.writeText(url);
     toast.success(MESSAGES.LINK_COPIED, { className: "font-mono" });
   };
@@ -34,7 +34,7 @@ const DashboardHeader = ({ store, stores, currentStoreId, onStoreChange, onCreat
         <div className="flex items-center gap-1">
           <SidebarTrigger className="h-8 w-8 p-1.5 text-foreground/70 hover:text-foreground shrink-0 md:hidden" />
           <Link to="/">
-            <img src={dukenLogo} alt="Duken" className="h-7 dark:invert shrink-0" />
+            <img src={dukenLogo} alt="Dukan" className="h-7 dark:invert shrink-0" />
           </Link>
           {stores.length > 1 ? (
             <StoreSelector stores={stores} currentStoreId={currentStoreId} onSelect={onStoreChange} onCreateNew={onCreateStore} />

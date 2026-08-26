@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
-import { KAZAKHSTAN_CITIES } from "@/constants/kazakhstanCities";
+import { BANGLADESH_CITIES } from "@/constants/bangladeshCities";
 
 interface CityDropdownProps {
   value: string;
@@ -41,7 +41,7 @@ const CityDropdown = ({ value, onChange, placeholder, searchPlaceholder }: CityD
             onChange={(e) => setSearch(e.target.value)}
             autoFocus
           />
-          {KAZAKHSTAN_CITIES.filter((c) => c.toLowerCase().includes(search.toLowerCase())).map((city) => (
+          {BANGLADESH_CITIES.filter((c) => c.toLowerCase().includes(search.toLowerCase())).map((city) => (
             <button
               key={city}
               type="button"

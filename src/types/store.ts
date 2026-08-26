@@ -37,21 +37,6 @@ export interface StoreRow {
   user_id: string;
   created_at: string;
   updated_at: string;
-  seller_type: 'individual_entrepreneur' | 'legal_entity' | null;
-  verification_status: 'unverified' | 'verified' | 'mismatch' | 'suspended' | 'manual_review';
-  registry_checked_at: string | null;
-  verified_at: string | null;
-  verification_notes: string | null;
-  kazpost_dea_number: string | null;
-  kazpost_dea_depcode: string | null;
-  kazpost_sender_bin: string | null;
-  kazpost_sender_index: string | null;
-  kazpost_sender_city: string | null;
-  kazpost_sender_street: string | null;
-  kazpost_sender_house: string | null;
-  kazpost_default_product: string;
-  kazpost_default_send_method: string;
-  kazpost_default_mail_ctg: string;
   slug_customized: boolean;
 }
 
@@ -98,7 +83,6 @@ export interface OrderRow {
   reference_code: string | null;
   promo_code: string | null;
   discount_amount: number;
-  kazpost_barcode: string | null;
   order_items: { product_name: string; quantity: number; product_price: number }[];
 }
 

@@ -6,7 +6,7 @@ import { test, expect, type Page } from "@playwright/test";
 // Visits EVERY route and tab and checks for console errors.
 // Bails on error at each page -- after logging in, if a page has console
 // errors, the test fails fast so you know exactly which page broke.
-// Base URL: http://localhost:8081 (for authenticated routes)
+// Base URL: http://localhost:8082 (for authenticated routes)
 // Default URL: http://localhost:8080 (for public routes)
 // ============================================================================
 
@@ -17,7 +17,7 @@ import { test, expect, type Page } from "@playwright/test";
 async function login(page: Page) {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-  await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -121,7 +121,7 @@ test.describe("Console Audit -- Public Routes", () => {
 // AUTHENTICATED ROUTES
 // ============================================================================
 test.describe("Console Audit -- Authenticated Routes", () => {
-  test.use({ baseURL: "http://localhost:8081" });
+  test.use({ baseURL: "http://localhost:8082" });
 
   test("dashboard page (/dashboard) has no console errors after login", async ({ page }) => {
     const errors = await captureConsoleErrors(page, async () => {
@@ -149,7 +149,7 @@ test.describe("Console Audit -- Authenticated Routes", () => {
 // DASHBOARD TABS -- CONSOLE AUDIT
 // ============================================================================
 test.describe("Console Audit -- Dashboard Tabs", () => {
-  test.use({ baseURL: "http://localhost:8081" });
+  test.use({ baseURL: "http://localhost:8082" });
 
   const dashboardTabs: { name: RegExp; label: string }[] = [
     { name: /branding|брендинг|бренд/i, label: "Branding" },
@@ -182,7 +182,7 @@ test.describe("Console Audit -- Dashboard Tabs", () => {
 // ADMIN PAGE -- CONSOLE AUDIT
 // ============================================================================
 test.describe("Console Audit -- Admin Page", () => {
-  test.use({ baseURL: "http://localhost:8081" });
+  test.use({ baseURL: "http://localhost:8082" });
 
   test("admin page (/admin) has no console errors", async ({ page }) => {
     const errors = await captureConsoleErrors(page, async () => {
@@ -201,7 +201,7 @@ test.describe("Console Audit -- Admin Page", () => {
 // STOREFRONT -- CONSOLE AUDIT
 // ============================================================================
 test.describe("Console Audit -- Storefront", () => {
-  test.use({ baseURL: "http://localhost:8081" });
+  test.use({ baseURL: "http://localhost:8082" });
 
   /**
    * Helper: Get a valid store slug by logging in first
@@ -209,7 +209,7 @@ test.describe("Console Audit -- Storefront", () => {
   async function getStoreSlug(page: Page): Promise<string | null> {
     await page.goto("/auth");
     await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-    await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+    await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
     await page.locator('input[type="password"]').fill("TestPass123!");
     await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
     await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -247,12 +247,12 @@ test.describe("Console Audit -- Storefront", () => {
 // ORDER TRACKING -- CONSOLE AUDIT
 // ============================================================================
 test.describe("Console Audit -- Order Tracking", () => {
-  test.use({ baseURL: "http://localhost:8081" });
+  test.use({ baseURL: "http://localhost:8082" });
 
   async function getFirstOrderId(page: Page): Promise<string | null> {
     await page.goto("/auth");
     await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-    await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+    await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
     await page.locator('input[type="password"]').fill("TestPass123!");
     await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
     await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -326,7 +326,7 @@ test.describe("Console Audit -- Comprehensive Route Sweep (Unauthenticated)", ()
 // COMPREHENSIVE ROUTE SWEEP -- AUTHENTICATED
 // ============================================================================
 test.describe("Console Audit -- Comprehensive Route Sweep (Authenticated)", () => {
-  test.use({ baseURL: "http://localhost:8081" });
+  test.use({ baseURL: "http://localhost:8082" });
 
   const dashboardTabs: { name: RegExp; label: string }[] = [
     { name: /branding|брендинг|бренд/i, label: "Branding" },

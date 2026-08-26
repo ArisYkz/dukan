@@ -5,10 +5,10 @@ import { test, expect, type Page } from "@playwright/test";
 // ============================================================================
 // Tests the public order tracking page at /order/:id
 // Uses a known order from the test account's store.
-// Base URL: http://localhost:8081
+// Base URL: http://localhost:8082
 // ============================================================================
 
-test.use({ baseURL: "http://localhost:8081" });
+test.use({ baseURL: "http://localhost:8082" });
 
 // ---------------------------------------------------------------------------
 // Helper: Log in and fetch a known public order ID from the dashboard
@@ -17,7 +17,7 @@ test.use({ baseURL: "http://localhost:8081" });
 async function getFirstOrderId(page: Page): Promise<string | null> {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-  await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -229,7 +229,7 @@ test.describe("Order Tracking — Payment", () => {
     await page.waitForLoadState("networkidle");
 
     // Payment amount section with price display
-    const priceText = page.getByText(/₸|\d[\d\s]*₸/);
+    const priceText = page.getByText(/৳|\d[\d\s]*৳/);
     await expect(priceText.first()).toBeVisible({ timeout: 5_000 }).catch(() => {});
   });
 
@@ -244,7 +244,7 @@ test.describe("Order Tracking — Payment", () => {
 
     // Recipient section — Kaspi phone/name
     const recipientLabel = page.getByText(/recipient|получатель|алушы/i);
-    const kaspiLabel = page.getByText(/kaspi|каспи/i);
+    const kaspiLabel = page.getByText(/payment/i);
     await expect(
       recipientLabel.first().or(kaspiLabel.first())
     ).toBeVisible({ timeout: 5_000 }).catch(() => {});
@@ -394,34 +394,3 @@ test.describe("Order Tracking — Not Found", () => {
   });
 });
 
-// ============================================================================
-// ORDER TRACKING — KAZPOST TRACKING SECTION
-// ============================================================================
-test.describe("Order Tracking — KazPost Tracking", () => {
-  let orderId: string;
-
-  test.beforeAll(async ({ browser }) => {
-    const page = await browser.newPage();
-    try {
-      orderId = (await getFirstOrderId(page)) || "";
-    } finally {
-      await page.close();
-    }
-  });
-
-  test("KazPost tracking section renders when barcode is available", async ({ page }) => {
-    if (!orderId) {
-      test.skip(true, "No order ID available — skipping");
-      return;
-    }
-
-    await page.goto(`/order/${orderId}`);
-    await page.waitForLoadState("networkidle");
-
-    // KazPost tracking section — check for barcode display or tracking label
-    const kazpostSection = page.getByText(/kazpost|казпочта|tracking|трекинг/i);
-    await expect(kazpostSection.first()).toBeVisible({ timeout: 5_000 }).catch(() => {
-      // Not all orders have KazPost barcodes
-    });
-  });
-});

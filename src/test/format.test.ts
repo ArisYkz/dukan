@@ -82,7 +82,7 @@ describe("Business constants", () => {
   });
 
   it("SUPPORT_TELEGRAM is the correct URL", () => {
-    expect(SUPPORT_TELEGRAM).toBe("https://t.me/qaborasupport");
+    expect(SUPPORT_TELEGRAM).toBe("https://t.me/dukan_support");
   });
 });
 

@@ -26,32 +26,24 @@ export const EmailChangeEmail = ({
   newEmail,
   confirmationUrl,
 }: EmailChangeEmailProps) => (
-  <Html lang="kk" dir="ltr">
+  <Html lang="en" dir="ltr">
     <Head />
-    <Preview>🇰🇿 Поштаны өзгерту / 🇷🇺 Смена почты — Duken</Preview>
+    <Preview>Confirm your email change — Dukan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKEN</Text>
-        <Text style={localeLabel}>🇰🇿 ҚАЗАҚША</Text>
-        <Heading style={title}>Сәлем!</Heading>
+        <Text style={brandLabel}>DUKAN</Text>
+        <Heading style={title}>Hello!</Heading>
         <Text style={text}>
-          Электрондық поштаңызды {email} → {newEmail} өзгерту сұранысы алынды. Растау үшін батырманы басыңыз:
+          We received a request to change your email address from {email} to {newEmail}. Click the button below to confirm:
         </Text>
         <Hr style={divider} />
-        <Text style={localeLabel}>🇷🇺 РУССКИЙ</Text>
-        <Heading style={title}>Здравствуйте!</Heading>
-        <Text style={text}>
-          Мы получили запрос на изменение электронной почты с {email} на {newEmail}. Нажмите кнопку для подтверждения:
-        </Text>
         <div style={buttonWrap}>
           <Button style={button} href={confirmationUrl}>
-            Поштаны растау / Подтвердить почту
+            Confirm email change
           </Button>
         </div>
         <Text style={footer}>
-          Егер сіз бұл сұранымды жібермесеңіз, бұл хатты елемеуіңізге болады.
-          <br />
-          Если вы не отправляли этот запрос, просто проигнорируйте это письмо.
+          If you did not request this, you can safely ignore this email.
         </Text>
       </Container>
     </Body>
@@ -63,7 +55,6 @@ export default EmailChangeEmail
 const main = { backgroundColor: '#ffffff', fontFamily: "'Manrope', Arial, sans-serif", margin: 0, padding: '32px 0' }
 const container = { border: '1px solid hsl(40 18% 86%)', borderRadius: '4px', maxWidth: '560px', padding: '40px' }
 const brandLabel = { color: 'hsl(28 45% 42%)', fontSize: '12px', letterSpacing: '0.18em', margin: '0 0 24px', textAlign: 'center' as const }
-const localeLabel = { color: 'hsl(28 45% 42%)', fontSize: '12px', letterSpacing: '0.1em', margin: '0 0 8px' }
 const title = { color: 'hsl(0 0% 15%)', fontFamily: "'Playfair Display', Georgia, serif", fontSize: '24px', fontWeight: 500, margin: '0 0 12px' }
 const text = {
   fontSize: '14px',

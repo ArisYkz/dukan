@@ -6,12 +6,12 @@ const CookieConsent = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consented = localStorage.getItem("duken_cookie_consent");
+    const consented = localStorage.getItem("dukan_cookie_consent");
     if (!consented) setVisible(true);
   }, []);
 
   const accept = () => {
-    localStorage.setItem("duken_cookie_consent", "true");
+    localStorage.setItem("dukan_cookie_consent", "true");
     setVisible(false);
   };
 

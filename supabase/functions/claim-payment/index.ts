@@ -12,36 +12,13 @@ const claimSchema = z.object({
   origin: z.string().url().optional(),
 });
 
-const formatPrice = (price: number) => new Intl.NumberFormat('kk-KZ').format(price) + ' ₸';
+const formatPrice = (price: number) => new Intl.NumberFormat('bn-BD', { numberingSystem: 'latn' }).format(price) + ' ৳';
 
 const getRequesterIp = (req: Request) => {
   const forwarded = req.headers.get('x-forwarded-for');
   if (!forwarded) return null;
   return forwarded.split(',')[0]?.trim() || null;
 };
-
-/** Read order PII from the KZ bridge, falling back to placeholders. */
-async function getOrderPii(orderId: string, fallbackPhone: string): Promise<{ name: string; phone: string; address: string }> {
-  const bridgeUrl = Deno.env.get('KZ_BRIDGE_URL');
-  const bridgeKey = Deno.env.get('KZ_BRIDGE_KEY');
-  if (!bridgeUrl || !bridgeKey) return { name: '—', phone: fallbackPhone, address: '—' };
-
-  try {
-    const res = await fetch(`${bridgeUrl}/order-pii/${encodeURIComponent(orderId)}`, {
-      headers: { 'x-bridge-key': bridgeKey },
-    });
-    if (!res.ok) return { name: '—', phone: fallbackPhone, address: '—' };
-    const data = await res.json();
-    if (!data.success) return { name: '—', phone: fallbackPhone, address: '—' };
-    return {
-      name: data.data.customer_name || '—',
-      phone: data.data.customer_phone || fallbackPhone,
-      address: data.data.customer_address || '—',
-    };
-  } catch {
-    return { name: '—', phone: fallbackPhone, address: '—' };
-  }
-}
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -84,7 +61,7 @@ Deno.serve(async (req) => {
 
     const { data: order, error: orderErr } = await supabase
       .from('orders')
-      .select('id, store_id, public_order_id, customer_phone, customer_phone_hash, total_price, status, reference_code, discount_amount')
+      .select('id, store_id, public_order_id, customer_name, customer_phone, customer_phone_hash, customer_address, total_price, status, reference_code, discount_amount')
       .eq('id', input.orderId)
       .single();
 
@@ -116,8 +93,11 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Read order PII from KZ bridge (source of truth for customer info)
-    const pii = await getOrderPii(order.id, order.customer_phone || '—');
+    const pii = {
+      name: order.customer_name || '—',
+      phone: order.customer_phone || '—',
+      address: order.customer_address || '—',
+    };
 
     const { data: paymentAttempt, error: attemptErr } = await supabase
       .from('payment_attempts')
@@ -166,17 +146,17 @@ Deno.serve(async (req) => {
 
     if (store.telegram_chat_id) {
       const caption = `
-✦  <b>ТӨЛЕМДІ РАСТАУ</b>  ✦
+✦  <b>PAYMENT CONFIRMATION</b>  ✦
 ━━━━━━━━━━━━━━━━━━
-📦  <b>№:</b>  <code>${order.public_order_id}</code>
-👤  <b>Клиент:</b>  ${pii.name}
-💰  <b>Сома:</b>  ${formatPrice(order.total_price)}
-🔑  <b>Код:</b>  <code>${order.reference_code || '—'}</code>
-📞  <b>Тел:</b>  <code>${pii.phone}</code>
-📍  <b>Мекенжай:</b>  ${pii.address}
+📦  <b>Order:</b>  <code>${order.public_order_id}</code>
+👤  <b>Customer:</b>  ${pii.name}
+💰  <b>Amount:</b>  ${formatPrice(order.total_price)}
+🔑  <b>Code:</b>  <code>${order.reference_code || '—'}</code>
+📞  <b>Phone:</b>  <code>${pii.phone}</code>
+📍  <b>Address:</b>  ${pii.address}
 ━━━━━━━━━━━━━━━━━━
-⏳  <b>KASPI-ДІ ТЕКСЕРІҢІЗ:</b>
-<i>Ақша түссе, төмендегі батырманы басыңыз.</i>${isSuspicious ? '\n\n⚠️ <b>КҮДІКТІ:</b> бұл телефон/IP 3+ расталмаған сұрау жіберді.' : ''}
+⏳  <b>CHECK YOUR PAYMENT APP:</b>
+<i>If the money has arrived, press the button below.</i>${isSuspicious ? '\n\n⚠️ <b>SUSPICIOUS:</b> this phone/IP has sent 3+ unconfirmed requests.' : ''}
       `.trim();
 
       const response = await fetch(`https://api.telegram.org/bot${telegramApiKey}/sendMessage`, {
@@ -191,8 +171,8 @@ Deno.serve(async (req) => {
           reply_markup: {
             inline_keyboard: [
               [
-                { text: '✅ Төлемді растау', callback_data: `confirm:${order.id}` },
-                { text: '❌ Бас тарту', callback_data: `reject:${order.id}` },
+                { text: '✅ Confirm payment', callback_data: `confirm:${order.id}` },
+                { text: '❌ Reject', callback_data: `reject:${order.id}` },
               ],
             ],
           },

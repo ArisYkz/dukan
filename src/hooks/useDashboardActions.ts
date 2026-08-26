@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 import { updateOrderStatus as updateOrderStatusService, resolvePaymentAttempts } from "@/services/orderService";
 import { updateStoreBranding } from "@/services/storeService";
-import { syncStorePii } from "@/services/bridgeService";
 import { isSlugOffensive } from "@/lib/slugFilter";
 import { normalizeSlug } from "@/lib/normalizeSlug";
 import { ERROR_CODES, useFormatError } from "@/lib/errorCodes";
@@ -138,7 +137,6 @@ export const useDashboardActions = ({
           order.tax_amount || 0,
           order.total_price,
           statusOrder(order.status),
-          order.kazpost_barcode || "",
           order.reference_code || "",
           formatDate(order.created_at),
         ].join(",")
@@ -149,7 +147,7 @@ export const useDashboardActions = ({
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `duken-orders-${Date.now()}.csv`;
+      a.download = `dukan-orders-${Date.now()}.csv`;
       a.click();
       URL.revokeObjectURL(url);
 
@@ -215,16 +213,6 @@ export const useDashboardActions = ({
         return false;
       }
 
-      // Forward PII fields (kaspi_phone, whatsapp_phone, kaspi_name) to
-      // Hoster.kz bridge for Kazakhstan data-localization compliance.
-      // Non-blocking — failures are logged, never shown to the user.
-      syncStorePii({
-        storeId: store.id,
-        kaspi_phone: brandForm.kaspi_phone,
-        whatsapp_phone: formattedWhatsapp,
-        kaspi_name: brandForm.kaspi_name,
-      });
-
       toast.success(MESSAGES.SETTINGS_SAVED);
       reload();
       return true;
@@ -234,7 +222,7 @@ export const useDashboardActions = ({
 
   /**
    * Create a new store with human-readable slug from store name.
-   * Collision handling: tries base → -kz → -shop → -NNN → random digits.
+   * Collision handling: tries base → -bd → -shop → -NNN → random digits.
    */
   const createStore = useCallback(
     async (userId: string, storeName: string, createStoreService: any) => {
@@ -250,7 +238,7 @@ export const useDashboardActions = ({
         }
         if (error?.code === "23505") {
           // Collision — try next suffix
-          if (attempt === 0) finalSlug = `${base}-kz`;
+          if (attempt === 0) finalSlug = `${base}-bd`;
           else if (attempt === 1) finalSlug = `${base}-shop`;
           else finalSlug = `${base}-${Math.floor(Math.random() * 900) + 100}`;
           continue;

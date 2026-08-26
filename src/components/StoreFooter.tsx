@@ -19,7 +19,7 @@ const StoreFooter = ({ storeName, STOREFRONT, onReportClick }: StoreFooterProps)
           Duken
         </Link>
       </p>
-      <p className="font-mono text-xs tracking-wide" style={{ color: "hsl(var(--footer-fg) / 0.4)" }}>Astana, Kazakhstan</p>
+      <p className="font-mono text-xs tracking-wide" style={{ color: "hsl(var(--footer-fg) / 0.4)" }}>Dhaka, Bangladesh</p>
       <p className="font-mono text-xs tracking-[0.15em] uppercase font-bold" style={{ color: "hsl(var(--footer-fg) / 0.5)" }}>
         {STOREFRONT.FOR_LOCAL_ENTREPRENEURS}
       </p>

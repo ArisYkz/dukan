@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
     // Scene A: Direct message (user sends /start to get their chat ID)
     if (body.message && body.message.chat) {
       const chatId = body.message.chat.id;
-      const reply = `✦  <b>Duken</b>  ✦\n\n🆔  Сіздің ID нөміріңіз / Ваш ID:\n<code>${chatId}</code>\n\nCopy this ID and paste it into your Store Branding settings to activate instant order alerts.`;
+      const reply = `✦  <b>Dukan</b>  ✦\n\n🆔  Your ID:\n<code>${chatId}</code>\n\nCopy this ID and paste it into your Store Branding settings to activate instant order alerts.`;
 
       await fetch(`${TELEGRAM_URL}/sendMessage`, {
         method: 'POST',
@@ -98,7 +98,7 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           chat_id: message.chat.id,
           message_id: message.message_id,
-          caption: `${message.caption || ''}\n\n📌 <b>Шешім:</b> ${status_text}`,
+          caption: `${message.caption || ''}\n\n📌 <b>Decision:</b> ${status_text}`,
           parse_mode: 'HTML',
         }),
       });

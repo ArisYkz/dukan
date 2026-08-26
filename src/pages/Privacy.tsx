@@ -120,7 +120,7 @@ const Privacy = () => {
           <ArrowLeft className="w-3.5 h-3.5" /> {language === "bn" ? "পিছনে" : "Back"}
         </Link>
         <div className="flex items-center gap-3 mb-10">
-          <img src={dukenLogo} alt="Duken" className="h-8 dark:invert" />
+          <img src={dukenLogo} alt="Dukan" className="h-8 dark:invert" />
           <span className="text-xs font-mono text-muted-foreground tracking-wider uppercase">{text.title}</span>
         </div>
 

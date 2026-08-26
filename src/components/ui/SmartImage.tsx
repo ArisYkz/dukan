@@ -125,7 +125,7 @@ const SmartImage = ({
           src={src}
           alt={alt}
           loading={loading}
-          fetchpriority={fetchPriority}
+          fetchPriority={fetchPriority}
           className={`absolute inset-0 w-full h-full object-${objectFit}`}
           style={{
             filter: status === "loaded" ? "blur(0)" : "blur(20px)",

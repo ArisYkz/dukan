@@ -6,7 +6,7 @@ import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useOrdersQuery } from "@/hooks/queries/useOrdersQuery";
 import { supabase } from "@/integrations/supabase/client";
 
-const STORE_ID_KEY = "duken_current_store_id";
+const STORE_ID_KEY = "dukan_current_store_id";
 
 /**
  * Custom hook for dashboard data (stores, products, orders).

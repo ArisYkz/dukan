@@ -128,7 +128,7 @@ describe("useCart", () => {
       result.current.addToCart(mockProduct);
     });
     
-    const stored = localStorage.getItem("duken_cart");
+    const stored = localStorage.getItem("dukan_cart");
     expect(stored).toBeTruthy();
     
     const parsed = JSON.parse(stored!);
@@ -139,7 +139,7 @@ describe("useCart", () => {
   it("loads cart from localStorage on initialization", () => {
     // Pre-populate localStorage
     const initialCart = [{ product: mockProduct, quantity: 2 }];
-    localStorage.setItem("duken_cart", JSON.stringify(initialCart));
+    localStorage.setItem("dukan_cart", JSON.stringify(initialCart));
     
     const { result } = renderHook(() => useCart());
     

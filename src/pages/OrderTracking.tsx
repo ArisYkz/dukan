@@ -22,7 +22,6 @@ interface OrderData {
   reference_code: string | null;
   promo_code: string | null;
   discount_amount: number | null;
-  kazpost_barcode: string | null;
   order_items: { product_name: string; quantity: number; product_price: number; product_id: string }[];
 }
 
@@ -74,8 +73,6 @@ const OrderTracking = () => {
   const [reviewedProducts, setReviewedProducts] = useState<Set<string>>(new Set());
   const [ratingInputs, setRatingInputs] = useState<Record<string, number>>({});
   const [submittingReview, setSubmittingReview] = useState<string | null>(null);
-  const [kazpostTracking, setKazpostTracking] = useState<any>(null);
-  const [kazpostLoading, setKazpostLoading] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval>>();
 
   const computeRemaining = useCallback((createdAt: string) => {
@@ -144,25 +141,6 @@ const OrderTracking = () => {
     }
     setLoading(false);
   };
-
-  // Load KazPost tracking data when order has a barcode
-  useEffect(() => {
-    if (!order?.kazpost_barcode) return;
-    let cancelled = false;
-    setKazpostLoading(true);
-    supabase.functions.invoke("kazpost-track", {
-      body: { barcode: order.kazpost_barcode },
-    }).then(({ data, error }) => {
-      if (cancelled) return;
-      setKazpostLoading(false);
-      if (error || data?.error) {
-        console.warn("KazPost tracking failed:", error || data?.error);
-        return;
-      }
-      setKazpostTracking(data);
-    });
-    return () => { cancelled = true; };
-  }, [order?.kazpost_barcode]);
 
   const handleSubmitReview = async (productId: string) => {
     if (!order) return;
@@ -318,7 +296,7 @@ const OrderTracking = () => {
             </Link>
           )}
           <footer className="pt-8">
-            <p className="text-xs text-muted-foreground font-mono">Duken · Astana, Kazakhstan</p>
+            <p className="text-xs text-muted-foreground font-mono">Dukan · Dhaka, Bangladesh</p>
           </footer>
         </div>
       </div>
@@ -403,55 +381,6 @@ const OrderTracking = () => {
                 </div>
               );
             })}
-          </motion.div>
-        )}
-
-        {/* KazPost tracking — shown when order has a barcode */}
-        {order.kazpost_barcode && (
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-            className="border border-border rounded-none p-4 space-y-3"
-          >
-            <div className="flex items-center justify-between">
-              <p className="font-mono text-xs tracking-[0.15em] uppercase text-muted-foreground">
-                {TRACKING?.KAZPOST_TRACKING || "KazPost Tracking"}
-              </p>
-              <span className="font-mono text-[10px] text-muted-foreground">{order.kazpost_barcode}</span>
-            </div>
-            {kazpostLoading ? (
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 border border-primary border-t-transparent rounded-full animate-spin" />
-                <span className="font-mono text-xs text-muted-foreground">Loading...</span>
-              </div>
-            ) : kazpostTracking?.responseCode === "0" ? (
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-muted-foreground">{TRACKING?.STATUS || "Status"}</span>
-                  <span className="font-medium">{kazpostTracking.status || "—"}</span>
-                </div>
-                {kazpostTracking.weight && (
-                  <div className="flex justify-between text-xs font-mono">
-                    <span className="text-muted-foreground">{TRACKING?.WEIGHT || "Weight"}</span>
-                    <span>{kazpostTracking.weight} kg</span>
-                  </div>
-                )}
-                {kazpostTracking.recipientCity && (
-                  <div className="flex justify-between text-xs font-mono">
-                    <span className="text-muted-foreground">{TRACKING?.DESTINATION || "Destination"}</span>
-                    <span>{kazpostTracking.recipientCity}{kazpostTracking.recipientIndex ? `, ${kazpostTracking.recipientIndex}` : ""}</span>
-                  </div>
-                )}
-                {kazpostTracking.declaredValue && (
-                  <div className="flex justify-between text-xs font-mono">
-                    <span className="text-muted-foreground">{TRACKING?.DECLARED_VALUE || "Declared value"}</span>
-                    <span>{Number(kazpostTracking.declaredValue).toLocaleString()} ৳</span>
-                  </div>
-                )}
-              </div>
-            ) : kazpostTracking ? (
-              <p className="font-mono text-xs text-muted-foreground">
-                {kazpostTracking.responseText || "Tracking data unavailable"}
-              </p>
-            ) : null}
           </motion.div>
         )}
 
@@ -650,36 +579,9 @@ const OrderTracking = () => {
         )}
 
         {/* Return barcode — shown when seller has issued a return label */}
-        {order.status === "returned" && order.kazpost_barcode && (
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
-            className="border border-destructive/30 bg-destructive/5 p-5 space-y-4"
-          >
-            <div className="flex items-center gap-2">
-              <Undo2 className="w-5 h-5 text-destructive" />
-              <p className="font-mono text-xs tracking-[0.15em] uppercase text-destructive font-bold">
-                {RETURNS?.RETURN_BARCODE_TITLE || "Return Barcode"}
-              </p>
-            </div>
-            <div className="bg-background border border-destructive/20 p-4 text-center">
-              <p className="font-mono text-2xl font-bold tracking-[0.15em] text-destructive select-all">
-                {order.kazpost_barcode}
-              </p>
-            </div>
-            <p className="font-mono text-xs text-muted-foreground leading-relaxed">
-              {RETURNS?.RETURN_BARCODE_INSTRUCTIONS || "Show this barcode at KazPost to return the item. The shipping cost is covered by the seller."}
-            </p>
-            <button
-              onClick={() => copyToClipboard(order.kazpost_barcode!, "Barcode")}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 border border-destructive/30 text-destructive text-xs tracking-wide uppercase rounded-none hover:bg-destructive/10 transition-colors font-mono"
-            >
-              <Copy className="w-3.5 h-3.5" />
-              {ACTIONS?.COPY_BARCODE || "Copy Barcode"}
-            </button>
-          </motion.div>
-        )}
 
         <footer className="text-center pt-4">
-          <p className="text-xs text-muted-foreground font-mono">Duken · Astana, Kazakhstan</p>
+          <p className="text-xs text-muted-foreground font-mono">Dukan · Dhaka, Bangladesh</p>
         </footer>
       </div>
 

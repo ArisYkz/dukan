@@ -73,7 +73,6 @@ const fakeOrder = {
   reference_code: null,
   promo_code: null,
   discount_amount: 0,
-  kazpost_barcode: null,
   order_items: [{ product_name: "Widget", quantity: 1, product_price: 5000 }],
 };
 

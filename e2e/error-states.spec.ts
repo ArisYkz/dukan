@@ -5,7 +5,7 @@ import { test, expect, type Page } from "@playwright/test";
 // ============================================================================
 // Tests that the app handles errors gracefully across all routes.
 // Uses baseURL from playwright.config.ts (default: http://localhost:8080)
-// for public routes, and http://localhost:8081 for authenticated routes.
+// for public routes, and http://localhost:8082 for authenticated routes.
 // ============================================================================
 
 // ---------------------------------------------------------------------------
@@ -15,7 +15,7 @@ import { test, expect, type Page } from "@playwright/test";
 async function login(page: Page) {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-  await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   // Scope to form to avoid tab button ambiguity
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
@@ -207,7 +207,7 @@ test.describe("Empty States (Unauthenticated)", () => {
 // AUTHENTICATED ERROR STATES
 // ============================================================================
 test.describe("Authenticated Error States", () => {
-  test.use({ baseURL: "http://localhost:8081" });
+  test.use({ baseURL: "http://localhost:8082" });
 
   test("authenticated access to /settings loads without error", async ({ page }) => {
     await login(page);

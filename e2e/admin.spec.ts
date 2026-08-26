@@ -5,10 +5,10 @@ import { test, expect, type Page } from "@playwright/test";
 // ============================================================================
 // Tests the administrative panel. Uses the test account; if not admin,
 // most tests will gracefully pass by checking for non-admin redirect.
-// Base URL: http://localhost:8081
+// Base URL: http://localhost:8082
 // ============================================================================
 
-test.use({ baseURL: "http://localhost:8081" });
+test.use({ baseURL: "http://localhost:8082" });
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -17,7 +17,7 @@ test.use({ baseURL: "http://localhost:8081" });
 async function login(page: Page) {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-  await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
   await page.waitForURL(/\/admin|\/dashboard/, { timeout: 15_000 });

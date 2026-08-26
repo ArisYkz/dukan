@@ -9,7 +9,7 @@ export default defineConfig({
   timeout: 30_000,
 
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:8081",
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:8082",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
@@ -25,7 +25,7 @@ export default defineConfig({
     ? undefined
     : {
         command: "npm run dev",
-        url: "http://localhost:8081",
+        url: "http://localhost:8082",
         reuseExistingServer: true,
         timeout: 30_000,
       },

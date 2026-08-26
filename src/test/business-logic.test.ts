@@ -109,7 +109,7 @@ describe("filterOrdersBySearch", () => {
   const mockOrders: OrderRow[] = [
     {
       id: "1", public_order_id: "Q-000001", customer_name: "Alice Smith",
-      customer_phone: "+7701***89", customer_address: "Astana", total_price: 5000,
+      customer_phone: "+8801***89", customer_address: "Dhaka", total_price: 5000,
       subtotal: 5000, tax_amount: 0, status: "new", created_at: "", updated_at: "",
       reference_code: null, promo_code: null, discount_amount: 0, order_items: [],
     },

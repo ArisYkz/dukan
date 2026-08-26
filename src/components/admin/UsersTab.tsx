@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAdminUsersQuery } from "@/hooks/queries/admin/useAdminUsersQuery";
 import { useAdminMutations } from "@/hooks/queries/admin/useAdminMutations";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Search, PenSquare, Loader2 } from "lucide-react";
-import { getStoreIinBin } from "@/services/bridgeService";
+import { Search, PenSquare } from "lucide-react";
 
 const PAGE_SIZE = 20;
 
@@ -24,10 +23,9 @@ interface EditDialogProps {
   profile: any;
   onClose: () => void;
   onSave: (userId: string, data: any) => void;
-  onVerifyChange: (storeId: string, status: string) => void;
 }
 
-const EditDialog = ({ profile, onClose, onSave, onVerifyChange }: EditDialogProps) => {
+const EditDialog = ({ profile, onClose, onSave }: EditDialogProps) => {
   const [planType, setPlanType] = useState(profile.plan_type || "free");
   const [subStatus, setSubStatus] = useState(profile.subscription_status || "none");
   const [role, setRole] = useState(profile.role || "user");
@@ -36,7 +34,6 @@ const EditDialog = ({ profile, onClose, onSave, onVerifyChange }: EditDialogProp
       ? new Date(profile.subscription_expiry).toISOString().slice(0, 10)
       : ""
   );
-  const [verifyStatus, setVerifyStatus] = useState(profile.store?.verification_status || "unverified");
 
   const handleSave = () => {
     onSave(profile.user_id, {
@@ -45,9 +42,6 @@ const EditDialog = ({ profile, onClose, onSave, onVerifyChange }: EditDialogProp
       role,
       subscription_expiry: expiryDate ? new Date(expiryDate).toISOString() : null,
     });
-    if (profile.store?.id && verifyStatus !== profile.store?.verification_status) {
-      onVerifyChange(profile.store.id, verifyStatus);
-    }
   };
 
   return (
@@ -100,18 +94,6 @@ const EditDialog = ({ profile, onClose, onSave, onVerifyChange }: EditDialogProp
               className="w-full border border-border bg-background px-3 py-2.5 font-mono text-xs outline-none focus:border-foreground/40 transition-colors" />
           </div>
 
-          {profile.store?.id && (
-            <div>
-              <label className="block font-mono text-[10px] tracking-[0.15em] uppercase text-muted-foreground mb-1.5">Verification</label>
-              <select value={verifyStatus} onChange={(e) => setVerifyStatus(e.target.value)}
-                className="w-full border border-border bg-background px-3 py-2.5 font-mono text-xs outline-none focus:border-foreground/40 transition-colors">
-                {[{ value: "unverified", label: "Unverified" }, { value: "verified", label: "Verified" }, { value: "mismatch", label: "Mismatch" }, { value: "suspended", label: "Suspended" }, { value: "manual_review", label: "Manual Review" }].map((opt) => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
-                ))}
-              </select>
-            </div>
-          )}
-
           <div className="flex gap-2 pt-2">
             <button onClick={handleSave}
               className="flex-1 bg-foreground text-background py-3 font-mono text-[10px] tracking-[0.2em] uppercase hover:opacity-90 transition-opacity">
@@ -133,37 +115,11 @@ const UsersTab = () => {
   const [page, setPage] = useState(0);
   const [editProfile, setEditProfile] = useState<any | null>(null);
   const { data, isLoading } = useAdminUsersQuery(search, page);
-  const { updateSub, updateVerification } = useAdminMutations();
+  const { updateSub } = useAdminMutations();
 
   const users = data?.users ?? [];
   const total = data?.count ?? 0;
   const totalPages = Math.ceil(total / PAGE_SIZE);
-  const [iinBinMap, setIinBinMap] = useState<Record<string, string | null>>({});
-  const [readingIinBins, setReadingIinBins] = useState(false);
-
-  // Fetch IIN/BIN from bridge for verified stores
-  useEffect(() => {
-    const verified = users
-      .map((u: any) => u.store)
-      .filter((s: any) => s?.verification_status === "verified");
-    if (verified.length === 0) return;
-
-    setReadingIinBins(true);
-    Promise.all(
-      verified.map(async (store: any) => {
-        try {
-          const bin = await getStoreIinBin(store.id);
-          return { storeId: store.id, iinBin: bin };
-        } catch {
-          return { storeId: store.id, iinBin: null };
-        }
-      }),
-    ).then((results) => {
-      const map: Record<string, string | null> = {};
-      results.forEach((r) => { map[r.storeId] = r.iinBin; });
-      setIinBinMap((prev) => ({ ...prev, ...map }));
-    }).finally(() => setReadingIinBins(false));
-  }, [users]);
 
   const handleSave = (userId: string, updates: any) => {
     const expiry = updates.subscription_expiry
@@ -171,10 +127,6 @@ const UsersTab = () => {
       : null;
     updateSub.mutate({ userId, data: { ...updates, subscription_expiry: expiry } });
     setEditProfile(null);
-  };
-
-  const handleVerifyChange = (storeId: string, status: string) => {
-    updateVerification.mutate({ storeId, status });
   };
 
   const statusBadge = (status: string) => {
@@ -186,8 +138,6 @@ const UsersTab = () => {
     };
     return map[status] ?? "bg-gray-500/10 text-gray-500";
   };
-
-  const verifyBadge = () => "bg-green-500/10 text-green-500";
 
   const planBadge = (plan: string) => {
     if (plan === "pro_month" || plan === "pro_year") return "bg-foreground/10 text-foreground";
@@ -213,8 +163,6 @@ const UsersTab = () => {
             <tr className="border-b border-border bg-muted/30">
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Store</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Email</th>
-              <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">БИН/ИИН</th>
-              <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Verified</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Plan</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Status</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Expires</th>
@@ -225,12 +173,12 @@ const UsersTab = () => {
             {isLoading ? (
               Array.from({ length: 5 }).map((_, i) => (
                 <tr key={i} className="border-b border-border">
-                  <td colSpan={8} className="px-4 py-3"><Skeleton className="h-4 w-full" /></td>
+                  <td colSpan={6} className="px-4 py-3"><Skeleton className="h-4 w-full" /></td>
                 </tr>
               ))
             ) : users.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-4 py-8 text-center text-muted-foreground text-xs">No users found</td>
+                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground text-xs">No users found</td>
               </tr>
             ) : (
               users.map((u: any) => (
@@ -240,20 +188,6 @@ const UsersTab = () => {
                   </td>
                   <td className="px-4 py-3 font-mono text-[10px] text-muted-foreground">
                     {u.email || "—"}
-                  </td>
-                  <td className="px-4 py-3 font-mono text-[10px] text-muted-foreground">
-                    {u.store?.verification_status === "verified"
-                      ? (iinBinMap[u.store.id] ?? <Loader2 className="w-3 h-3 animate-spin inline-block" />)
-                      : "—"}
-                  </td>
-                  <td className="px-4 py-3">
-                    {u.store?.verification_status === "verified" ? (
-                      <span className={`inline-block px-2 py-0.5 rounded-sm text-[10px] uppercase tracking-wider ${verifyBadge()}`}>
-                        Verified
-                      </span>
-                    ) : (
-                      <span className="font-mono text-[10px] text-muted-foreground">—</span>
-                    )}
                   </td>
                   <td className="px-4 py-3">
                     {u.plan_type === "pro_month" || u.plan_type === "pro_year" ? (
@@ -299,7 +233,7 @@ const UsersTab = () => {
       )}
 
       {editProfile && (
-        <EditDialog profile={editProfile} onClose={() => setEditProfile(null)} onSave={handleSave} onVerifyChange={handleVerifyChange} />
+        <EditDialog profile={editProfile} onClose={() => setEditProfile(null)} onSave={handleSave} />
       )}
     </div>
   );

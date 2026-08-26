@@ -24,7 +24,7 @@ const QrMarketingCard = ({ storeSlug, storeName, isPro, onUpgrade }: QrMarketing
 
   const hasSlug = storeSlug.length > 0;
   const canToggle = isPro && hasSlug;
-  const storeUrl = `https://duken.com.kz/s/${storeSlug}`;
+  const storeUrl = `https://dukan.example.com/s/${storeSlug}`;
 
   const handleSwitchClick = () => {
     if (!hasSlug) return; // tooltip handles messaging
@@ -136,7 +136,7 @@ const QrMarketingCard = ({ storeSlug, storeName, isPro, onUpgrade }: QrMarketing
                 {/* Logo */}
                 <img
                   src={dukenLogo}
-                  alt="Duken"
+                  alt="Dukan"
                   className="h-5 object-contain opacity-80"
                   style={{ filter: "grayscale(100%)" }}
                 />

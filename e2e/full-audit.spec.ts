@@ -8,11 +8,11 @@ import { test, expect, type Page } from "@playwright/test";
 //   npx playwright test e2e/full-audit.spec.ts               # headless
 //   npx playwright test e2e/full-audit.spec.ts -g "Auth"    # filter by name
 //
-// Test account: playwright-test@duken.com / TestPass123!
-// Base URL:     http://localhost:8081
+// Test account: playwright-test@dukan.com / TestPass123!
+// Base URL:     http://localhost:8082
 // ============================================================================
 
-test.use({ baseURL: "http://localhost:8081" });
+test.use({ baseURL: "http://localhost:8082" });
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -22,7 +22,7 @@ async function login(page: Page) {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
 
-  await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
 

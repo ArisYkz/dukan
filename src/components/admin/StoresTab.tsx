@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAdminStoresQuery } from "@/hooks/queries/admin/useAdminStoresQuery";
 import { useAdminMutations } from "@/hooks/queries/admin/useAdminMutations";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Search, Ban, CheckCircle, Pause, Play, Package, ShoppingCart, X, ExternalLink } from "lucide-react";
+import { Search, Ban, CheckCircle, Pause, Play, Package, ShoppingCart, X } from "lucide-react";
 import { fetchStoreProducts, fetchStoreOrders } from "@/services/adminService";
 import { formatPrice } from "@/lib/format";
 
@@ -28,17 +28,6 @@ const StoresTab = ({ onSelectStore }: StoresTabProps) => {
   const total = data?.count ?? 0;
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
-  const statusBadge = (status: string) => {
-    const map: Record<string, string> = {
-      unverified: "bg-gray-500/10 text-gray-500",
-      verified: "bg-green-500/10 text-green-500",
-      mismatch: "bg-red-500/10 text-red-500",
-      suspended: "bg-yellow-500/10 text-yellow-500",
-      manual_review: "bg-blue-500/10 text-blue-500",
-    };
-    return map[status] ?? "bg-gray-500/10 text-gray-500";
-  };
-
   return (
     <div className="space-y-4">
       <div className="relative">
@@ -58,7 +47,6 @@ const StoresTab = ({ onSelectStore }: StoresTabProps) => {
             <tr className="border-b border-border bg-muted/30">
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Store</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Slug</th>
-              <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Verify</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Status</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Paused</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Actions</th>
@@ -68,12 +56,12 @@ const StoresTab = ({ onSelectStore }: StoresTabProps) => {
             {isLoading ? (
               Array.from({ length: 5 }).map((_, i) => (
                 <tr key={i} className="border-b border-border">
-                  <td colSpan={6} className="px-4 py-3"><Skeleton className="h-4 w-full" /></td>
+                  <td colSpan={5} className="px-4 py-3"><Skeleton className="h-4 w-full" /></td>
                 </tr>
               ))
             ) : stores.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground text-xs">No stores found</td>
+                <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground text-xs">No stores found</td>
               </tr>
             ) : (
               stores.map((s: any) => (
@@ -84,11 +72,6 @@ const StoresTab = ({ onSelectStore }: StoresTabProps) => {
                     </button>
                   </td>
                   <td className="px-4 py-3 font-mono text-[10px] text-muted-foreground">/{s.slug}</td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-0.5 rounded-sm text-[10px] uppercase tracking-wider ${statusBadge(s.verification_status)}`}>
-                      {s.verification_status}
-                    </span>
-                  </td>
                   <td className="px-4 py-3">
                     <span className={`inline-block px-2 py-0.5 rounded-sm text-[10px] uppercase tracking-wider ${s.subscription_status === "banned" ? "bg-red-500/10 text-red-500" : "bg-green-500/10 text-green-500"}`}>
                       {s.subscription_status}
@@ -258,20 +241,6 @@ const StoresTab = ({ onSelectStore }: StoresTabProps) => {
                         <td className="px-3 py-2.5 font-mono text-[10px] text-muted-foreground">{o.customer_name || o.customer_phone || "—"}</td>
                         <td className="px-3 py-2.5 font-mono text-[10px] text-muted-foreground">
                           {new Date(o.created_at).toLocaleDateString()}
-                        </td>
-                        <td className="px-3 py-2.5">
-                          {o.kazpost_barcode ? (
-                            <a
-                              href={`/track/${o.kazpost_barcode}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-[10px] font-mono text-primary hover:underline"
-                            >
-                              Track <ExternalLink className="w-3 h-3" />
-                            </a>
-                          ) : (
-                            <span className="text-[10px] text-muted-foreground">—</span>
-                          )}
                         </td>
                       </tr>
                     ))}

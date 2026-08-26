@@ -52,7 +52,7 @@ export const fetchStoreProducts = async (storeId: string) => {
 export const fetchStoreOrders = async (storeId: string) => {
   const { data, error } = await supabase
     .from("orders")
-    .select("id, public_order_id, status, total_price, customer_name, customer_phone, created_at, kazpost_barcode")
+    .select("id, public_order_id, status, total_price, customer_name, customer_phone, created_at")
     .eq("store_id", storeId)
     .order("created_at", { ascending: false });
   if (error) throw error;
@@ -93,7 +93,7 @@ export const fetchUsersWithStores = async (search: string, page: number) => {
 
   const { data: stores, error: storesErr } = await supabase
     .from("stores")
-    .select("id, name, slug, verification_status, verified_at, user_id")
+    .select("id, name, slug, user_id")
     .in("user_id", userIds);
   if (storesErr) throw storesErr;
 
@@ -180,14 +180,6 @@ export const adminUpdateSubscription = async (userId: string, data: {
   subscription_screenshot_url?: string | null;
 }) => {
   const { error } = await supabase.from("profiles").update(data).eq("user_id", userId);
-  if (error) throw error;
-};
-
-export const adminUpdateStoreVerification = async (storeId: string, verificationStatus: string) => {
-  const { error } = await supabase
-    .from("stores")
-    .update({ verification_status: verificationStatus })
-    .eq("id", storeId);
   if (error) throw error;
 };
 

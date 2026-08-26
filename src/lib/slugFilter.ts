@@ -22,7 +22,7 @@ const BLOCKED_WORDS: string[] = [
   "qoqys", "mambet", "mambetai",
 
   // ── Brand protection ──
-  "duken", "admin", "support", "help", "login", "signup",
+  "dukan", "admin", "support", "help", "login", "signup",
   "dashboard", "api", "auth", "settings", "account",
 ];
 

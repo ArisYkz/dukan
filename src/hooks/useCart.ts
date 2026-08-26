@@ -18,7 +18,7 @@ export interface CartItem {
   variantPriceAdjustment?: number;
 }
 
-const CART_STORAGE_KEY = "duken_cart";
+const CART_STORAGE_KEY = "dukan_cart";
 
 /**
  * Custom hook for cart management with localStorage persistence.

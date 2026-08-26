@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link2, MessageCircle, Archive, Loader2, ChevronDown, Save, Sparkles, XCircle } from "lucide-react";
+import { Link2, MessageCircle, Archive, Loader2, ChevronDown } from "lucide-react";
 import type { OrderRow } from "@/types/store";
 import { formatPrice, statusColor } from "@/lib/format";
 import { useLabels } from "@/hooks/useLabels";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 interface OrderCardProps {
@@ -21,22 +20,10 @@ const OrderCard = React.memo(({ order, variant, onStatusChange, onCancelConfirm,
   const { STATUS_LABELS, STATUS_TOOLTIPS } = useLabels();
   const [processing, setProcessing] = useState(false);
   const [statusOpen, setStatusOpen] = useState(false);
-  const [kazpostInput, setKazpostInput] = useState(order.kazpost_barcode || "");
-  const [savingBarcode, setSavingBarcode] = useState(false);
-  const [kazpostEnabled, setKazpostEnabled] = useState(false);
-  const [generatingBarcode, setGeneratingBarcode] = useState(false);
   const statusRef = useRef<HTMLDivElement>(null);
   const lastActionRef = React.useRef(0);
   const isArchived = variant === "archived";
   const isMuted = ["cancelled", "payment_rejected"].includes(order.status);
-
-  // Check if KazPost is configured for this store
-  useEffect(() => {
-    if (!order.store_id) return;
-    supabase.rpc("check_store_has_kazpost_key", { p_store_id: order.store_id })
-      .then(({ data }) => setKazpostEnabled(!!data))
-      .catch(() => {});
-  }, [order.store_id]);
 
   // Close status dropdown on click outside
   useEffect(() => {
@@ -240,101 +227,6 @@ const OrderCard = React.memo(({ order, variant, onStatusChange, onCancelConfirm,
         )}
       </div>
 
-      {/* Barcode section */}
-      {!isArchived && ["paid_confirmed", "shipped", "delivered"].includes(order.status) && (
-        <div className="mt-2 md:mt-3 flex items-center gap-2">
-          <span className="text-xs font-mono tracking-wider uppercase text-muted-foreground/50">KazPost</span>
-          {order.kazpost_barcode ? (
-            <>
-              <span className="text-xs font-mono text-muted-foreground">
-                {order.kazpost_barcode}
-              </span>
-              {kazpostEnabled && (
-                <button
-                  disabled={generatingBarcode}
-                  onClick={async () => {
-                    if (!confirm("Cancel this KazPost barcode?")) return;
-                    setGeneratingBarcode(true);
-                    const { data, error } = await supabase.functions.invoke("kazpost-cancel", {
-                      body: { orderId: order.id },
-                    });
-                    setGeneratingBarcode(false);
-                    if (error || data?.error) {
-                      toast.error(data?.error || "Failed to cancel barcode");
-                    } else {
-                      toast.success("Barcode cancelled");
-                      setKazpostInput("");
-                    }
-                  }}
-                  className="p-0.5 text-destructive/60 hover:text-destructive transition-colors disabled:opacity-30"
-                  title="Cancel KazPost barcode"
-                >
-                  <XCircle className="w-3 h-3" />
-                </button>
-              )}
-            </>
-          ) : (
-            <>
-              <input
-                value={kazpostInput}
-                onChange={(e) => setKazpostInput(e.target.value)}
-                placeholder="AP..."
-                className="w-24 h-6 text-xs font-mono px-1.5 border border-border bg-background rounded-none focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && kazpostInput.trim()) {
-                    const el = e.currentTarget.parentElement?.querySelector("button");
-                    el?.click();
-                  }
-                }}
-              />
-              <button
-                disabled={savingBarcode || !kazpostInput.trim()}
-                onClick={async () => {
-                  const val = kazpostInput.trim();
-                  if (!val) return;
-                  setSavingBarcode(true);
-                  const { error } = await supabase
-                    .from("orders")
-                    .update({ kazpost_barcode: val })
-                    .eq("id", order.id);
-                  setSavingBarcode(false);
-                  if (error) {
-                    toast.error("Failed to save barcode");
-                  } else {
-                    toast.success("Barcode saved");
-                  }
-                }}
-                className="p-1 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30"
-                title="Save KazPost barcode"
-              >
-                <Save className="w-3 h-3" />
-              </button>
-              {kazpostEnabled && (
-                <button
-                  disabled={generatingBarcode}
-                  onClick={async () => {
-                    setGeneratingBarcode(true);
-                    const { data, error } = await supabase.functions.invoke("kazpost-generate", {
-                      body: { orderId: order.id },
-                    });
-                    setGeneratingBarcode(false);
-                    if (error || data?.error) {
-                      toast.error(data?.error || "Failed to generate barcode");
-                    } else {
-                      toast.success("Barcode generated: " + data.barcode);
-                      setKazpostInput(data.barcode);
-                    }
-                  }}
-                  className="p-1 text-[hsl(200,60%,50%)] hover:text-[hsl(200,70%,40%)] transition-colors disabled:opacity-30"
-                  title="Generate via KazPost"
-                >
-                  <Sparkles className={`w-3 h-3 ${generatingBarcode ? "animate-pulse" : ""}`} />
-                </button>
-              )}
-            </>
-          )}
-        </div>
-      )}
     </motion.div>
   );
 });

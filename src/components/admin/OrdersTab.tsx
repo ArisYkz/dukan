@@ -66,7 +66,6 @@ const OrdersTab = () => {
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Customer</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Total</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Status</th>
-              <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">KazPost</th>
               <th className="text-left px-4 py-2 text-[10px] tracking-wider uppercase text-muted-foreground">Date</th>
             </tr>
           </thead>
@@ -74,12 +73,12 @@ const OrdersTab = () => {
             {isLoading ? (
               Array.from({ length: 5 }).map((_, i) => (
                 <tr key={i} className="border-b border-border">
-                  <td colSpan={7} className="px-4 py-3"><Skeleton className="h-4 w-full" /></td>
+                  <td colSpan={6} className="px-4 py-3"><Skeleton className="h-4 w-full" /></td>
                 </tr>
               ))
             ) : orders.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground text-xs">No orders found</td>
+                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground text-xs">No orders found</td>
               </tr>
             ) : (
               orders.map((o: any) => (
@@ -92,9 +91,6 @@ const OrdersTab = () => {
                     <span className={`inline-block px-2 py-0.5 rounded-sm text-[10px] uppercase tracking-wider ${statusBadge(o.status)}`}>
                       {o.status}
                     </span>
-                  </td>
-                  <td className="px-4 py-3 font-mono text-[10px] text-muted-foreground">
-                    {o.kazpost_barcode || "—"}
                   </td>
                   <td className="px-4 py-3 font-mono text-[10px] text-muted-foreground">
                     {new Date(o.created_at).toLocaleDateString()}

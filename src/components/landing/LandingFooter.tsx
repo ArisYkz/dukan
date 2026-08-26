@@ -16,16 +16,16 @@ const LandingFooter = () => {
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="text-center md:text-left">
-            <img src={dukenLogo} alt="Duken" className="h-7 dark:invert" />
-            <p className="font-body text-xs mt-1" style={{ color: "hsl(var(--footer-fg) / 0.6)" }}>Made with ❤️ in Astana, Kazakhstan</p>
+            <img src={dukenLogo} alt="Dukan" className="h-7 dark:invert" />
+            <p className="font-body text-xs mt-1" style={{ color: "hsl(var(--footer-fg) / 0.6)" }}>Made with ❤️ in Dhaka, Bangladesh</p>
             <p className="font-mono text-[10px] tracking-wider mt-1 uppercase" style={{ color: "hsl(var(--footer-fg) / 0.4)" }}>Your brand, your link, anywhere.</p>
           </div>
           <nav className="flex items-center gap-8">
             <a href="/auth" className="font-mono text-xs tracking-wider transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}>{LANDING.LOGIN}</a>
             <a href="/auth" className="font-mono text-xs tracking-wider transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}>{LANDING.SIGN_UP}</a>
             <div className="flex items-center gap-3">
-              <a href="https://instagram.com/duken.kz" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><Instagram className="w-4 h-4" /></a>
-              <a href="https://tiktok.com/@duken.kz" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><TikTokIcon className="w-4 h-4" /></a>
+              <a href="https://instagram.com/dukan.example.com" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><Instagram className="w-4 h-4" /></a>
+              <a href="https://tiktok.com/@dukan.example.com" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><TikTokIcon className="w-4 h-4" /></a>
             </div>
           </nav>
         </div>

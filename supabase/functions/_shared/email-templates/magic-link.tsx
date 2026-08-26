@@ -22,28 +22,22 @@ interface MagicLinkEmailProps {
 export const MagicLinkEmail = ({
   confirmationUrl,
 }: MagicLinkEmailProps) => (
-  <Html lang="kk" dir="ltr">
+  <Html lang="en" dir="ltr">
     <Head />
-    <Preview>🇰🇿 Кіру сілтемесі / 🇷🇺 Ссылка для входа — Duken</Preview>
+    <Preview>Your sign-in link — Dukan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKEN</Text>
-        <Text style={localeLabel}>🇰🇿 ҚАЗАҚША</Text>
-        <Heading style={title}>Сәлем!</Heading>
-        <Text style={text}>Жүйеге кіру үшін төмендегі батырманы басыңыз:</Text>
+        <Text style={brandLabel}>DUKAN</Text>
+        <Heading style={title}>Hello!</Heading>
+        <Text style={text}>Click the button below to sign in to your account:</Text>
         <Hr style={divider} />
-        <Text style={localeLabel}>🇷🇺 РУССКИЙ</Text>
-        <Heading style={title}>Здравствуйте!</Heading>
-        <Text style={text}>Нажмите кнопку ниже, чтобы войти в систему:</Text>
         <div style={buttonWrap}>
           <Button style={button} href={confirmationUrl}>
-            Кіру / Войти
+            Sign in
           </Button>
         </div>
         <Text style={footer}>
-          Егер сіз бұл сұранымды жібермесеңіз, бұл хатты елемеуіңізге болады.
-          <br />
-          Если вы не отправляли этот запрос, просто проигнорируйте это письмо.
+          If you did not request this, you can safely ignore this email.
         </Text>
       </Container>
     </Body>
@@ -55,7 +49,6 @@ export default MagicLinkEmail
 const main = { backgroundColor: '#ffffff', fontFamily: "'Manrope', Arial, sans-serif", margin: 0, padding: '32px 0' }
 const container = { border: '1px solid hsl(40 18% 86%)', borderRadius: '4px', maxWidth: '560px', padding: '40px' }
 const brandLabel = { color: 'hsl(28 45% 42%)', fontSize: '12px', letterSpacing: '0.18em', margin: '0 0 24px', textAlign: 'center' as const }
-const localeLabel = { color: 'hsl(28 45% 42%)', fontSize: '12px', letterSpacing: '0.1em', margin: '0 0 8px' }
 const title = { color: 'hsl(0 0% 15%)', fontFamily: "'Playfair Display', Georgia, serif", fontSize: '24px', fontWeight: 500, margin: '0 0 12px' }
 const text = {
   fontSize: '14px',

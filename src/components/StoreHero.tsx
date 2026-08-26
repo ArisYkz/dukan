@@ -23,7 +23,7 @@ const StoreHero = ({ store }: StoreHeroProps) => {
               alt={store.hero_title || "Store banner"}
               className="w-full h-auto"
               loading="eager"
-              fetchpriority="high"
+              fetchPriority="high"
             />
           </div>
           <div

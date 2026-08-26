@@ -103,33 +103,6 @@ const ManualOrderForm = ({ products, storeId, onClose, onCreated }: ManualOrderF
         customer_phone: customerPhone.trim(),
       } as Database["public"]["Tables"]["order_contacts"]["Insert"]);
 
-      // Forward order PII to Hoster.kz bridge (data-localization compliance, non-blocking)
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (!session?.access_token) return;
-        fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/store-pii`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session.access_token}`,
-          },
-          body: JSON.stringify({
-            storeId,
-            orderPii: {
-              orderId: order.id,
-              customerName: customerName.trim(),
-              customerPhone: customerPhone.trim(),
-              customerAddress: customerAddress.trim(),
-            }
-          }),
-        }).then(async (res) => {
-          if (!res.ok) {
-            const body = await res.text().catch(() => "");
-            console.warn(`[manual-order] store-pii failed: ${res.status} ${body}`);
-          }
-        }).catch((err) => {
-          console.warn("[manual-order] store-pii network error:", err);
-        });
-      });
       // Contact insert may fail silently (RLS), that's ok for manual orders
 
       toast.success(`${MANUAL_ORDER.SUCCESS} ${order.public_order_id}`);
@@ -164,7 +137,7 @@ const ManualOrderForm = ({ products, storeId, onClose, onCreated }: ManualOrderF
           </div>
           <div>
             <label className="text-sm tracking-[0.15em] uppercase text-muted-foreground mb-1.5 block">{MANUAL_ORDER.CUSTOMER_PHONE}</label>
-            <input value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} placeholder="+7 777 123 4567" className="w-full border border-border bg-transparent px-3 py-2.5 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-ring" required />
+            <input value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} placeholder="+880 1XXX-XXXXXX" className="w-full border border-border bg-transparent px-3 py-2.5 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-ring" required />
           </div>
           <div>
             <label className="text-sm tracking-[0.15em] uppercase text-muted-foreground mb-1.5 block">{MANUAL_ORDER.CUSTOMER_ADDRESS}</label>

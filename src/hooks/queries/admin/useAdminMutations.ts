@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { banStore, unbanStore, toggleStorePause, adminUpdateSubscription, adminRejectSubscription, adminUpdateStoreVerification } from "@/services/adminService";
+import { banStore, unbanStore, toggleStorePause, adminUpdateSubscription, adminRejectSubscription } from "@/services/adminService";
 import { toast } from "sonner";
 
 export const useAdminMutations = () => {
@@ -44,12 +44,5 @@ export const useAdminMutations = () => {
     onError: (e: Error) => toast.error(e.message),
   });
 
-  const updateVerification = useMutation({
-    mutationFn: ({ storeId, status }: { storeId: string; status: string }) =>
-      adminUpdateStoreVerification(storeId, status),
-    onSuccess: () => { toast.success("Verification status updated"); qc.invalidateQueries({ queryKey: ["admin-users"] }); },
-    onError: (e: Error) => toast.error(e.message),
-  });
-
-  return { ban, unban, togglePause, updateSub, rejectSub, updateVerification };
+  return { ban, unban, togglePause, updateSub, rejectSub };
 };

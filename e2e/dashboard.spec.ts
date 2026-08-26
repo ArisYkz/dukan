@@ -3,11 +3,11 @@ import { test, expect, type Page } from "@playwright/test";
 // ============================================================================
 // Duken Dashboard — Functional Test Suite
 // ============================================================================
-// Test account: playwright-test@duken.com / TestPass123!
-// Base URL:     http://localhost:8081
+// Test account: playwright-test@dukan.com / TestPass123!
+// Base URL:     http://localhost:8082
 // ============================================================================
 
-test.use({ baseURL: "http://localhost:8081" });
+test.use({ baseURL: "http://localhost:8082" });
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -17,7 +17,7 @@ async function login(page: Page) {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
 
-  await page.locator('input[type="email"]').fill("playwright-test@duken.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
 
@@ -424,42 +424,6 @@ test.describe("Dashboard — Settings Navigation", () => {
     await page.waitForLoadState("networkidle");
     const heading = page.getByText(/settings|настройки|параметрлер/i).first();
     await expect(heading).toBeVisible({ timeout: 5_000 });
-  });
-});
-
-// ============================================================================
-// DASHBOARD — KAZPOST SETTINGS
-// ============================================================================
-test.describe("Dashboard — KazPost Settings", () => {
-  test.beforeEach(async ({ page }) => {
-    await login(page);
-    // Navigate to branding tab where KazPost section lives
-    await goToDashboardTab(page, /branding|брендинг|бренд/i);
-  });
-
-  test("KazPost settings section is present on branding tab", async ({ page }) => {
-    await page.waitForLoadState("networkidle");
-    const kazpostSection = page.getByText(/kazpost|казпочта|почта/i).first();
-    await expect(kazpostSection).toBeVisible({ timeout: 5_000 }).catch(() => {});
-  });
-
-  test("KazPost section has API key input", async ({ page }) => {
-    await page.waitForLoadState("networkidle");
-    const apiKeyInput = page.locator('input[placeholder*="API"], input[maxlength="32"]').first();
-    await expect(apiKeyInput).toBeVisible({ timeout: 5_000 }).catch(() => {});
-  });
-
-  test("KazPost sender address fields are present", async ({ page }) => {
-    await page.waitForLoadState("networkidle");
-    const addressFields = page.locator('input:not([type="hidden"])');
-    const count = await addressFields.count();
-    expect(count).toBeGreaterThan(0);
-  });
-
-  test("KazPost save configuration button is present", async ({ page }) => {
-    await page.waitForLoadState("networkidle");
-    const saveConfigBtn = page.getByRole("button", { name: /save config|сохранить/i }).last();
-    await expect(saveConfigBtn).toBeVisible({ timeout: 5_000 }).catch(() => {});
   });
 });
 

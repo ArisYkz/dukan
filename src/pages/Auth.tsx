@@ -74,7 +74,7 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email: loginEmail, password: loginPassword, options: { shouldCreateSession: rememberMe } });
+      const { data, error } = await supabase.auth.signInWithPassword({ email: loginEmail, password: loginPassword });
       if (error) throw error;
 
       const userId = data.session?.user?.id;
@@ -163,7 +163,7 @@ const Auth = () => {
           >
             <img
               src={dukenLogo}
-              alt="Duken"
+              alt="Dukan"
               className="h-12 max-w-[120px] object-contain dark:invert"
             />
           </motion.div>

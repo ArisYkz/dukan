@@ -24,37 +24,27 @@ interface SignupEmailProps {
 export const SignupEmail = ({
   confirmationUrl,
 }: SignupEmailProps) => (
-  <Html lang="kk" dir="ltr">
+  <Html lang="en" dir="ltr">
     <Head />
-    <Preview>🇰🇿 Поштаны растау / 🇷🇺 Подтвердить почту — Duken</Preview>
+    <Preview>Confirm your email — Dukan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKEN</Text>
-        <Text style={localeLabel}>🇰🇿 ҚАЗАҚША</Text>
-        <Heading style={title}>Сәлем!</Heading>
+        <Text style={brandLabel}>DUKAN</Text>
+        <Heading style={title}>Hello!</Heading>
         <Text style={text}>
-          Duken-ге қош келдіңіз! Тіркелуді аяқтау үшін поштаңызды растауыңызды сұраймыз:
+          Welcome to Dukan! To finish setting up your store, please confirm your email address:
         </Text>
 
         <Hr style={divider} />
 
-        <Text style={localeLabel}>🇷🇺 РУССКИЙ</Text>
-        <Heading style={title}>Здравствуйте!</Heading>
-        <Text style={text}>
-          Добро пожаловать в Duken. Чтобы запустить свой магазин, нажмите на
-          кнопку ниже и подтвердите свой адрес электронной почты:
-        </Text>
-
         <div style={buttonWrap}>
           <Button style={button} href={confirmationUrl}>
-            Поштаны растау / Подтвердить почту
+            Confirm email
           </Button>
         </div>
 
         <Text style={footer}>
-          Егер сіз бұл сұранымды жібермесеңіз, бұл хатты елемеуіңізге болады.
-          <br />
-          Если вы не отправляли этот запрос, просто проигнорируйте это письмо.
+          If you did not request this, you can safely ignore this email.
         </Text>
       </Container>
     </Body>
@@ -81,12 +71,6 @@ const brandLabel = {
   letterSpacing: '0.18em',
   margin: '0 0 24px',
   textAlign: 'center' as const,
-}
-const localeLabel = {
-  color: 'hsl(28 45% 42%)',
-  fontSize: '12px',
-  letterSpacing: '0.1em',
-  margin: '0 0 8px',
 }
 const title = {
   color: 'hsl(0 0% 15%)',

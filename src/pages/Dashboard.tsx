@@ -29,7 +29,6 @@ import OrdersTab from "@/components/dashboard/OrdersTab";
 import ArchiveTab from "@/components/dashboard/ArchiveTab";
 import BannedScreen from "@/components/dashboard/BannedScreen";
 import StoreCreationForm from "@/components/dashboard/StoreCreationForm";
-import VerificationBanner from "@/components/dashboard/VerificationBanner";
 import ConfirmModal from "@/components/dashboard/ConfirmModal";
 import ManualOrderForm from "@/components/dashboard/ManualOrderForm";
 import UpgradeModal from "@/components/dashboard/UpgradeModal";
@@ -309,11 +308,6 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Verification banner */}
-          {store.verification_status !== "verified" && (
-            <VerificationBanner verificationStatus={store.verification_status} />
-          )}
-
           {/* Under review banner */}
           {(store.report_count ?? 0) >= 5 && !store.is_verified && (
             <div className="border-b border-border">
@@ -355,7 +349,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                   ) : (
-                    <ProductsTab products={products} productImages={productImages} storeId={store.id} userId={user.id} isPro={isPro} isPaused={!isPro && store.is_paused} isVerificationBlocked={store.verification_status === "mismatch" || store.verification_status === "suspended"} verificationStatus={store.verification_status} onShowUpgrade={() => setShowUpgradeModal(true)} onReload={reload} onDeleteConfirm={setDeleteConfirmId} />
+                    <ProductsTab products={products} productImages={productImages} storeId={store.id} userId={user.id} isPro={isPro} isPaused={!isPro && store.is_paused} isVerificationBlocked={false} verificationStatus={null} onShowUpgrade={() => setShowUpgradeModal(true)} onReload={reload} onDeleteConfirm={setDeleteConfirmId} />
                   )
                 )}
 

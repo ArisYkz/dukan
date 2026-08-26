@@ -577,7 +577,7 @@ const en: TranslationMap = {
   MISC: {
     DAY_NAMES: "Sun,Mon,Tue,Wed,Thu,Fri,Sat",
     MONTH_NAMES: "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec",
-    CSV_HEADERS: "Order ID,Store,Name,Phone,Address,Items,Subtotal,Discount,Promo Code,Tax Rate (%),Tax Paid,Total,Status,KazPost Barcode,Reference Code,Date",
+    CSV_HEADERS: "Order ID,Store,Name,Phone,Address,Items,Subtotal,Discount,Promo Code,Tax Rate (%),Tax Paid,Total,Status,Reference Code,Date",
     COLOR_PRESETS: "Black,White,Gray,Beige,Brown,Blue,Red",
   },
 };
@@ -1155,7 +1155,7 @@ const bn: TranslationMap = {
   MISC: {
     DAY_NAMES: "রবি,সোম,মঙ্গল,বুধ,বৃহঃ,শুক্র,শনি",
     MONTH_NAMES: "জান,ফেব্রু,মার্চ,এপ্রিল,মে,জুন,জুলাই,আগস্ট,সেপ্ট,অক্টো,নভে,ডিসে",
-    CSV_HEADERS: "Order ID,Store,Name,Phone,Address,Items,Subtotal,Discount,Promo Code,Tax Rate (%),Tax Paid,Total,Status,KazPost Barcode,Reference Code,Date",
+    CSV_HEADERS: "Order ID,Store,Name,Phone,Address,Items,Subtotal,Discount,Promo Code,Tax Rate (%),Tax Paid,Total,Status,Reference Code,Date",
     COLOR_PRESETS: "কালো,সাদা,ধূসর,বেইজ,বাদামি,নীল,লাল",
   },
 };

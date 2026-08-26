@@ -1,15 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
-import { ArrowLeft, Mail, Lock, Globe, Shield, CheckCircle, Clock, Loader2 } from "lucide-react";
+import { ArrowLeft, Mail, Lock, Globe } from "lucide-react";
 import { useLabels } from "@/hooks/useLabels";
 import { useLanguage, type Language } from "@/contexts/LanguageContext";
 import { validatePassword, isPasswordValid, PasswordRulesChecklist, type PasswordRules } from "@/lib/passwordValidation";
-import { getStoreIinBin } from "@/services/bridgeService";
 import ThemeToggle from "@/components/ThemeToggle";
-import VerificationOnboarding from "@/components/dashboard/VerificationOnboarding";
 
 const LANG_OPTIONS: { value: Language; label: string; name: string }[] = [
   { value: "bn", label: "BN", name: "বাংলা" },
@@ -17,7 +15,7 @@ const LANG_OPTIONS: { value: Language; label: string; name: string }[] = [
 ];
 
 export default function Settings() {
-  const { AUTH, ACTIONS, SETTINGS: S, ERRORS, VERIFICATION } = useLabels();
+  const { AUTH, ACTIONS, SETTINGS: S, ERRORS } = useLabels();
   const { language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -30,11 +28,8 @@ export default function Settings() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordRules, setPasswordRules] = useState<PasswordRules>({ minLength: false, hasUppercase: false, hasDigit: false });
   const [updatingPassword, setUpdatingPassword] = useState(false);
-  const [store, setStore] = useState<{ id: string; name: string; verification_status: string; is_verified: boolean; verified_at: string | null } | null>(null);
-  const [iinBin, setIinBin] = useState<string | null>(null);
-  const [iinBinLoading, setIinBinLoading] = useState(false);
-  const [storesLoading, setStoresLoading] = useState(true);
-  const verificationRef = useRef<HTMLDivElement>(null);
+
+  const isRecovery = searchParams.get("type") === "recovery" || searchParams.get("recovery") !== null;
 
   const inputClass =
     "w-full h-10 bg-transparent border border-border/50 rounded-none px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-ring/50 focus:ring-1 focus:ring-ring/20 transition-all duration-150";
@@ -46,61 +41,9 @@ export default function Settings() {
       if (!session) { navigate("/auth"); return; }
       setEmail(session.user.email || "");
       setNewEmail(session.user.email || "");
-
-      // Fetch the user's primary store for verification status
-      supabase
-        .from("stores")
-        .select("id, name, verification_status, is_verified, verified_at")
-        .eq("user_id", session.user.id)
-        .order("created_at", { ascending: true })
-        .limit(1)
-        .maybeSingle()
-        .then(({ data: storeData }) => {
-          setStore(storeData);
-          setStoresLoading(false);
-          if (storeData?.verification_status === "verified") {
-            setIinBinLoading(true);
-            getStoreIinBin(storeData.id)
-              .then((bin) => {
-                if (bin === null) {
-                  // Bridge has no PII — downgrade to unverified
-                  supabase
-                    .from("stores")
-                    .update({ verification_status: "unverified", is_verified: false })
-                    .eq("id", storeData.id)
-                    .then(() => {
-                      setStore((prev) =>
-                        prev ? { ...prev, verification_status: "unverified", is_verified: false } : prev,
-                      );
-                      setIinBinLoading(false);
-                    });
-                } else {
-                  setIinBin(bin);
-                  setIinBinLoading(false);
-                }
-              })
-              .catch(() => {
-                // Bridge unreachable — leave status as-is
-                setIinBinLoading(false);
-              });
-          }
-        })
-        .catch(() => {
-          setStoresLoading(false);
-        });
-
       setLoading(false);
     });
   }, [navigate]);
-
-  // Scroll to verification section when ?tab=verification is set
-  useEffect(() => {
-    if (searchParams.get("tab") === "verification" && !storesLoading && store) {
-      setTimeout(() => {
-        verificationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
-    }
-  }, [searchParams, storesLoading, store]);
 
   const handleRequestPasswordReset = async () => {
     setSendingPasswordReset(true);
@@ -249,93 +192,6 @@ export default function Settings() {
               </>
             )}
           </div>
-
-          {/* Store Verification */}
-          {storesLoading ? (
-            <div ref={verificationRef} className={sectionClass}>
-              <div className="flex items-center gap-2 text-foreground">
-                <Shield className="w-4 h-4" />
-                <h3 className="text-xs tracking-[0.15em] uppercase font-semibold font-mono">{VERIFICATION?.TITLE || "Verification"}</h3>
-              </div>
-              <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-            </div>
-          ) : store ? (
-            <div ref={verificationRef} className={sectionClass}>
-              <div className="flex items-center gap-2 text-foreground">
-                <Shield className="w-4 h-4" />
-                <h3 className="text-xs tracking-[0.15em] uppercase font-semibold font-mono">{VERIFICATION?.TITLE || "Verification"}</h3>
-                {store.verification_status === "verified" && (
-                  <span className="text-[10px] font-medium text-green-600/80 uppercase tracking-wider ml-auto flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3" /> {VERIFICATION?.STATUS_VERIFIED || "Verified"}
-                  </span>
-                )}
-              </div>
-
-              {store.verification_status === "verified" ? (
-                <div className="space-y-3">
-                  {store.verified_at && (
-                    <p className="text-[11px] text-muted-foreground/50 flex items-center gap-1.5">
-                      <Clock className="w-3 h-3" />
-                      {VERIFICATION?.VERIFIED_AT || "Verified"}: {new Date(store.verified_at).toLocaleDateString(
-                        { bn: "bn-BD", en: "en-US" }[language] || "bn-BD",
-                        { day: "numeric", month: "long", year: "numeric" }
-                      )}
-                    </p>
-                  )}
-                  {iinBinLoading ? (
-                    <Loader2 className="w-3 h-3 animate-spin text-muted-foreground" />
-                  ) : iinBin ? (
-                    <p className="text-[11px] text-muted-foreground/50 flex items-center gap-1.5">
-                      <span className="font-mono tracking-wider">{iinBin}</span>
-                    </p>
-                  ) : null}
-                  <p className="text-[10px] text-muted-foreground/40 leading-relaxed border-t border-border/20 pt-3">
-                    Персональные данные хранятся на серверах в Республике Казахстан в соответствии с законодательством РЗ.
-                  </p>
-                </div>
-              ) : store.verification_status === "unverified" ? (
-                <VerificationOnboarding
-                  storeId={store.id}
-                  onVerified={(verifiedIinBin) => {
-                    supabase
-                      .from("stores")
-                      .select("id, name, verification_status, is_verified, verified_at")
-                      .eq("id", store.id)
-                      .single()
-                      .then(({ data }) => {
-                        if (data) {
-                          setStore(data);
-                          if (data.verification_status === "verified") {
-                            setIinBin(verifiedIinBin ?? null);
-                          }
-                        }
-                      });
-                  }}
-                  compact
-                />
-              ) : (
-                <div className="space-y-3">
-                  <p className="text-xs text-muted-foreground/70">
-                    Verification status: <span className="font-medium text-foreground/80">
-                      {store.verification_status === "mismatch" ? VERIFICATION?.STATUS_MISMATCH
-                        : store.verification_status === "suspended" ? VERIFICATION?.STATUS_SUSPENDED
-                        : VERIFICATION?.STATUS_MANUAL_REVIEW || "Manual Review"}
-                    </span>
-                  </p>
-                  {store.verification_status === "mismatch" && (
-                    <VerificationOnboarding
-                      storeId={store.id}
-                      onVerified={() => window.location.reload()}
-                      compact
-                    />
-                  )}
-                  {store.verification_status !== "mismatch" && (
-                    <p className="text-[11px] text-muted-foreground/50">{VERIFICATION?.CONTACT_SUPPORT || "Contact support for assistance."}</p>
-                  )}
-                </div>
-              )}
-            </div>
-          ) : null}
         </motion.div>
       </div>
     </div>

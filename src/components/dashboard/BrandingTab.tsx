@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import {
   AlertTriangle, Instagram, MessageCircle, Bell, Crown,
   Info, Lock, Check, ChevronDown, Globe, Link as LinkIcon,
-  Smartphone, User, Percent, Store, Shield,
+  Smartphone, User, Percent, Store,
 } from "lucide-react";
 import { STORE_THEMES } from "@/lib/storeThemes";
 import ImageCropUpload from "@/components/ImageCropUpload";
@@ -11,7 +11,6 @@ import type { StoreRow, BrandFormState } from "@/types/store";
 import { checkSlugAvailability } from "@/services/storeService";
 import { useLabels } from "@/hooks/useLabels";
 import QrMarketingCard from "@/components/dashboard/QrMarketingCard";
-import KazPostSettings from "@/components/dashboard/KazPostSettings";
 import HelpButton from "@/components/dashboard/HelpButton";
 import { isSlugOffensive } from "@/lib/slugFilter";
 
@@ -273,7 +272,7 @@ const BrandingTab = ({
               </div>
               <div className="flex items-stretch border border-border/50 rounded-none bg-transparent has-[input:focus]:border-ring/50 has-[input:focus]:ring-1 has-[input:focus]:ring-ring/20 transition-all duration-150">
                 <span className="flex items-center pl-3 md:pl-3.5 py-2 md:py-2.5 text-xs md:text-sm text-muted-foreground/30 font-mono shrink-0 select-none pointer-events-none">
-                  duken.com.kz/
+                  dukan.example.com/
                 </span>
                 {slugEditable ? (
                   <input
@@ -579,87 +578,39 @@ const BrandingTab = ({
 
           {/* ── Card: Payment Methods ── */}
           <SectionCard title={BRANDING.PAYMENT_QR} description={BRANDING.PAYMENT_QR_DESC}>
-            {store.verification_status !== "verified" ? (
-              <div className="space-y-4">
-                <div className="rounded-none border border-dashed border-border/30 bg-muted/10 p-6 flex flex-col items-center gap-3 text-center">
-                  <Shield className="w-6 h-6 text-muted-foreground/30" />
-                  <div>
-                    <p className="text-xs md:text-sm font-medium text-muted-foreground/60 mb-1">{BRANDING.VERIFICATION_REQUIRED || "Verification required"}</p>
-                    <p className="text-xs md:text-sm text-muted-foreground/40 leading-relaxed max-w-xs">
-                      {BRANDING.VERIFICATION_PAYMENT_DESC || "Complete seller verification in Settings to enable payment configuration."}
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-3 opacity-40 pointer-events-none">
-                  <ImageCropUpload
-                    bucket="qr-codes"
-                    folder={userId}
-                    value={brandForm.payment_qr_image}
-                    onUpload={(url) => set("payment_qr_image", url)}
-                    onRemove={() => set("payment_qr_image", null)}
-                    label={BRANDING.UPLOAD_QR}
-                    previewClass="w-36 h-36 object-contain rounded-none border border-border/20"
-                    aspectRatio={1}
-                    maxWidth={800}
-                    maxHeight={800}
+            <div className="space-y-3">
+              <ImageCropUpload
+                bucket="qr-codes"
+                folder={userId}
+                value={brandForm.payment_qr_image}
+                onUpload={(url) => set("payment_qr_image", url)}
+                onRemove={() => set("payment_qr_image", null)}
+                label={BRANDING.UPLOAD_QR}
+                previewClass="w-36 h-36 object-contain rounded-none border border-border/20"
+                aspectRatio={1}
+                maxWidth={800}
+                maxHeight={800}
+              />
+              <p className="text-xs md:text-sm text-muted-foreground/50">{BRANDING.NO_QR_FALLBACK}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Field label={BRANDING.PHONE_NUMBER} icon={<Smartphone className="w-3.5 h-3.5" />}>
+                  <input
+                    value={brandForm.kaspi_phone}
+                    onChange={(e) => set("kaspi_phone", e.target.value)}
+                    className={inputClass}
+                    placeholder="+880 1XXX-XXXXXX"
                   />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <Field label={BRANDING.PHONE_NUMBER} icon={<Smartphone className="w-3.5 h-3.5" />}>
-                      <input
-                        value={brandForm.kaspi_phone}
-                        disabled
-                        className={`${inputClass} cursor-not-allowed text-muted-foreground/40 bg-muted/20`}
-                        placeholder="+7 777 123 4567"
-                      />
-                    </Field>
-                    <Field label={BRANDING.OWNER_NAME} icon={<User className="w-3.5 h-3.5" />}>
-                      <input
-                        value={brandForm.kaspi_name}
-                        disabled
-                        className={`${inputClass} cursor-not-allowed text-muted-foreground/40 bg-muted/20`}
-                        placeholder="John Doe"
-                      />
-                    </Field>
-                  </div>
-                </div>
+                </Field>
+                <Field label={BRANDING.OWNER_NAME} icon={<User className="w-3.5 h-3.5" />}>
+                  <input
+                    value={brandForm.kaspi_name}
+                    onChange={(e) => set("kaspi_name", e.target.value)}
+                    className={inputClass}
+                    placeholder="Owner Name"
+                  />
+                </Field>
               </div>
-            ) : (
-              <>
-                <ImageCropUpload
-                  bucket="qr-codes"
-                  folder={userId}
-                  value={brandForm.payment_qr_image}
-                  onUpload={(url) => set("payment_qr_image", url)}
-                  onRemove={() => set("payment_qr_image", null)}
-                  label={BRANDING.UPLOAD_QR}
-                  previewClass="w-36 h-36 object-contain rounded-none border border-border/20"
-                  aspectRatio={1}
-                  maxWidth={800}
-                  maxHeight={800}
-                />
-                <div className="space-y-3 pt-1">
-                  <p className="text-xs md:text-sm text-muted-foreground/50">{BRANDING.NO_QR_FALLBACK}</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <Field label={BRANDING.PHONE_NUMBER} icon={<Smartphone className="w-3.5 h-3.5" />}>
-                      <input
-                        value={brandForm.kaspi_phone}
-                        onChange={(e) => set("kaspi_phone", e.target.value)}
-                        className={inputClass}
-                        placeholder="+7 777 123 4567"
-                      />
-                    </Field>
-                    <Field label={BRANDING.OWNER_NAME} icon={<User className="w-3.5 h-3.5" />}>
-                      <input
-                        value={brandForm.kaspi_name}
-                        onChange={(e) => set("kaspi_name", e.target.value)}
-                        className={inputClass}
-                        placeholder="John Doe"
-                      />
-                    </Field>
-                  </div>
-                </div>
-              </>
-            )}
+            </div>
           </SectionCard>
 
           {/* ── Card: Notifications ── */}
@@ -705,9 +656,6 @@ const BrandingTab = ({
 
         </div>
       </div>
-
-      {/* ── KazPost Settings ── */}
-      <KazPostSettings store={store} />
 
       {/* ── Floating Save Button ── */}
       <div className="sticky bottom-0 py-3 flex items-center justify-center">

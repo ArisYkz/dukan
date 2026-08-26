@@ -1,4 +1,3 @@
-Initialising login role...
 export type Json =
   | string
   | number
@@ -799,21 +798,14 @@ export type Database = {
           hero_subtitle: string | null
           hero_title: string | null
           id: string
-          iin_bin: string | null
           instagram: string | null
           is_paused: boolean | null
           is_verified: boolean
-          kaspi_name: string | null
-          kaspi_phone: string | null
-          legal_name: string | null
           name: string
-          official_name: string | null
           payment_qr_image: string | null
           plan_type: string
-          registry_checked_at: string | null
           report_count: number | null
           review_count: number | null
-          seller_type: string | null
           show_banner: boolean | null
           show_instagram: boolean | null
           show_telegram: boolean | null
@@ -834,8 +826,6 @@ export type Database = {
           total_views: number | null
           updated_at: string
           user_id: string
-          verification_notes: string | null
-          verification_status: string
           whatsapp_phone: string | null
         }
         Insert: {
@@ -847,21 +837,14 @@ export type Database = {
           hero_subtitle?: string | null
           hero_title?: string | null
           id?: string
-          iin_bin?: string | null
           instagram?: string | null
           is_paused?: boolean | null
           is_verified?: boolean
-          kaspi_name?: string | null
-          kaspi_phone?: string | null
-          legal_name?: string | null
           name: string
-          official_name?: string | null
           payment_qr_image?: string | null
           plan_type?: string
-          registry_checked_at?: string | null
           report_count?: number | null
           review_count?: number | null
-          seller_type?: string | null
           show_banner?: boolean | null
           show_instagram?: boolean | null
           show_telegram?: boolean | null
@@ -882,8 +865,6 @@ export type Database = {
           total_views?: number | null
           updated_at?: string
           user_id: string
-          verification_notes?: string | null
-          verification_status?: string
           whatsapp_phone?: string | null
         }
         Update: {
@@ -895,21 +876,14 @@ export type Database = {
           hero_subtitle?: string | null
           hero_title?: string | null
           id?: string
-          iin_bin?: string | null
           instagram?: string | null
           is_paused?: boolean | null
           is_verified?: boolean
-          kaspi_name?: string | null
-          kaspi_phone?: string | null
-          legal_name?: string | null
           name?: string
-          official_name?: string | null
           payment_qr_image?: string | null
           plan_type?: string
-          registry_checked_at?: string | null
           report_count?: number | null
           review_count?: number | null
-          seller_type?: string | null
           show_banner?: boolean | null
           show_instagram?: boolean | null
           show_telegram?: boolean | null
@@ -930,8 +904,6 @@ export type Database = {
           total_views?: number | null
           updated_at?: string
           user_id?: string
-          verification_notes?: string | null
-          verification_status?: string
           whatsapp_phone?: string | null
         }
         Relationships: []
@@ -1174,5 +1146,3 @@ export const Constants = {
     },
   },
 } as const
-A new version of Supabase CLI is available: v2.98.1 (currently installed v2.95.0)
-We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
