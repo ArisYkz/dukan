@@ -1,5 +1,5 @@
 -- Restrict direct public table access to stores so sensitive columns
--- (kaspi_phone, total_earned, subscription_* etc.) are not exposed.
+-- (payment_phone, total_earned, subscription_* etc.) are not exposed.
 --
 -- Approach:
 --   1. Create a SECURITY DEFINER function that returns only public-safe columns

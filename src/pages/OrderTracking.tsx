@@ -30,8 +30,8 @@ interface StoreData {
   slug: string;
   payment_qr_image: string | null;
   is_verified: boolean;
-  kaspi_phone: string | null;
-  kaspi_name: string | null;
+  payment_phone: string | null;
+  payment_name: string | null;
   whatsapp_phone: string | null;
   social_platform: string | null;
   telegram_chat_id: string | null;
@@ -115,7 +115,7 @@ const OrderTracking = () => {
 
     const { data: storeData } = await supabase
       .from("stores")
-      .select("name, slug, payment_qr_image, is_verified, kaspi_phone, kaspi_name, whatsapp_phone, social_platform, telegram_chat_id, instagram")
+      .select("name, slug, payment_qr_image, is_verified, payment_phone, payment_name, whatsapp_phone, social_platform, telegram_chat_id, instagram")
       .eq("id", orderData.store_id)
       .single();
 
@@ -261,7 +261,7 @@ const OrderTracking = () => {
   const isRejected = order.status === "payment_rejected";
   const canClaimPayment = ["new", "payment_rejected"].includes(order.status);
   const hasQR = !!store?.payment_qr_image;
-  const hasKaspi = !!(store?.kaspi_phone && store?.kaspi_name);
+  const hasPayment = !!(store?.payment_phone && store?.payment_name);
   const isExpired = order.status === "new" && remaining !== null && remaining <= 0;
 
   // Expired state
@@ -409,7 +409,7 @@ const OrderTracking = () => {
             </div>
 
             {/* Point 2: Recipient */}
-            {hasKaspi && (
+            {hasPayment && (
               <div className="border border-border rounded-none p-4 space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-xs font-bold bg-primary text-primary-foreground w-5 h-5 flex items-center justify-center rounded-none">2</span>
@@ -417,16 +417,16 @@ const OrderTracking = () => {
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <p className="font-mono text-xl font-bold">{store!.kaspi_phone}</p>
+                    <p className="font-mono text-xl font-bold">{store!.payment_phone}</p>
                     <button
-                      onClick={() => copyToClipboard(store!.kaspi_phone!, "Number")}
+                      onClick={() => copyToClipboard(store!.payment_phone!, "Number")}
                       className="flex items-center gap-1.5 px-3 py-1.5 text-xs tracking-wide uppercase border border-border rounded-none hover:bg-muted transition-colors text-muted-foreground hover:text-foreground font-mono"
                     >
                       <Copy className="w-3 h-3" />
                       {ACTIONS.COPY}
                     </button>
                   </div>
-                  <p className="font-mono text-sm font-bold text-foreground">{store!.kaspi_name}</p>
+                  <p className="font-mono text-sm font-bold text-foreground">{store!.payment_name}</p>
                 </div>
               </div>
             )}
@@ -435,7 +435,7 @@ const OrderTracking = () => {
             {order.reference_code && (
               <div className="border border-border rounded-none p-4 space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold bg-primary text-primary-foreground w-5 h-5 flex items-center justify-center rounded-none">{hasKaspi ? "3" : "2"}</span>
+                  <span className="font-mono text-xs font-bold bg-primary text-primary-foreground w-5 h-5 flex items-center justify-center rounded-none">{hasPayment ? "3" : "2"}</span>
                   <p className="font-mono text-xs tracking-[0.15em] uppercase text-muted-foreground">{TRACKING.PAYMENT_CODE}</p>
                 </div>
                 <div className="flex items-center justify-between">
@@ -458,7 +458,7 @@ const OrderTracking = () => {
             {hasQR && (
               <div className="border border-border rounded-none p-4 space-y-3">
                 <p className="font-mono text-xs tracking-[0.15em] uppercase text-muted-foreground">{TRACKING.PAY_VIA_QR}</p>
-                <img src={store!.payment_qr_image!} alt="Kaspi QR" className="w-full rounded-none border border-border object-cover max-h-80" loading="lazy" />
+                <img src={store!.payment_qr_image!} alt="Payment QR" className="w-full rounded-none border border-border object-cover max-h-80" loading="lazy" />
               </div>
             )}
 

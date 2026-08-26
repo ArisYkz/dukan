@@ -803,6 +803,8 @@ export type Database = {
           is_verified: boolean
           name: string
           payment_qr_image: string | null
+          payment_name: string | null
+          payment_phone: string | null
           plan_type: string
           report_count: number | null
           review_count: number | null
@@ -842,6 +844,8 @@ export type Database = {
           is_verified?: boolean
           name: string
           payment_qr_image?: string | null
+          payment_name?: string | null
+          payment_phone?: string | null
           plan_type?: string
           report_count?: number | null
           review_count?: number | null
@@ -881,6 +885,8 @@ export type Database = {
           is_verified?: boolean
           name?: string
           payment_qr_image?: string | null
+          payment_name?: string | null
+          payment_phone?: string | null
           plan_type?: string
           report_count?: number | null
           review_count?: number | null

@@ -595,16 +595,16 @@ const BrandingTab = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Field label={BRANDING.PHONE_NUMBER} icon={<Smartphone className="w-3.5 h-3.5" />}>
                   <input
-                    value={brandForm.kaspi_phone}
-                    onChange={(e) => set("kaspi_phone", e.target.value)}
+                    value={brandForm.payment_phone}
+                    onChange={(e) => set("payment_phone", e.target.value)}
                     className={inputClass}
                     placeholder="+880 1XXX-XXXXXX"
                   />
                 </Field>
                 <Field label={BRANDING.OWNER_NAME} icon={<User className="w-3.5 h-3.5" />}>
                   <input
-                    value={brandForm.kaspi_name}
-                    onChange={(e) => set("kaspi_name", e.target.value)}
+                    value={brandForm.payment_name}
+                    onChange={(e) => set("payment_name", e.target.value)}
                     className={inputClass}
                     placeholder="Owner Name"
                   />

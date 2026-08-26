@@ -176,7 +176,7 @@ const SubscriptionSection = ({ userId, profile, isPro, onDataChange }: Subscript
         })}
       </div>
 
-      {/* Modal: Kaspi QR */}
+      {/* Modal: QR */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/95 backdrop-blur-sm">
           <div className="bg-background border border-border p-8 md:p-10 max-w-sm w-full relative rounded-none shadow-2xl">

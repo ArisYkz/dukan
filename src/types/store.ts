@@ -10,8 +10,8 @@ export interface StoreRow {
   hero_image_url: string | null;
   hero_title: string | null;
   hero_subtitle: string | null;
-  kaspi_phone: string | null;
-  kaspi_name: string | null;
+  payment_phone: string | null;
+  payment_name: string | null;
   whatsapp_phone: string | null;
   plan_type: string;
   subscription_active: boolean;
@@ -114,8 +114,8 @@ export interface BrandFormState {
   hero_title: string;
   hero_subtitle: string;
   payment_qr_image: string | null;
-  kaspi_phone: string;
-  kaspi_name: string;
+  payment_phone: string;
+  payment_name: string;
   whatsapp_phone: string;
   social_platform: string;
   show_instagram: boolean;
