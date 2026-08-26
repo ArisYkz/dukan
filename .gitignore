@@ -43,8 +43,7 @@ supabase/seed_*.sql
 # Plans, documentation drafts, audit logs (not official docs)
 plans/
 scripts/
-hoster-kz-bridge/
-setup-hoster.sh
+
 supabase/.temp/
 
 # Playwright

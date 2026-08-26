@@ -11,7 +11,7 @@
 --   20260323144555_*  – hero columns, product_images table, extra buckets
 --   20260323150805_*  – public order viewing, stock decrement trigger
 --   20260323151949_*  – anon update policy
---   20260323153750_*  – kaspi columns
+--   20260323153750_*  – payment columns
 --   20260323162410_*  – orders status check constraint
 --   20260323164347_*  – product_variants
 --   20260323165828_*  – pg_cron, pg_net

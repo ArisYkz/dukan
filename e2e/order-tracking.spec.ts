@@ -244,9 +244,9 @@ test.describe("Order Tracking — Payment", () => {
 
     // Recipient section — Kaspi phone/name
     const recipientLabel = page.getByText(/recipient|получатель|алушы/i);
-    const kaspiLabel = page.getByText(/payment/i);
+    const paymentLabel = page.getByText(/payment/i);
     await expect(
-      recipientLabel.first().or(kaspiLabel.first())
+      recipientLabel.first().or(paymentLabel.first())
     ).toBeVisible({ timeout: 5_000 }).catch(() => {});
   });
 });
