@@ -72,7 +72,7 @@ const StoreFront = () => {
   useEffect(() => {
     if (!store || langSet.current) return;
     const lang = store.default_language;
-    if (lang === "en" || lang === "ru" || lang === "kk") setLanguage(lang, false);
+    if (lang === "en" || lang === "bn") setLanguage(lang, false);
     langSet.current = true;
   }, [store, setLanguage]);
 

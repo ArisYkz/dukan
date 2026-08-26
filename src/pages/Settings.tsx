@@ -12,8 +12,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import VerificationOnboarding from "@/components/dashboard/VerificationOnboarding";
 
 const LANG_OPTIONS: { value: Language; label: string; name: string }[] = [
-  { value: "kk", label: "ҚЗ", name: "Қазақша" },
-  { value: "ru", label: "RU", name: "Русский" },
+  { value: "bn", label: "BN", name: "বাংলা" },
   { value: "en", label: "EN", name: "English" },
 ];
 
@@ -278,7 +277,7 @@ export default function Settings() {
                     <p className="text-[11px] text-muted-foreground/50 flex items-center gap-1.5">
                       <Clock className="w-3 h-3" />
                       {VERIFICATION?.VERIFIED_AT || "Verified"}: {new Date(store.verified_at).toLocaleDateString(
-                        { kk: "kk-KZ", ru: "ru-RU", en: "en-US" }[language] || "ru-RU",
+                        { bn: "bn-BD", en: "en-US" }[language] || "bn-BD",
                         { day: "numeric", month: "long", year: "numeric" }
                       )}
                     </p>

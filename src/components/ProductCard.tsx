@@ -16,7 +16,7 @@ interface ProductCardProps {
 }
 
 const formatPrice = (price: number) =>
-  new Intl.NumberFormat("kk-KZ").format(price) + " ₸";
+  new Intl.NumberFormat("bn-BD", { numberingSystem: "latn" }).format(price) + " ৳";
 
 const ProductCard = memo(({ product, index, onSelect, onQuickAdd, isPaused }: ProductCardProps) => {
   const { PRODUCT } = useLabels();

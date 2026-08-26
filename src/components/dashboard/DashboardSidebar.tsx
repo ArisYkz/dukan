@@ -14,8 +14,7 @@ import dukenLogo from "@/assets/duken-logo.webp";
 import { Link } from "react-router-dom";
 
 const LANG_OPTIONS: { value: Language; label: string }[] = [
-  { value: "kk", label: "ҚЗ" },
-  { value: "ru", label: "RU" },
+  { value: "bn", label: "BN" },
   { value: "en", label: "EN" },
 ];
 

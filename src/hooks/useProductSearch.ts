@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { normalizeCyrillic } from "@/lib/normalizeKazakh";
+import { normalizeText } from "@/lib/normalize";
 
 export interface SearchableProduct {
   name: string;
@@ -8,11 +8,11 @@ export interface SearchableProduct {
 }
 
 /**
- * Custom hook for product search with debounce and Cyrillic normalization.
- * 
+ * Custom hook for product search with debounce.
+ *
  * Features:
  * - 300ms debounce to avoid blocking main thread on rapid input
- * - Kazakhstan/Russian text normalization for better search matching
+ * - Case-insensitive text normalization for better search matching
  * - Searches both name and description fields
  * - Optional category filtering
  * - Memoized filtering for performance
@@ -53,12 +53,12 @@ export const useProductSearch = <T extends SearchableProduct>(
     // Apply search filter
     if (!debouncedQuery.trim()) return result;
 
-    const normalizedTerm = normalizeCyrillic(debouncedQuery);
-    
+    const normalizedTerm = normalizeText(debouncedQuery);
+
     return result.filter((p) => {
-      const normalizedName = normalizeCyrillic(p.name);
+      const normalizedName = normalizeText(p.name);
       const normalizedDescription = p.description
-        ? normalizeCyrillic(p.description)
+        ? normalizeText(p.description)
         : "";
 
       return (

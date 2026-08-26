@@ -210,7 +210,7 @@ const PromoCodesTab = ({ storeId }: PromoCodesTabProps) => {
                   <div className="flex items-center gap-2 justify-center sm:justify-start">
                     <span className="font-mono font-bold text-sm tracking-wider">{pc.code}</span>
                     <span className="text-xs font-mono px-2 py-0.5 border border-border bg-muted">
-                      {pc.discount_type === "percent" ? `${pc.discount_value}%` : `${pc.discount_value} ₸`}
+                      {pc.discount_type === "percent" ? `${pc.discount_value}%` : `${pc.discount_value} ৳`}
                     </span>
                     {!pc.is_active && <span className="text-xs font-mono text-destructive">{L.INACTIVE}</span>}
                     {isExpired && <span className="text-xs font-mono text-destructive">{L.EXPIRED}</span>}
@@ -218,7 +218,7 @@ const PromoCodesTab = ({ storeId }: PromoCodesTabProps) => {
                   </div>
                   <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-mono text-muted-foreground justify-center sm:justify-start">
                     <span>{L.USED}: {pc.used_count}{pc.max_uses ? `/${pc.max_uses}` : ""}</span>
-                    {pc.min_cart_amount != null && pc.min_cart_amount > 0 && <span>{L.MIN_CART_LABEL}: {pc.min_cart_amount} ₸</span>}
+                    {pc.min_cart_amount != null && pc.min_cart_amount > 0 && <span>{L.MIN_CART_LABEL}: {pc.min_cart_amount} ৳</span>}
                     {pc.min_quantity != null && pc.min_quantity > 0 && <span>{L.MIN_QTY_LABEL}: {pc.min_quantity}</span>}
                     <span>{format(new Date(pc.start_date), "MMM d")} → {pc.end_date ? format(new Date(pc.end_date), "MMM d, yyyy") : L.NO_END}</span>
                   </div>

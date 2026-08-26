@@ -1,8 +1,7 @@
 import { useLanguage, type Language } from "@/contexts/LanguageContext";
 
 const LANG_OPTIONS: { value: Language; label: string }[] = [
-  { value: "kk", label: "ҚЗ" },
-  { value: "ru", label: "RU" },
+  { value: "bn", label: "BN" },
   { value: "en", label: "EN" },
 ];
 

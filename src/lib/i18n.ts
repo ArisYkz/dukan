@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import translations from "@/constants/translations";
 import type { Language } from "@/contexts/LanguageContext";
 
-const supportedLngs: Language[] = ["en", "ru", "kk"];
+const supportedLngs: Language[] = ["en", "bn"];
 
 void i18n.use(initReactI18next).init({
   // Our translations.ts already uses the { lang: { section: { key: value } } } shape,
@@ -16,7 +16,7 @@ void i18n.use(initReactI18next).init({
     },
     {} as Record<string, { translation: Record<string, unknown> }>,
   ),
-  lng: "kk",
+  lng: "bn",
   fallbackLng: "en",
   interpolation: { escapeValue: false },
   returnObjects: true,

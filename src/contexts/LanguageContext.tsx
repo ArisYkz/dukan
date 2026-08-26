@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import i18n from "@/lib/i18n";
 
-export type Language = "en" | "ru" | "kk";
+export type Language = "en" | "bn";
 
 interface LanguageContextType {
   language: Language;
@@ -11,14 +11,14 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const STORAGE_KEY = "duken-lang";
+const STORAGE_KEY = "dukan-lang";
 
 const getInitialLanguage = (): Language => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "en" || stored === "ru" || stored === "kk") return stored;
+    if (stored === "en" || stored === "bn") return stored;
   } catch {}
-  return "kk";
+  return "bn";
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {

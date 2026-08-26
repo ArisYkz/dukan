@@ -21,7 +21,7 @@ const PricingSection = () => {
   const proPeriod = yearly ? LANDING.PER_YEAR : LANDING.PER_MONTH;
 
   const basicFeatures = (LANDING.BASIC_FEATURES as string[] | undefined) || ["Unlimited products", "Store customization", "Product categories", "No Telegram notifications"];
-  const proFeatures = (LANDING.PRO_FEATURES as string[] | undefined) || ["All Free features", "Telegram notifications", "Kaspi payment verification"];
+  const proFeatures = (LANDING.PRO_FEATURES as string[] | undefined) || ["All Free features", "Telegram notifications", "QR payment verification"];
   const noTelegramText = (LANDING.NO_TELEGRAM as string) || "No Telegram notifications";
 
   return (
@@ -73,12 +73,12 @@ const PricingSection = () => {
             <div className="mb-8">
               {yearly ? (
                 <div className="space-y-1">
-                  <span className="font-heading text-4xl md:text-5xl text-background">{proPrice} ₸</span>
+                  <span className="font-heading text-4xl md:text-5xl text-background">{proPrice} ৳</span>
                   <span className="font-body text-background/50 text-sm ml-2">/ {proPeriod}</span>
-                  <div className="block text-xs font-mono text-sage mt-1 line-through text-background/40">15,000 ₸ / month</div>
+                  <div className="block text-xs font-mono text-sage mt-1 line-through text-background/40">15,000 ৳ / month</div>
                 </div>
               ) : (
-                <><span className="font-heading text-4xl md:text-5xl text-background">{proPrice} ₸</span><span className="font-body text-background/50 text-sm ml-2">/ {proPeriod}</span></>
+                <><span className="font-heading text-4xl md:text-5xl text-background">{proPrice} ৳</span><span className="font-body text-background/50 text-sm ml-2">/ {proPeriod}</span></>
               )}
             </div>
             {yearly && (<p className="font-mono text-xs text-sage mb-4 -mt-4">{LANDING.SAVE_2_MONTHS_LONG}</p>)}

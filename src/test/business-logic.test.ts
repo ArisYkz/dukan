@@ -6,17 +6,17 @@ import type { OrderRow } from "@/types/store";
 // ─── formatPrice ───────────────────────────────────────────────
 describe("formatPrice", () => {
   it("formats zero", () => {
-    expect(formatPrice(0)).toBe("0 ₸");
+    expect(formatPrice(0)).toBe("0 ৳");
   });
 
   it("formats small values", () => {
     expect(formatPrice(500)).toContain("500");
-    expect(formatPrice(500)).toContain("₸");
+    expect(formatPrice(500)).toContain("৳");
   });
 
   it("formats large values with grouping", () => {
     const result = formatPrice(12000);
-    expect(result).toContain("₸");
+    expect(result).toContain("৳");
     // Should contain some form of 12 000 or 12,000
     expect(result.replace(/\s/g, "").replace(/,/g, "")).toContain("12000");
   });
@@ -95,8 +95,8 @@ describe("OrderStatus", () => {
 
 // ─── Business constants ────────────────────────────────────────
 describe("Business constants", () => {
-  it("FREE_CONFIRMED_LIMIT is 15000", () => {
-    expect(FREE_CONFIRMED_LIMIT).toBe(15_000);
+  it("FREE_CONFIRMED_LIMIT is 50000", () => {
+    expect(FREE_CONFIRMED_LIMIT).toBe(50_000);
   });
 
   it("PAYMENT_WINDOW_MS is 30 minutes", () => {

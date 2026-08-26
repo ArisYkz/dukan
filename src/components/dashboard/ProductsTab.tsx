@@ -12,7 +12,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip
 import { Pagination } from "@/components/ui/pagination";
 import type { ProductRow, ProductImageRow, ProductFormState } from "@/types/store";
 import { formatPrice, FREE_PRODUCT_LIMIT, FREE_IMAGE_LIMIT, PRO_IMAGE_LIMIT, FREE_CATEGORY_LIMIT } from "@/lib/format";
-import { normalizeCyrillic } from "@/lib/normalizeKazakh";
+import { normalizeText } from "@/lib/normalize";
 import { useLabels } from "@/hooks/useLabels";
 import CsvImport from "@/components/dashboard/CsvImport";
 import BulkUploadComponent from "@/components/dashboard/BulkUploadComponent";
@@ -102,10 +102,10 @@ const ProductsTab = ({
 
   const searchedProducts = useMemo(() => {
     if (!debouncedSearchTerm.trim()) return products;
-    const term = normalizeCyrillic(debouncedSearchTerm);
+    const term = normalizeText(debouncedSearchTerm);
     return products.filter(p =>
-      normalizeCyrillic(p.name).includes(term) ||
-      (p.description && normalizeCyrillic(p.description).includes(term))
+      normalizeText(p.name).includes(term) ||
+      (p.description && normalizeText(p.description).includes(term))
     );
   }, [products, debouncedSearchTerm]);
 

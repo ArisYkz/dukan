@@ -314,8 +314,7 @@ const BrandingTab = ({
                 <div className="flex gap-1.5">
                   {([
                     { value: "en", labelKey: "DEFAULT_LANG_EN" as const },
-                    { value: "ru", labelKey: "DEFAULT_LANG_RU" as const },
-                    { value: "kk", labelKey: "DEFAULT_LANG_KK" as const },
+                    { value: "bn", labelKey: "DEFAULT_LANG_BN" as const },
                   ] as const).map((opt) => (
                     <button
                       key={opt.value}

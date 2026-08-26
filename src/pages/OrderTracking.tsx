@@ -443,7 +443,7 @@ const OrderTracking = () => {
                 {kazpostTracking.declaredValue && (
                   <div className="flex justify-between text-xs font-mono">
                     <span className="text-muted-foreground">{TRACKING?.DECLARED_VALUE || "Declared value"}</span>
-                    <span>{Number(kazpostTracking.declaredValue).toLocaleString()} ₸</span>
+                    <span>{Number(kazpostTracking.declaredValue).toLocaleString()} ৳</span>
                   </div>
                 )}
               </div>

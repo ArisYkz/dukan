@@ -19,9 +19,9 @@ export {
   FILTER_STATUS_MAP as filterStatuses,
 } from "@/constants/business";
 
-/** Format a numeric price to Kazakh tenge display string */
+/** Format a numeric price to Bangladeshi Taka display string */
 export const formatPrice = (price: number) =>
-  new Intl.NumberFormat("kk-KZ").format(price) + " ₸";
+  new Intl.NumberFormat("bn-BD", { numberingSystem: "latn" }).format(price) + " ৳";
 
 /** Human-readable status label (English) */
 export const statusLabel = (status: string): string =>

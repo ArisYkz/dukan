@@ -4,24 +4,24 @@
  */
 
 const COLOR_MAP: Record<string, Record<string, string>> = {
-  // English key (lowercase) → { kk, ru }
-  black:  { kk: "Қара",   ru: "Черный" },
-  white:  { kk: "Ақ",     ru: "Белый" },
-  red:    { kk: "Қызыл",  ru: "Красный" },
-  blue:   { kk: "Көк",    ru: "Синий" },
-  green:  { kk: "Жасыл",  ru: "Зеленый" },
-  yellow: { kk: "Сары",   ru: "Желтый" },
-  grey:   { kk: "Сұр",    ru: "Серый" },
-  gray:   { kk: "Сұр",    ru: "Серый" },
-  gold:   { kk: "Алтын",  ru: "Золотистый" },
-  silver: { kk: "Күміс",  ru: "Серебристый" },
+  // English key (lowercase) → { bn }
+  black:  { bn: "কালো" },
+  white:  { bn: "সাদা" },
+  red:    { bn: "লাল" },
+  blue:   { bn: "নীল" },
+  green:  { bn: "সবুজ" },
+  yellow: { bn: "হলুদ" },
+  grey:   { bn: "ধূসর" },
+  gray:   { bn: "ধূসর" },
+  gold:   { bn: "সোনালি" },
+  silver: { bn: "রূপালি" },
 };
 
 const VARIANT_TYPE_MAP: Record<string, Record<string, string>> = {
-  color:  { kk: "Түс",    ru: "Цвет" },
-  colour: { kk: "Түс",    ru: "Цвет" },
-  size:   { kk: "Өлшем",  ru: "Размер" },
-  box:    { kk: "Қорап",  ru: "Коробка" },
+  color:  { bn: "রং" },
+  colour: { bn: "রং" },
+  size:   { bn: "সাইজ" },
+  box:    { bn: "বক্স" },
 };
 
 export const translateVariant = (value: string, language: string): string => {

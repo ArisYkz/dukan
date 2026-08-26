@@ -58,8 +58,8 @@ export const FREE_IMAGE_LIMIT = 1;
 export const PRO_IMAGE_LIMIT = 5;
 export const FREE_CATEGORY_LIMIT = 2;
 
-/** Maximum confirmed revenue (₸) before free-tier store is paused */
-export const FREE_CONFIRMED_LIMIT = 15_000;
+/** Maximum confirmed revenue (৳) before free-tier store is paused */
+export const FREE_CONFIRMED_LIMIT = 50_000;
 
 // ─── Pagination ────────────────────────────────────────────────
 export const STOREFRONT_PAGE_SIZE = 20;

@@ -18,17 +18,17 @@ import translations from "@/constants/translations";
 // ─── Additional formatPrice edge cases ───────────────────────────
 describe("formatPrice edge cases", () => {
   it("formats zero", () => {
-    expect(formatPrice(0)).toBe("0 ₸");
+    expect(formatPrice(0)).toBe("0 ৳");
   });
 
   it("formats small integer values", () => {
-    expect(formatPrice(500)).toBe("500 ₸");
-    expect(formatPrice(1)).toBe("1 ₸");
+    expect(formatPrice(500)).toBe("500 ৳");
+    expect(formatPrice(1)).toBe("1 ৳");
   });
 
   it("formats thousand-separated values", () => {
     const result = formatPrice(12000);
-    expect(result).toContain("₸");
+    expect(result).toContain("৳");
     // Strip all non-digit characters to verify the number is present
     const digits = result.replace(/[^\d]/g, "");
     expect(digits).toContain("12000");
@@ -36,21 +36,21 @@ describe("formatPrice edge cases", () => {
 
   it("formats large values", () => {
     const result = formatPrice(1_000_000);
-    expect(result).toContain("₸");
+    expect(result).toContain("৳");
     const digits = result.replace(/[^\d]/g, "");
     expect(digits).toContain("1000000");
   });
 
   it("formats decimal values", () => {
-    // formatPrice uses Intl.NumberFormat("kk-KZ") which rounds to integer
+    // formatPrice uses Intl.NumberFormat("bn-BD") which rounds to integer
     // since no minimumFractionDigits are set.
     const result = formatPrice(99.9);
-    expect(result).toContain("₸");
+    expect(result).toContain("৳");
   });
 
   it("formats negative values", () => {
     const result = formatPrice(-500);
-    expect(result).toContain("₸");
+    expect(result).toContain("৳");
     expect(result).toContain("500");
   });
 });
@@ -153,18 +153,16 @@ describe("statusLabel coverage", () => {
 
 // ─── Translation structure ───────────────────────────────────────
 describe("Translations structure", () => {
-  it("has three languages defined", () => {
+  it("has two languages defined", () => {
     const langs = Object.keys(translations);
-    expect(langs).toEqual(["en", "ru", "kk"]);
+    expect(langs).toEqual(["en", "bn"]);
   });
 
   it("all languages have the same top-level keys (groups)", () => {
     const enKeys = Object.keys(translations.en).sort();
-    const ruKeys = Object.keys(translations.ru).sort();
-    const kkKeys = Object.keys(translations.kk).sort();
+    const bnKeys = Object.keys(translations.bn).sort();
 
-    expect(ruKeys).toEqual(enKeys);
-    expect(kkKeys).toEqual(enKeys);
+    expect(bnKeys).toEqual(enKeys);
   });
 
   it("all languages have the same keys within each group", () => {
@@ -172,18 +170,14 @@ describe("Translations structure", () => {
 
     groups.forEach((group) => {
       const enGroup = translations.en[group];
-      const ruGroup = translations.ru[group];
-      const kkGroup = translations.kk[group];
+      const bnGroup = translations.bn[group];
 
-      expect(ruGroup).toBeDefined(`ru missing group: ${group}`);
-      expect(kkGroup).toBeDefined(`kk missing group: ${group}`);
+      expect(bnGroup).toBeDefined(`bn missing group: ${group}`);
 
       const enKeys = Object.keys(enGroup).sort();
-      const ruKeys = Object.keys(ruGroup).sort();
-      const kkKeys = Object.keys(kkGroup).sort();
+      const bnKeys = Object.keys(bnGroup).sort();
 
-      expect(ruKeys).toEqual(enKeys);
-      expect(kkKeys).toEqual(enKeys);
+      expect(bnKeys).toEqual(enKeys);
     });
   });
 

@@ -173,7 +173,7 @@ const BulkActionsBar = ({
               <PopoverContent className="w-64 p-4 bg-card border border-border rounded-none">
                 <div className="space-y-3">
                   <label className="font-mono uppercase tracking-[0.2em] text-[10px] text-muted-foreground block">
-                    {PRODUCTS_TAB.PRICE} (₸)
+                    {PRODUCTS_TAB.PRICE} (৳)
                   </label>
                   <Input
                     type="number"

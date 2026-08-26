@@ -88,7 +88,7 @@ const StoreDetailSheet = ({ storeId, onClose }: StoreDetailSheetProps) => {
               ["Paused", store.is_paused ? "Yes" : "No"],
               ["Views", store.total_views],
               ["Orders", store.total_sales_count],
-              ["Earned", `${Number(store.total_earned ?? 0).toLocaleString()} ₸`],
+              ["Earned", `${Number(store.total_earned ?? 0).toLocaleString()} ৳`],
             ].map(([label, value]) => (
               <div key={label as string} className="border border-border p-3">
                 <p className="font-mono text-[9px] text-muted-foreground uppercase tracking-wider">{label}</p>

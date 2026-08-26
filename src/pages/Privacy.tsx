@@ -11,37 +11,37 @@ type Text = {
 
 const EN: Text = {
   title: "Privacy Policy",
-  updated: "Last updated: May 11, 2026",
+  updated: "Last updated: August 26, 2026",
   sections: [
     {
       heading: "1. Information We Collect",
       paragraphs: [
-        "When you register for Duken, we collect your email address and a password (stored as a salted hash). If you create a store, we collect the business information you provide: store name, slug, description, social media handles (Instagram, TikTok, Telegram), payment QR images, and product details including names, descriptions, prices, and images.",
-        "For seller verification, we collect images of identity documents. This data is stored securely and used only for verification purposes.",
+        "When you register for Dukan, we collect your email address and a password (stored as a salted hash). If you create a store, we collect the business information you provide: store name, slug, description, social media handles (Instagram, TikTok, Telegram), payment QR images, and product details including names, descriptions, prices, and images.",
+        "When a customer places an order, we collect their name, phone number, and delivery address in order to process and fulfill that order.",
       ],
     },
     {
       heading: "2. How We Use Your Information",
       paragraphs: [
-        "We use your information to operate the Duken platform: display your store and products to visitors, process orders, send Telegram notifications (if configured), and manage your subscription. We do not sell your personal data to third parties.",
+        "We use your information to operate the Dukan platform: display your store and products to visitors, process orders, send Telegram notifications (if configured), and manage your subscription. We do not sell your personal data to third parties.",
       ],
     },
     {
       heading: "3. Data Storage and Location",
       paragraphs: [
-        "Your data is stored on servers in the Republic of Kazakhstan and South Korea (Seoul), in compliance with the Law of the Republic of Kazakhstan \"On Personal Data and Their Protection.\" We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.",
+        "Your data is stored securely on cloud infrastructure provided by our hosting and database partners. We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.",
       ],
     },
     {
       heading: "4. Data Sharing",
       paragraphs: [
-        "We share data with third-party service providers only as necessary to operate the platform: Supabase (database and authentication), Kaspi Bank (payment QR processing), KazPost (shipping integration), and Telegram (notification delivery). Each provider processes data under their own privacy obligations.",
+        "We share data with third-party service providers only as necessary to operate the platform: Supabase (database and authentication), payment QR processing, courier services for delivery, and Telegram (notification delivery). Each provider processes data under their own privacy obligations.",
       ],
     },
     {
       heading: "5. Your Rights",
       paragraphs: [
-        "Under Kazakhstan law, you have the right to access, correct, and request deletion of your personal data. You may also withdraw consent for data processing at any time. To exercise these rights, contact us at the email below.",
+        "You have the right to access, correct, and request deletion of your personal data. You may also withdraw consent for data processing at any time. To exercise these rights, contact us at the email below.",
       ],
     },
     {
@@ -53,107 +53,57 @@ const EN: Text = {
     {
       heading: "7. Contact",
       paragraphs: [
-        "For privacy-related inquiries: hello@duken.kz",
+        "For privacy-related inquiries: hello@dukan.example.com",
       ],
     },
   ],
 };
 
-const RU: Text = {
-  title: "Политика конфиденциальности",
-  updated: "Последнее обновление: 11 мая 2026 г.",
+const BN: Text = {
+  title: "গোপনীয়তা নীতি",
+  updated: "সর্বশেষ হালনাগাদ: ২৬ আগস্ট ২০২৬",
   sections: [
     {
-      heading: "1. Какую информацию мы собираем",
+      heading: "১. আমরা কী তথ্য সংগ্রহ করি",
       paragraphs: [
-        "При регистрации в Duken мы собираем ваш адрес электронной почты и пароль (хранится в виде солевого хеша). Если вы создаете магазин, мы собираем предоставленную вами информацию о бизнесе: название магазина, slug, описание, ссылки на соцсети (Instagram, TikTok, Telegram), изображения QR-платежей, а также данные о товарах, включая названия, описания, цены и изображения.",
-        "Для верификации продавца мы собираем изображения удостоверяющих личность документов. Эти данные хранятся безопасно и используются только для целей верификации.",
+        "আপনি যখন Dukan-এ নিবন্ধন করেন, আমরা আপনার ইমেইল ঠিকানা এবং একটি পাসওয়ার্ড (সল্টেড হ্যাশ আকারে সংরক্ষিত) সংগ্রহ করি। আপনি যদি একটি দোকান তৈরি করেন, আমরা আপনার দেওয়া ব্যবসায়িক তথ্য সংগ্রহ করি: দোকানের নাম, slug, বিবরণ, সামাজিক যোগাযোগ মাধ্যমের হ্যান্ডেল (Instagram, TikTok, Telegram), পেমেন্ট QR ছবি এবং পণ্যের বিবরণ (নাম, বিবরণ, দাম ও ছবি)।",
+        "গ্রাহক যখন একটি অর্ডার দেন, তখন আমরা তাদের নাম, ফোন নম্বর এবং ডেলিভারি ঠিকানা সংগ্রহ করি যাতে সেই অর্ডার প্রক্রিয়া ও সম্পন্ন করা যায়।",
       ],
     },
     {
-      heading: "2. Как мы используем вашу информацию",
+      heading: "২. আমরা আপনার তথ্য কীভাবে ব্যবহার করি",
       paragraphs: [
-        "Мы используем вашу информацию для работы платформы Duken: отображения вашего магазина и товаров посетителям, обработки заказов, отправки уведомлений в Telegram (если настроено) и управления подпиской. Мы не продаем ваши персональные данные третьим лицам.",
+        "আমরা Dukan প্ল্যাটফর্ম পরিচালনার জন্য আপনার তথ্য ব্যবহার করি: দর্শনার্থীদের কাছে আপনার দোকান ও পণ্য প্রদর্শন, অর্ডার প্রক্রিয়াকরণ, Telegram নোটিফিকেশন পাঠানো (যদি কনফিগার করা থাকে) এবং আপনার সাবস্ক্রিপশন পরিচালনা। আমরা আপনার ব্যক্তিগত তথ্য তৃতীয় পক্ষের কাছে বিক্রি করি না।",
       ],
     },
     {
-      heading: "3. Хранение и расположение данных",
+      heading: "৩. ডেটা সংরক্ষণ ও অবস্থান",
       paragraphs: [
-        "Ваши данные хранятся на серверах в Республике Казахстан и Южной Корее (Сеул) в соответствии с Законом Республики Казахстан «О персональных данных и их защите». Мы применяем соответствующие технические и организационные меры для защиты ваших персональных данных от несанкционированного доступа, изменения, раскрытия или уничтожения.",
+        "আপনার ডেটা আমাদের হোস্টিং ও ডেটাবেস অংশীদারদের প্রদত্ত ক্লাউড অবকাঠামোতে নিরাপদে সংরক্ষিত থাকে। আমরা অননুমোদিত অ্যাক্সেস, পরিবর্তন, প্রকাশ বা ধ্বংস থেকে আপনার ব্যক্তিগত ডেটা রক্ষার জন্য যথাযথ প্রযুক্তিগত ও সাংগঠনিক ব্যবস্থা গ্রহণ করি।",
       ],
     },
     {
-      heading: "4. Передача данных",
+      heading: "৪. ডেটা ভাগাভাগি",
       paragraphs: [
-        "Мы передаем данные сторонним поставщикам услуг только по мере необходимости для работы платформы: Supabase (база данных и аутентификация), Kaspi Bank (обработка QR-платежей), KazPost (интеграция доставки) и Telegram (доставка уведомлений). Каждый поставщик обрабатывает данные в соответствии со своими обязательствами по конфиденциальности.",
+        "আমরা শুধুমাত্র প্ল্যাটফর্ম পরিচালনার জন্য প্রয়োজন অনুযায়ী তৃতীয় পক্ষের পরিষেবা প্রদানকারীদের সাথে ডেটা ভাগ করি: Supabase (ডেটাবেস ও প্রমাণীকরণ), পেমেন্ট QR প্রক্রিয়াকরণ, ডেলিভারির জন্য কুরিয়ার পরিষেবা এবং Telegram (নোটিফিকেশন সরবরাহ)। প্রতিটি প্রদানকারী তাদের নিজ নিজ গোপনীয়তার বাধ্যবাধকতা অনুসারে ডেটা প্রক্রিয়া করে।",
       ],
     },
     {
-      heading: "5. Ваши права",
+      heading: "৫. আপনার অধিকার",
       paragraphs: [
-        "В соответствии с законодательством Казахстана вы имеете право на доступ, исправление и удаление ваших персональных данных. Вы также можете в любое время отозвать согласие на обработку данных. Для осуществления этих прав свяжитесь с нами по электронной почте, указанной ниже.",
+        "আপনার ব্যক্তিগত ডেটা অ্যাক্সেস, সংশোধন এবং মুছে ফেলার অনুরোধ করার অধিকার আপনার রয়েছে। আপনি যেকোনো সময় ডেটা প্রক্রিয়াকরণের সম্মতি প্রত্যাহারও করতে পারেন। এই অধিকারগুলো প্রয়োগ করতে, নিচের ইমেইলে আমাদের সাথে যোগাযোগ করুন।",
       ],
     },
     {
-      heading: "6. Cookie",
+      heading: "৬. কুকিজ",
       paragraphs: [
-        "Мы используем обязательные cookie-файлы для аутентификации и управления сессией. Мы не используем отслеживающие или рекламные cookie-файлы. Вы можете управлять настройками cookie в своем браузере.",
+        "আমরা প্রমাণীকরণ ও সেশন পরিচালনার জন্য প্রয়োজনীয় কুকিজ ব্যবহার করি। কোনো ট্র্যাকিং বা বিজ্ঞাপনের কুকিজ ব্যবহার করা হয় না। আপনি আপনার ব্রাউজারে কুকি সেটিংস নিয়ন্ত্রণ করতে পারেন।",
       ],
     },
     {
-      heading: "7. Контакты",
+      heading: "৭. যোগাযোগ",
       paragraphs: [
-        "По вопросам конфиденциальности: hello@duken.kz",
-      ],
-    },
-  ],
-};
-
-const KK: Text = {
-  title: "Құпиялылық саясаты",
-  updated: "Соңғы жаңарту: 11 мамыр 2026 ж.",
-  sections: [
-    {
-      heading: "1. Біз қандай ақпарат жинаймыз",
-      paragraphs: [
-        "Duken-ге тіркелген кезде біз сіздің электрондық поштаңызды және құпия сөзіңізді (тұзды хэш түрінде сақталады) жинаймыз. Егер сіз дүкен ашсаңыз, біз сіз берген бизнес ақпаратын жинаймыз: дүкен атауы, slug, сипаттамасы, әлеуметтік желі сілтемелері (Instagram, TikTok, Telegram), төлем QR-кескіндері және тауарлар туралы мәліметтер (атаулары, сипаттамалары, бағалары, кескіндері).",
-        "Сатушыны растау үшін біз жеке басты куәландыратын құжаттардың кескіндерін жинаймыз. Бұл деректер қауіпсіз сақталады және тек растау мақсатында пайдаланылады.",
-      ],
-    },
-    {
-      heading: "2. Біз ақпаратыңызды қалай пайдаланамыз",
-      paragraphs: [
-        "Біз сіздің ақпаратыңызды Duken платформасын жұмыс істеу үшін пайдаланамыз: дүкеніңіз бен тауарларыңызды келушілерге көрсету, тапсырыстарды өңдеу, Telegram хабарландыруларын жіберу (егер конфигурацияланған болса) және жазылымыңызды басқару. Біз сіздің жеке деректеріңізді үшінші тұлғаларға сатпаймыз.",
-      ],
-    },
-    {
-      heading: "3. Деректерді сақтау және орналасуы",
-      paragraphs: [
-        "Сіздің деректеріңіз Қазақстан Республикасының «Жеке деректер және оларды қорғау туралы» Заңына сәйкес Қазақстан Республикасы мен Оңтүстік Кореядағы (Сеул) серверлерде сақталады. Біз сіздің жеке деректеріңізді рұқсатсыз кіруден, өзгертуден, жария етуден немесе жоюдан қорғау үшін тиісті техникалық және ұйымдастырушылық шараларды қолданамыз.",
-      ],
-    },
-    {
-      heading: "4. Деректерді бөлісу",
-      paragraphs: [
-        "Біз деректерді үшінші тарап қызмет провайдерлеріне тек платформаны жұмыс істеу үшін қажет болған жағдайда ғана береміз: Supabase (дерекқор және аутентификация), Kaspi Bank (QR-төлемдерді өңдеу), KazPost (жеткізу интеграциясы) және Telegram (хабарландыруларды жеткізу). Әрбір провайдер деректерді өздерінің құпиялылық міндеттемелеріне сәйкес өңдейді.",
-      ],
-    },
-    {
-      heading: "5. Сіздің құқықтарыңыз",
-      paragraphs: [
-        "Қазақстан заңнамасына сәйкес сіздің жеке деректеріңізге қол жеткізуге, түзетуге және жоюды талап етуге құқығыңыз бар. Сіз сондай-ақ кез келген уақытта деректерді өңдеуге келісіміңізді қайтарып ала аласыз. Осы құқықтарды жүзеге асыру үшін төмендегі электрондық пошта арқылы бізге хабарласыңыз.",
-      ],
-    },
-    {
-      heading: "6. Cookie файлдары",
-      paragraphs: [
-        "Біз аутентификация және сессияны басқару үшін қажетті cookie файлдарын пайдаланамыз. Бақылау немесе жарнама cookie файлдары пайдаланылмайды. Cookie параметрлерін браузеріңізде басқара аласыз.",
-      ],
-    },
-    {
-      heading: "7. Байланыс",
-      paragraphs: [
-        "Құпиялылық сұрақтары бойынша: hello@duken.kz",
+        "গোপনীয়তা সংক্রান্ত প্রশ্নের জন্য: hello@dukan.example.com",
       ],
     },
   ],
@@ -161,13 +111,13 @@ const KK: Text = {
 
 const Privacy = () => {
   const { language } = useLanguage();
-  const text = language === "kk" ? KK : language === "ru" ? RU : EN;
+  const text = language === "bn" ? BN : EN;
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container max-w-3xl py-12">
         <Link to="/" className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors mb-8">
-          <ArrowLeft className="w-3.5 h-3.5" /> {language === "kk" ? "Артқа" : language === "ru" ? "Назад" : "Back"}
+          <ArrowLeft className="w-3.5 h-3.5" /> {language === "bn" ? "পিছনে" : "Back"}
         </Link>
         <div className="flex items-center gap-3 mb-10">
           <img src={dukenLogo} alt="Duken" className="h-8 dark:invert" />

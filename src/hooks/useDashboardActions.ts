@@ -63,7 +63,7 @@ export const useDashboardActions = ({
       if (order && totalConfirmed + order.total_price > FREE_CONFIRMED_LIMIT) {
         toast.error(
           MESSAGES.FREE_CONFIRMED_LIMIT ||
-            "Free plan allows up to 15,000 ₸ in confirmed payments. Upgrade to Pro for unlimited."
+            "Free plan allows up to ৳50,000 in confirmed payments. Upgrade to Pro for unlimited."
         );
         return false; // Indicate limit reached
       }

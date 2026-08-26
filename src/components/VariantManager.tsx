@@ -226,7 +226,7 @@ const VariantManager = ({ variants, onChange, isPro = true }: VariantManagerProp
           <div className="flex flex-wrap gap-2">
             <input value={customType} onChange={(e) => setCustomType(e.target.value)} placeholder={VARIANTS.TYPE_PLACEHOLDER} className="flex-1 min-w-[120px] border border-border bg-transparent px-3 py-2 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-ring" />
             <input value={customValue} onChange={(e) => setCustomValue(e.target.value)} placeholder={VARIANTS.VALUE_PLACEHOLDER} className="flex-1 min-w-[120px] border border-border bg-transparent px-3 py-2 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-ring" />
-            <input type="number" value={customPrice} onChange={(e) => setCustomPrice(e.target.value)} placeholder="+/- ₸" className="w-20 border border-border bg-transparent px-3 py-2 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-ring" />
+            <input type="number" value={customPrice} onChange={(e) => setCustomPrice(e.target.value)} placeholder="+/- ৳" className="w-20 border border-border bg-transparent px-3 py-2 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-ring" />
             <button type="button" onClick={addCustom} className="p-2 border border-border rounded-sm hover:bg-muted transition-colors"><Plus className="w-4 h-4" /></button>
           </div>
         </div>
@@ -251,7 +251,7 @@ const VariantManager = ({ variants, onChange, isPro = true }: VariantManagerProp
                 return (
                   <span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 text-xs border border-border rounded-sm bg-muted/50">
                     {item.variant_value}
-                    {item.price_adjustment !== 0 && (<span className="text-muted-foreground">({item.price_adjustment > 0 ? "+" : ""}{item.price_adjustment} ₸)</span>)}
+                    {item.price_adjustment !== 0 && (<span className="text-muted-foreground">({item.price_adjustment > 0 ? "+" : ""}{item.price_adjustment} ৳)</span>)}
                     <button type="button" onClick={() => removeVariant(globalIdx)} className="ml-0.5 hover:text-destructive transition-colors"><X className="w-3 h-3" /></button>
                   </span>
                 );
