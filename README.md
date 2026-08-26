@@ -1,6 +1,6 @@
-# Duken
+# Dukan
 
-SaaS platform for Kazakhstani entrepreneurs to create mobile-friendly online storefronts. Supports Kaspi QR payments, Telegram notifications, Instagram/TikTok integration, and full trilingual UI (Kazakh, Russian, English).
+SaaS platform for Bangladeshi entrepreneurs to create mobile-friendly online storefronts. Supports QR payments, Telegram notifications, WhatsApp, Instagram/TikTok integration, and a bilingual UI (English, Bengali).
 
 ## Tech Stack
 
@@ -9,9 +9,9 @@ SaaS platform for Kazakhstani entrepreneurs to create mobile-friendly online sto
 | Frontend | React 18, TypeScript, Vite 5, Tailwind CSS 3, shadcn/ui |
 | State | TanStack React Query 5 |
 | Backend | Supabase (PostgreSQL, Auth, Storage, Edge Functions) |
-| Payments | Kaspi QR |
+| Payments | Generic QR (provider-agnostic; gateway TBD) |
 | Notifications | Telegram Bot |
-| Deploy | Vercel + Docker / GHCR |
+| Deploy | Vercel |
 
 ## Prerequisites
 
@@ -20,13 +20,15 @@ SaaS platform for Kazakhstani entrepreneurs to create mobile-friendly online sto
 - Supabase account (for auth, DB, storage)
 - Vercel account (for deployment)
 
+> Pre-launch: the app currently runs without a live database. Supabase keys are placeholders until the Bangladesh project is provisioned.
+
 ## Setup
 
 ```bash
 # Install dependencies
 npm install
 
-# Start dev server
+# Start dev server (port 8082)
 npm run dev
 
 # Type check
@@ -50,7 +52,7 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 
 | Command | Action |
 |---------|--------|
-| `npm run dev` | Start Vite dev server (port 8080) |
+| `npm run dev` | Start Vite dev server (port 8082) |
 | `npm run build` | Production build |
 | `npm run lint` | ESLint check |
 | `npm test` | Run vitest unit tests |
@@ -69,13 +71,13 @@ src/
   contexts/    React contexts (Language)
   test/        Unit tests
 supabase/
-  functions/   12 Deno edge functions
-  migrations/  43 PostgreSQL migrations
+  functions/   Deno edge functions
+  migrations/  PostgreSQL migrations
 ```
 
 ## Languages
 
-- English, Russian, Kazakh — configurable via language toggle
+- English, Bengali — configurable via language toggle
 - Language preference persisted in localStorage
 
 ## License

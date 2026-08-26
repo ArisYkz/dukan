@@ -16,8 +16,8 @@ project_id = "bot"
 
 [auth]
   additional_redirect_urls = [
-    "http://127.0.0.1:8081",
-    "http://127.0.0.1:8081/update-password",
+    "http://127.0.0.1:8082",
+    "http://127.0.0.1:8082/update-password",
   ]
   enable_anonymous_sign_ins = false
   enable_manual_linking = false
@@ -28,7 +28,7 @@ project_id = "bot"
   minimum_password_length = 6
   password_requirements = ""
   refresh_token_reuse_interval = 10
-  site_url = "http://127.0.0.1:8081"
+  site_url = "http://127.0.0.1:8082"
   [auth.email]
     double_confirm_changes = true
     enable_confirmations = false
