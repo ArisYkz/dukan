@@ -1,0 +1,73 @@
+/// <reference types="npm:@types/react@18.3.1" />
+
+import * as React from 'npm:react@18.3.1'
+
+import {
+  Body,
+  Button,
+  Container,
+  Head,
+  Hr,
+  Heading,
+  Html,
+  Preview,
+  Text,
+} from 'npm:@react-email/components@0.0.22'
+
+interface RecoveryEmailProps {
+  siteName: string
+  confirmationUrl: string
+}
+
+export const RecoveryEmail = ({
+  confirmationUrl,
+}: RecoveryEmailProps) => (
+  <Html lang="kk" dir="ltr">
+    <Head />
+    <Preview>🇰🇿 Құпия сөзді қалпына келтіру / 🇷🇺 Сброс пароля — Duken</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Text style={brandLabel}>DUKEN</Text>
+        <Text style={localeLabel}>🇰🇿 ҚАЗАҚША</Text>
+        <Heading style={title}>Сәлем!</Heading>
+        <Text style={text}>
+          Құпия сөзді қалпына келтіру сұранысы алынды. Төмендегі батырманы басыңыз:
+        </Text>
+        <Hr style={divider} />
+        <Text style={localeLabel}>🇷🇺 РУССКИЙ</Text>
+        <Heading style={title}>Здравствуйте!</Heading>
+        <Text style={text}>
+          Мы получили запрос на сброс пароля. Нажмите кнопку ниже:
+        </Text>
+        <div style={buttonWrap}>
+          <Button style={button} href={confirmationUrl}>
+            Құпия сөзді қалпына келтіру / Сбросить пароль
+          </Button>
+        </div>
+        <Text style={footer}>
+          Егер сіз бұл сұранымды жібермесеңіз, бұл хатты елемеуіңізге болады.
+          <br />
+          Если вы не отправляли этот запрос, просто проигнорируйте это письмо.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+)
+
+export default RecoveryEmail
+
+const main = { backgroundColor: '#ffffff', fontFamily: "'Manrope', Arial, sans-serif", margin: 0, padding: '32px 0' }
+const container = { border: '1px solid hsl(40 18% 86%)', borderRadius: '4px', maxWidth: '560px', padding: '40px' }
+const brandLabel = { color: 'hsl(28 45% 42%)', fontSize: '12px', letterSpacing: '0.18em', margin: '0 0 24px', textAlign: 'center' as const }
+const localeLabel = { color: 'hsl(28 45% 42%)', fontSize: '12px', letterSpacing: '0.1em', margin: '0 0 8px' }
+const title = { color: 'hsl(0 0% 15%)', fontFamily: "'Playfair Display', Georgia, serif", fontSize: '24px', fontWeight: 500, margin: '0 0 12px' }
+const text = {
+  fontSize: '14px',
+  color: 'hsl(0 0% 40%)',
+  lineHeight: '1.7',
+  margin: '0 0 20px',
+}
+const divider = { borderColor: 'hsl(40 18% 86%)', margin: '24px 0' }
+const buttonWrap = { margin: '32px 0 16px', textAlign: 'center' as const }
+const button = { backgroundColor: 'hsl(0 0% 15%)', color: 'hsl(47 33% 97%)', fontSize: '13px', borderRadius: '4px', fontWeight: 600, letterSpacing: '0.14em', padding: '14px 32px', textDecoration: 'none', textTransform: 'uppercase' as const }
+const footer = { fontSize: '12px', color: 'hsl(0 0% 60%)', lineHeight: '1.6', margin: '16px 0 0', textAlign: 'center' as const }

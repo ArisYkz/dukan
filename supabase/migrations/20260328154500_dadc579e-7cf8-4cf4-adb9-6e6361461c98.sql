@@ -1,0 +1,1 @@
+ALTER TABLE public.stores ADD COLUMN default_language text NOT NULL DEFAULT 'en';

@@ -1,0 +1,2 @@
+ALTER TABLE public.orders DROP CONSTRAINT orders_status_check;
+ALTER TABLE public.orders ADD CONSTRAINT orders_status_check CHECK (status = ANY (ARRAY['new'::text, 'awaiting_verification'::text, 'paid_confirmed'::text, 'payment_rejected'::text, 'confirmed'::text, 'shipped'::text, 'delivered'::text, 'cancelled'::text]));

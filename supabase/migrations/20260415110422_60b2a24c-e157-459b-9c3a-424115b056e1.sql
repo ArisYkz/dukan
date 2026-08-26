@@ -1,0 +1,1 @@
+ALTER TABLE public.stores ADD COLUMN theme_preset text NOT NULL DEFAULT 'classic';

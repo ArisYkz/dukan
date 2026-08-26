@@ -1,0 +1,3 @@
+ALTER TABLE public.orders
+  ADD COLUMN IF NOT EXISTS subtotal integer NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS tax_amount integer NOT NULL DEFAULT 0;

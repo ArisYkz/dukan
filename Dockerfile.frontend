@@ -1,0 +1,24 @@
+# syntax=docker/dockerfile:1
+
+# Build stage
+FROM oven/bun:1 AS builder
+WORKDIR /app
+
+# Install dependencies using Bun lockfile for reproducible builds
+COPY package.json bun.lockb ./
+RUN bun install
+
+# Build static assets
+COPY . .
+RUN bun run build
+
+# Runtime stage
+FROM nginx:1.27-alpine AS runner
+
+# Replace default nginx config to support SPA routes and listen on 8080 for App Platform
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]

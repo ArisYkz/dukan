@@ -1,0 +1,1 @@
+ALTER TABLE public.stores ADD COLUMN show_banner boolean NOT NULL DEFAULT true;
