@@ -13,6 +13,7 @@
 -- === SCHEMA: cron_helper ===
 -- Use a dedicated schema instead of cron to avoid DDL restrictions
 
+create extension if not exists pg_cron;
 create schema if not exists cron_helper;
 
 -- === HELPER: get vault secret by name ===

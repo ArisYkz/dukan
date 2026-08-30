@@ -112,7 +112,7 @@ project_id = "bot"
     port = 54329
   [db.seed]
     enabled = true
-    sql_paths = ["./seed.sql"]
+    sql_paths = ["./seed_makeup_store.sql"]
 
 [edge_runtime]
   enabled = true

@@ -1,19 +1,15 @@
--- Set cache control + image transformation defaults for remaining buckets
+-- Set cache control defaults — no-op on newer storage where the
+-- cache_control column does not exist.
 
 DO $$
 BEGIN
-  -- store-assets bucket (hero banners, branding)
-  IF EXISTS (SELECT 1 FROM storage.buckets WHERE name = 'store-assets') THEN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'storage' AND table_name = 'buckets' AND column_name = 'cache_control'
+  ) THEN
     UPDATE storage.buckets
     SET cache_control = 'max-age=31536000, immutable'
-    WHERE name = 'store-assets';
-  END IF;
-
-  -- qr-codes bucket
-  IF EXISTS (SELECT 1 FROM storage.buckets WHERE name = 'qr-codes') THEN
-    UPDATE storage.buckets
-    SET cache_control = 'max-age=31536000, immutable'
-    WHERE name = 'qr-codes';
+    WHERE name IN ('store-assets', 'qr-codes');
   END IF;
 END $$;
 

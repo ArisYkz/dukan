@@ -1,0 +1,7 @@
+DELETE FROM public.order_items WHERE product_id IN (SELECT id FROM public.products WHERE store_id IN (SELECT id FROM public.stores WHERE user_id = '5ee8ca6a-020e-4284-a653-645402565934'));
+DELETE FROM public.orders WHERE store_id IN (SELECT id FROM public.stores WHERE user_id = '5ee8ca6a-020e-4284-a653-645402565934');
+DELETE FROM public.products WHERE store_id IN (SELECT id FROM public.stores WHERE user_id = '5ee8ca6a-020e-4284-a653-645402565934');
+DELETE FROM public.stores WHERE user_id = '5ee8ca6a-020e-4284-a653-645402565934';
+DELETE FROM public.store_members WHERE user_id = '5ee8ca6a-020e-4284-a653-645402565934';
+DELETE FROM public.profiles WHERE user_id = '5ee8ca6a-020e-4284-a653-645402565934';
+DELETE FROM auth.users WHERE id = '5ee8ca6a-020e-4284-a653-645402565934';

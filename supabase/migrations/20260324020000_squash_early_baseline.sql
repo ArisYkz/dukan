@@ -58,11 +58,11 @@ CREATE TRIGGER update_profiles_updated_at
   BEFORE UPDATE ON public.profiles FOR EACH ROW
   EXECUTE FUNCTION public.update_updated_at_column();
 
-CREATE POLICY IF NOT EXISTS "Users can view their own profile"
+CREATE POLICY "Users can view their own profile"
   ON public.profiles FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS "Users can update their own profile"
+CREATE POLICY "Users can update their own profile"
   ON public.profiles FOR UPDATE USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS "Users can insert their own profile"
+CREATE POLICY "Users can insert their own profile"
   ON public.profiles FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- Auto-create profile on signup
@@ -96,13 +96,13 @@ CREATE TABLE IF NOT EXISTS public.stores (
 
 ALTER TABLE public.stores ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "Anyone can view stores"
+CREATE POLICY "Anyone can view stores"
   ON public.stores FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "Owners can insert stores"
+CREATE POLICY "Owners can insert stores"
   ON public.stores FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS "Owners can update stores"
+CREATE POLICY "Owners can update stores"
   ON public.stores FOR UPDATE USING (auth.uid() = user_id);
-CREATE POLICY IF NOT EXISTS "Owners can delete stores"
+CREATE POLICY "Owners can delete stores"
   ON public.stores FOR DELETE USING (auth.uid() = user_id);
 
 DROP TRIGGER IF EXISTS update_stores_updated_at ON public.stores;
@@ -144,21 +144,21 @@ CREATE TABLE IF NOT EXISTS public.products (
 
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "Anyone can view active products"
+CREATE POLICY "Anyone can view active products"
   ON public.products FOR SELECT USING (
     is_active = true OR EXISTS (
       SELECT 1 FROM public.stores WHERE stores.id = products.store_id AND stores.user_id = auth.uid()
     )
   );
-CREATE POLICY IF NOT EXISTS "Store owners can insert products"
+CREATE POLICY "Store owners can insert products"
   ON public.products FOR INSERT WITH CHECK (
     EXISTS (SELECT 1 FROM public.stores WHERE stores.id = products.store_id AND stores.user_id = auth.uid())
   );
-CREATE POLICY IF NOT EXISTS "Store owners can update products"
+CREATE POLICY "Store owners can update products"
   ON public.products FOR UPDATE USING (
     EXISTS (SELECT 1 FROM public.stores WHERE stores.id = products.store_id AND stores.user_id = auth.uid())
   );
-CREATE POLICY IF NOT EXISTS "Store owners can delete products"
+CREATE POLICY "Store owners can delete products"
   ON public.products FOR DELETE USING (
     EXISTS (SELECT 1 FROM public.stores WHERE stores.id = products.store_id AND stores.user_id = auth.uid())
   );
@@ -219,7 +219,7 @@ CREATE TRIGGER trg_set_order_public_id
   EXECUTE FUNCTION public.set_order_public_id();
 
 -- Policies
-CREATE POLICY IF NOT EXISTS "Anyone can view order by id"
+CREATE POLICY "Anyone can view order by id"
   ON public.orders FOR SELECT USING (true);
 
 DROP POLICY IF EXISTS "Anyone can create orders" ON public.orders;
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS public.order_items (
 
 ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "Anyone can view order items for their order"
+CREATE POLICY "Anyone can view order items for their order"
   ON public.order_items FOR SELECT USING (true);
 
 DROP POLICY IF EXISTS "Anyone can create order items" ON public.order_items;
@@ -287,10 +287,10 @@ CREATE TABLE IF NOT EXISTS public.product_images (
 
 ALTER TABLE public.product_images ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "Anyone can view product images"
+CREATE POLICY "Anyone can view product images"
   ON public.product_images FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "Store owners can manage product images"
+CREATE POLICY "Store owners can manage product images"
   ON public.product_images FOR ALL USING (
     EXISTS (
       SELECT 1 FROM public.products p JOIN public.stores s ON s.id = p.store_id
@@ -311,10 +311,10 @@ CREATE TABLE IF NOT EXISTS public.product_variants (
 
 ALTER TABLE public.product_variants ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "Anyone can view product variants"
+CREATE POLICY "Anyone can view product variants"
   ON public.product_variants FOR SELECT TO public USING (true);
 
-CREATE POLICY IF NOT EXISTS "Store owners can manage product variants"
+CREATE POLICY "Store owners can manage product variants"
   ON public.product_variants FOR ALL TO public USING (
     EXISTS (
       SELECT 1 FROM products p JOIN stores s ON s.id = p.store_id
@@ -333,7 +333,7 @@ CREATE TABLE IF NOT EXISTS public.order_contacts (
 
 ALTER TABLE public.order_contacts ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "Store owners can view contact phones"
+CREATE POLICY "Store owners can view contact phones"
   ON public.order_contacts FOR SELECT USING (
     EXISTS (
       SELECT 1 FROM public.stores
@@ -356,12 +356,12 @@ CREATE TABLE IF NOT EXISTS public.payment_attempts (
 
 ALTER TABLE public.payment_attempts ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY IF NOT EXISTS "Store owners can view payment attempts"
+CREATE POLICY "Store owners can view payment attempts"
   ON public.payment_attempts FOR SELECT USING (
     EXISTS (SELECT 1 FROM public.stores WHERE stores.id = payment_attempts.store_id AND stores.user_id = auth.uid())
   );
 
-CREATE POLICY IF NOT EXISTS "Store owners can update payment attempts"
+CREATE POLICY "Store owners can update payment attempts"
   ON public.payment_attempts FOR UPDATE USING (
     EXISTS (SELECT 1 FROM public.stores WHERE stores.id = payment_attempts.store_id AND stores.user_id = auth.uid())
   );
@@ -439,36 +439,36 @@ VALUES ('qr-codes', 'qr-codes', true)
 ON CONFLICT (id) DO NOTHING;
 
 -- Product-images policies
-CREATE POLICY IF NOT EXISTS "Anyone can view product images"
+CREATE POLICY "Anyone can view product images"
   ON storage.objects FOR SELECT USING (bucket_id = 'product-images');
-CREATE POLICY IF NOT EXISTS "Authenticated users can upload product images"
+CREATE POLICY "Authenticated users can upload product images"
   ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'product-images' AND auth.role() = 'authenticated');
-CREATE POLICY IF NOT EXISTS "Authenticated users can update product images"
+CREATE POLICY "Authenticated users can update product images"
   ON storage.objects FOR UPDATE USING (bucket_id = 'product-images' AND auth.role() = 'authenticated');
-CREATE POLICY IF NOT EXISTS "Authenticated users can delete product images"
+CREATE POLICY "Authenticated users can delete product images"
   ON storage.objects FOR DELETE USING (bucket_id = 'product-images' AND auth.role() = 'authenticated');
-CREATE POLICY IF NOT EXISTS "Owners can delete product images"
+CREATE POLICY "Owners can delete product images"
   ON storage.objects FOR DELETE TO authenticated
   USING (bucket_id = 'product-images' AND (storage.foldername(name))[1] = auth.uid()::text);
 
 -- Store-assets policies
-CREATE POLICY IF NOT EXISTS "Public read store-assets"
+CREATE POLICY "Public read store-assets"
   ON storage.objects FOR SELECT USING (bucket_id = 'store-assets');
-CREATE POLICY IF NOT EXISTS "Auth upload store-assets"
+CREATE POLICY "Auth upload store-assets"
   ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'store-assets' AND auth.role() = 'authenticated');
-CREATE POLICY IF NOT EXISTS "Auth update store-assets"
+CREATE POLICY "Auth update store-assets"
   ON storage.objects FOR UPDATE USING (bucket_id = 'store-assets' AND auth.role() = 'authenticated');
-CREATE POLICY IF NOT EXISTS "Auth delete store-assets"
+CREATE POLICY "Auth delete store-assets"
   ON storage.objects FOR DELETE USING (bucket_id = 'store-assets' AND auth.role() = 'authenticated');
 
 -- QR-codes policies
-CREATE POLICY IF NOT EXISTS "Public read qr-codes"
+CREATE POLICY "Public read qr-codes"
   ON storage.objects FOR SELECT USING (bucket_id = 'qr-codes');
-CREATE POLICY IF NOT EXISTS "Auth upload qr-codes"
+CREATE POLICY "Auth upload qr-codes"
   ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'qr-codes' AND auth.role() = 'authenticated');
-CREATE POLICY IF NOT EXISTS "Auth update qr-codes"
+CREATE POLICY "Auth update qr-codes"
   ON storage.objects FOR UPDATE USING (bucket_id = 'qr-codes' AND auth.role() = 'authenticated');
-CREATE POLICY IF NOT EXISTS "Auth delete qr-codes"
+CREATE POLICY "Auth delete qr-codes"
   ON storage.objects FOR DELETE USING (bucket_id = 'qr-codes' AND auth.role() = 'authenticated');
 
 -- 16. Indexes ─────────────────────────────────────────────────────────────────
@@ -484,4 +484,4 @@ CREATE INDEX IF NOT EXISTS payment_attempts_phone_hash_idx ON public.payment_att
 CREATE INDEX IF NOT EXISTS payment_attempts_requester_ip_idx ON public.payment_attempts(requester_ip);
 
 -- 17. Realtime ─────────────────────────────────────────────────────────────────
-ALTER PUBLICATION supabase_realtime ADD TABLE IF NOT EXISTS public.stores;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.stores;

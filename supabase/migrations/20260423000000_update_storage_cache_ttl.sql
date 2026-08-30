@@ -1,35 +1,17 @@
--- Migration: Update Supabase Storage Cache TTL to 1 Year
--- Purpose: Change default cache control from 1 hour to 1 year for better performance
--- Date: 2026-04-23
--- This migration only updates cache_control, safe to run multiple times
+-- Update Supabase Storage Cache TTL — no-op on newer storage where the
+-- cache_control column does not exist.
 
--- Update cache control for product-images bucket (if it exists)
-DO $$ 
+DO $$
 BEGIN
-  IF EXISTS (SELECT 1 FROM storage.buckets WHERE name = 'product-images') THEN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'storage' AND table_name = 'buckets' AND column_name = 'cache_control'
+  ) THEN
     UPDATE storage.buckets
     SET cache_control = 'max-age=31536000, immutable'
-    WHERE name = 'product-images';
-    RAISE NOTICE 'Updated cache_control for product-images bucket';
+    WHERE name IN ('product-images', 'product-assets');
+    RAISE NOTICE 'Updated cache_control for product-images/product-assets buckets';
   ELSE
-    RAISE NOTICE 'product-images bucket not found, skipping';
+    RAISE NOTICE 'storage.buckets.cache_control does not exist — skipping cache TTL update';
   END IF;
 END $$;
-
--- Update cache control for product-assets bucket (if it exists)
-DO $$ 
-BEGIN
-  IF EXISTS (SELECT 1 FROM storage.buckets WHERE name = 'product-assets') THEN
-    UPDATE storage.buckets
-    SET cache_control = 'max-age=31536000, immutable'
-    WHERE name = 'product-assets';
-    RAISE NOTICE 'Updated cache_control for product-assets bucket';
-  ELSE
-    RAISE NOTICE 'product-assets bucket not found, skipping';
-  END IF;
-END $$;
-
--- Verify the changes
-SELECT name, cache_control 
-FROM storage.buckets 
-WHERE name IN ('product-images', 'product-assets');

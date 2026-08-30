@@ -17,19 +17,15 @@ CREATE TABLE IF NOT EXISTS public.product_images (
 ALTER TABLE public.product_images ENABLE ROW LEVEL SECURITY;
 
 -- RLS for product_images
-DO $$ BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Anyone can view product images' AND tablename = 'product_images') THEN
-    CREATE POLICY "Anyone can view product images" ON public.product_images FOR SELECT USING (true);
-  END IF;
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Store owners can manage product images' AND tablename = 'product_images') THEN
-    CREATE POLICY "Store owners can manage product images" ON public.product_images FOR ALL USING (
-      EXISTS (
-        SELECT 1 FROM public.products p JOIN public.stores s ON s.id = p.store_id
-        WHERE p.id = product_images.product_id AND s.user_id = auth.uid()
-      )
-    );
-  END IF;
-END $$;
+DROP POLICY IF EXISTS "Anyone can view product images" ON public.product_images;
+CREATE POLICY "Anyone can view product images" ON public.product_images FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Store owners can manage product images" ON public.product_images;
+CREATE POLICY "Store owners can manage product images" ON public.product_images FOR ALL USING (
+  EXISTS (
+    SELECT 1 FROM public.products p JOIN public.stores s ON s.id = p.store_id
+    WHERE p.id = product_images.product_id AND s.user_id = auth.uid()
+  )
+);
 
 -- Create store-assets bucket
 INSERT INTO storage.buckets (id, name, public) VALUES ('store-assets', 'store-assets', true) ON CONFLICT (id) DO NOTHING;
