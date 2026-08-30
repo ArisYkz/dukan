@@ -37,7 +37,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://dukan-project.supabase.co https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://dukan-project.supabase.co; connect-src 'self' https://dukan-project.supabase.co wss://hitoidaosclbcgckbsip.supabase.co https://api.telegram.org; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; form-action 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://jdcsyjukrxtgzduzhngh.supabase.co https://bmeqacenolbuxwirxpit.supabase.co; connect-src 'self' https://jdcsyjukrxtgzduzhngh.supabase.co wss://jdcsyjukrxtgzduzhngh.supabase.co https://api.telegram.org; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; form-action 'self';"
         }
       ]
     }
