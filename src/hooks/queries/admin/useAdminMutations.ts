@@ -34,7 +34,8 @@ export const useAdminMutations = () => {
   const updateSub = useMutation({
     mutationFn: ({ userId, data }: { userId: string; data: { plan_type?: string; subscription_status?: string; subscription_expiry?: string | null; role?: string } }) =>
       adminUpdateSubscription(userId, data),
-    onSuccess: () => { toast.success("Subscription updated"); invalidate(); },
+    // Also refresh the affected user's own dashboard cache (plan limits read from it)
+    onSuccess: (_res, { userId }) => { toast.success("Subscription updated"); invalidate(); qc.invalidateQueries({ queryKey: ["user-profile", userId] }); },
     onError: (e: Error) => toast.error(e.message),
   });
 

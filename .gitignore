@@ -53,3 +53,6 @@ playwright-report/
 # Package managers (npm is canonical)
 bun.lock
 bun.lockb
+
+.vercel
+.env*

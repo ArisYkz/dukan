@@ -38,6 +38,23 @@ export const useStoreData = () => {
 
   const profile = profileQuery.data;
 
+  // Live-sync profile: admin plan/status changes (e.g. upgrade) reflect
+  // without waiting for the next refetch — same pattern as SubscriptionSection.
+  useEffect(() => {
+    if (!user?.id) return;
+    const channel = supabase
+      .channel("user-profile-sync")
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "profiles", filter: `user_id=eq.${user.id}` },
+        () => queryClient.invalidateQueries({ queryKey: ["user-profile", user.id] })
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id, queryClient]);
+
   // Restore persisted selection, defaulting to first store
   const [currentStoreId, setCurrentStoreId] = useState<string | null>(() => {
     const stored = localStorage.getItem(STORE_ID_KEY);
