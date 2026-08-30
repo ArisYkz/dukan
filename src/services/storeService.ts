@@ -1,8 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
 
-/**
- * Fetch a single store by slug (public storefront use).
- */
 export const fetchStoreBySlug = async (slug: string) => {
   const { data, error } = await supabase
     .from("stores")
@@ -23,9 +20,6 @@ export const fetchStoreBySlug = async (slug: string) => {
   return data;
 };
 
-/**
- * Fetch all stores the current user is a member of (via store_members).
- */
 export const fetchUserStores = async (userId: string) => {
   const { data: memberships, error } = await supabase
     .from("store_members")
@@ -37,30 +31,32 @@ export const fetchUserStores = async (userId: string) => {
     .filter(Boolean);
 };
 
-/**
- * Create a new store.
- */
 export const createStore = async (userId: string, name: string, slug: string) => {
+  await supabase.auth.refreshSession();
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  if (sessionError || !session) {
+    console.error("DEBUG: no active session - passed userId:", userId);
+    return { error: { message: "No active session", code: "403" } };
+  }
+  console.log("DEBUG session.user.id:", session.user.id, "passed userId:", userId);
+  if (session.user.id !== userId) {
+    console.error("DEBUG MISMATCH session.user.id:", session.user.id, "passed userId:", userId);
+    return { error: { message: "User ID does not match session", code: "403" } };
+  }
+
   const { error } = await supabase.from("stores").insert({
-    user_id: userId,
+    user_id: session.user.id,
     name,
     slug,
   });
   return { error };
 };
 
-/**
- * Update store branding fields.
- */
 export const updateStoreBranding = async (storeId: string, data: Record<string, unknown>) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { error } = await supabase.from("stores").update(data as any).eq("id", storeId);
   return { error };
 };
 
-/**
- * Check if a slug is already taken by another store.
- */
 export const checkSlugAvailability = async (slug: string, excludeStoreId: string) => {
   const { data } = await supabase
     .from("stores")
@@ -71,32 +67,19 @@ export const checkSlugAvailability = async (slug: string, excludeStoreId: string
   return !!data;
 };
 
-/**
- * Increment store view count (fire-and-forget).
- */
 export const incrementStoreViews = async (storeId: string) => {
   try {
     await supabase.rpc("increment_store_views", { _store_id: storeId });
   } catch {
-    // Silently ignore network errors - view count is non-critical
+    // Silently ignore network errors
   }
 };
 
-/**
- * Check if a store is paused.
- */
 export const checkStorePaused = async (storeId: string): Promise<boolean> => {
-  const { data } = await supabase
-    .from("stores")
-    .select("is_paused")
-    .eq("id", storeId)
-    .single();
+  const { data } = await supabase.from("stores").select("is_paused").eq("id", storeId).single();
   return data?.is_paused === true;
 };
 
-/**
- * Fetch user profile display name.
- */
 export const fetchUserProfile = async (userId: string) => {
   const { data, error } = await supabase
     .from("profiles")
@@ -107,13 +90,7 @@ export const fetchUserProfile = async (userId: string) => {
   return data;
 };
 
-/**
- * Update user profile display name.
- */
 export const updateUserProfile = async (userId: string, displayName: string) => {
-  const { error } = await supabase
-    .from("profiles")
-    .update({ display_name: displayName })
-    .eq("user_id", userId);
+  const { error } = await supabase.from("profiles").update({ display_name: displayName }).eq("user_id", userId);
   return { error };
 };
