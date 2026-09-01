@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { ERROR_CODES } from "@/lib/errorCodes";
 import { optimizeImage, formatBytes, preprocessStoreImage } from "@/lib/imageOptimizer";
 import { deleteStorageFile } from "@/lib/storageCleanup";
+import { useLabels } from "@/hooks/useLabels";
 
 interface ImageCropUploadProps {
   bucket: string;
@@ -57,13 +58,15 @@ const ImageCropUpload = ({
   value,
   onUpload,
   onRemove,
-  label = "Upload image",
+  label,
   accept = "image/*",
   className = "",
   previewClass = "w-full h-40 object-cover rounded-sm",
   aspectRatio,
   imageType = 'product',
 }: ImageCropUploadProps) => {
+  const { IMAGE_UPLOAD } = useLabels();
+  const resolvedLabel = label ?? IMAGE_UPLOAD.LABEL;
   const [uploading, setUploading] = useState(false);
   const [optimizing, setOptimizing] = useState(false);
   const [cropSrc, setCropSrc] = useState<string | null>(null);
@@ -201,7 +204,7 @@ const ImageCropUpload = ({
                   className="flex-1 bg-primary text-primary-foreground py-2.5 text-sm tracking-wide uppercase rounded-sm hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {(uploading || optimizing) ? <Loader2 className="w-4 h-4 animate-spin" /> : <Crop className="w-4 h-4" />}
-                  {optimizing ? "Оңтайландыру..." : uploading ? "Жүктелуде..." : "Crop & Upload"}
+                  {optimizing ? IMAGE_UPLOAD.OPTIMIZING : uploading ? IMAGE_UPLOAD.UPLOADING : IMAGE_UPLOAD.CROP_UPLOAD}
                 </button>
                 <button
                   type="button"
@@ -237,7 +240,7 @@ const ImageCropUpload = ({
           className="w-full border border-dashed border-border rounded-sm p-6 flex flex-col items-center gap-2 text-muted-foreground hover:border-ring hover:text-foreground transition-colors disabled:opacity-50"
         >
           <Upload className="w-5 h-5" />
-          <span className="text-xs tracking-wide uppercase">{label}</span>
+          <span className="text-xs tracking-wide uppercase">{resolvedLabel}</span>
         </button>
       )}
       <input

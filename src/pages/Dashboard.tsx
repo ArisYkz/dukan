@@ -14,6 +14,7 @@ import {
 import { FREE_CONFIRMED_LIMIT, OrderStatus } from "@/constants/business";
 import { ERROR_CODES, useFormatError } from "@/lib/errorCodes";
 import { useLabels } from "@/hooks/useLabels";
+import { useTranslation } from "react-i18next";
 import { isSlugOffensive } from "@/lib/slugFilter";
 import { createStore as createStoreService } from "@/services/storeService";
 import { deleteProduct as deleteProductService } from "@/services/productService";
@@ -41,20 +42,21 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const ProOnlyGate = ({ onUpgrade }: { onUpgrade: () => void }) => {
-  const { UPGRADE } = useLabels();
+  const { UPGRADE, DASHBOARD_BANNERS } = useLabels();
   return (
     <div className="flex flex-col items-center justify-center py-20 space-y-4">
       <Lock className="w-10 h-10 text-muted-foreground" />
       <p className="text-sm text-muted-foreground tracking-wide uppercase">{UPGRADE.GENERIC_PRO_ONLY}</p>
       <button onClick={onUpgrade} className="bg-primary text-primary-foreground px-6 py-2.5 text-sm rounded-sm hover:opacity-90 transition-opacity">
-        Upgrade to Pro
+        {DASHBOARD_BANNERS.UPGRADE_TO_PRO}
       </button>
     </div>
   );
 };
 
 const Dashboard = () => {
-  const { MESSAGES, CONFIRM, CSV_HEADERS, AUTH, ACTIONS, PRODUCTS_TAB, ERRORS } = useLabels();
+  const { MESSAGES, CONFIRM, CSV_HEADERS, AUTH, ACTIONS, PRODUCTS_TAB, ERRORS, DASHBOARD_BANNERS } = useLabels();
+  const { t } = useTranslation();
   const formatError = useFormatError();
   const { dark } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -293,16 +295,16 @@ const Dashboard = () => {
             <div className="border-b border-border">
               <div className="container py-8 space-y-4">
                 <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
-                  Іс-әрекет қажет
+                  {DASHBOARD_BANNERS.ACTION_REQUIRED}
                 </p>
                 <p className="font-mono text-sm text-foreground max-w-lg leading-relaxed">
-                  Сіздің айлық лимитіңіз аяқталды ({formatPrice(store.total_earned || 0)} / {formatPrice(FREE_CONFIRMED_LIMIT)}). Сауданы жалғастыру үшін Pro нұсқасына өтіңіз.
+                  {t("DASHBOARD_BANNERS.LIMIT_REACHED_DESC", { earned: formatPrice(store.total_earned || 0), limit: formatPrice(FREE_CONFIRMED_LIMIT) })}
                 </p>
                 <button
                   onClick={() => setTab("billing")}
                   className="font-mono text-[10px] tracking-[0.15em] uppercase px-6 py-2.5 bg-accent text-accent-foreground hover:opacity-90 transition-opacity"
                 >
-                  Upgrade to Pro
+                  {DASHBOARD_BANNERS.UPGRADE_TO_PRO}
                 </button>
               </div>
             </div>
@@ -313,19 +315,19 @@ const Dashboard = () => {
             <div className="border-b border-border">
               <div className="container py-8 space-y-4">
                 <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
-                  Қауіпсіздік тексерісі
+                  {DASHBOARD_BANNERS.SECURITY_CHECK}
                 </p>
                 <p className="font-mono text-sm text-foreground max-w-lg leading-relaxed">
-                  Дүкенге шағым түсті. Тексеруден өту үшін жеке куәлікті жүктеп, Верификациядан өтіңіз.
+                  {DASHBOARD_BANNERS.REVIEW_DESC}
                 </p>
                 <p className="font-mono text-[10px] text-muted-foreground max-w-lg leading-relaxed">
-                  Pro тексерілген дүкендерге автоматты блоктау қолданылмайды — тек әкімші тексереді.
+                  {DASHBOARD_BANNERS.REVIEW_PRO_NOTE}
                 </p>
                 <button
                   onClick={() => setTab("billing")}
                   className="font-mono text-[10px] tracking-[0.15em] uppercase px-6 py-2.5 bg-accent text-accent-foreground hover:opacity-90 transition-opacity"
                 >
-                  Верификациядан өту
+                  {DASHBOARD_BANNERS.GET_VERIFIED}
                 </button>
               </div>
             </div>

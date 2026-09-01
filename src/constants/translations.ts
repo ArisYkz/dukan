@@ -137,6 +137,8 @@ const en: TranslationMap = {
     RETURN_TO_STORE: "Return to Store",
     KEEP_LINK: "Save this link to track your order status later:",
     COPY_LINK: "Copy tracking link", LINK_COPIED: "Link copied!",
+    WHATSAPP_MESSAGE: "Hello!\nNew order: {{orderId}}\nStore: {{storeName}}\n\nItems:\n{{items}}\n\nTotal: {{total}}\nReference code: {{reference}}\n\nPlease confirm the payment.",
+    NO_REFERENCE: "none",
   },
   TRACKING: {
     ORDER_NUMBER: "Order Number", ORDER_NOT_FOUND: "Order Not Found",
@@ -154,6 +156,9 @@ const en: TranslationMap = {
     CONTACT_VIA_TELEGRAM: "Contact via Telegram",
     CONTACT_VIA_INSTAGRAM: "Contact via Instagram", REFRESH: "Refresh",
     STATUS: "Status",
+    STORE_NOT_ACCEPTING: "This store is temporarily not accepting orders",
+    STORE_NOT_ACCEPTING_DESC: "This store is temporarily not accepting orders.",
+    WHATSAPP_MESSAGE: "Hello! I placed order #{{orderId}} from {{storeName}}. Amount: {{amount}}",
   },
   STOREFRONT: {
     COLLECTION: "Collection", ALL: "All", NO_PRODUCTS: "No products yet",
@@ -167,6 +172,7 @@ const en: TranslationMap = {
     FOR_LOCAL_ENTREPRENEURS: "For local entrepreneurs",
     REPORT_STORE: "Report Store",
     UNDER_REVIEW_BANNER: "THIS STORE IS UNDER SECURITY REVIEW",
+    PAUSED_BANNER: "STORE TEMPORARILY NOT ACCEPTING ORDERS",
     RECOMMENDED: "Default", PRICE: "Price",
     CATEGORY_EMPTY: "Stay tuned — more items coming soon!",
     SORT_BY: "SORT BY",
@@ -433,6 +439,28 @@ const en: TranslationMap = {
     DESCRIPTION: "If you believe this is an error, please contact support.",
     CONTACT_SUPPORT: "Contact Support",
   },
+  COOKIE_CONSENT: {
+    MESSAGE: "Dokan only uses essential cookies required for registration and session management.",
+    LEARN_MORE: "Learn more",
+    ACCEPT: "Accept",
+  },
+  DASHBOARD_BANNERS: {
+    ACTION_REQUIRED: "Action required",
+    LIMIT_REACHED_DESC: "Your monthly limit has been reached ({{earned}} / {{limit}}). Upgrade to Pro to continue selling.",
+    UPGRADE_TO_PRO: "Upgrade to Pro",
+    SECURITY_CHECK: "Security check",
+    REVIEW_DESC: "A complaint was filed against your store. Upload your ID and complete verification to pass the review.",
+    REVIEW_PRO_NOTE: "Pro verified stores are not auto-blocked — only an admin reviews them.",
+    GET_VERIFIED: "Get Verified",
+  },
+  IMAGE_UPLOAD: {
+    LABEL: "Upload image",
+    FILE_TOO_LARGE: "File must be under 10MB",
+    UPLOAD_ERROR: "Upload error: ",
+    OPTIMIZING: "Optimizing...",
+    UPLOADING: "Uploading...",
+    CROP_UPLOAD: "Crop & Upload",
+  },
   STORE_CREATION: {
     TITLE: "Create Store", STORE_NAME: "Store Name", SLUG: "Slug (link)",
     DESCRIPTION: "Description", INSTAGRAM: "Instagram",
@@ -579,6 +607,8 @@ const en: TranslationMap = {
     MONTH_NAMES: "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec",
     CSV_HEADERS: "Order ID,Store,Name,Phone,Address,Items,Subtotal,Discount,Promo Code,Tax Rate (%),Tax Paid,Total,Status,Reference Code,Date",
     COLOR_PRESETS: "Black,White,Gray,Beige,Brown,Blue,Red",
+    LIGHT_MODE: "Light mode",
+    DARK_MODE: "Dark mode",
   },
 };
 
@@ -715,6 +745,8 @@ const bn: TranslationMap = {
     RETURN_TO_STORE: "দোকানে ফিরুন",
     KEEP_LINK: "পরে অর্ডারের অবস্থা ট্র্যাক করতে এই লিংকটি সংরক্ষণ করুন:",
     COPY_LINK: "ট্র্যাকিং লিংক কপি করুন", LINK_COPIED: "লিংক কপি হয়েছে!",
+    WHATSAPP_MESSAGE: "হ্যালো!\nনতুন অর্ডার: {{orderId}}\nদোকান: {{storeName}}\n\nপণ্যসমূহ:\n{{items}}\n\nমোট: {{total}}\nরেফারেন্স কোড: {{reference}}\n\nঅনুগ্রহ করে পেমেন্ট নিশ্চিত করুন।",
+    NO_REFERENCE: "নেই",
   },
   TRACKING: {
     ORDER_NUMBER: "অর্ডার নম্বর", ORDER_NOT_FOUND: "অর্ডার পাওয়া যায়নি",
@@ -732,6 +764,9 @@ const bn: TranslationMap = {
     CONTACT_VIA_TELEGRAM: "Telegram-এ যোগাযোগ করুন",
     CONTACT_VIA_INSTAGRAM: "Instagram-এ যোগাযোগ করুন", REFRESH: "রিফ্রেশ",
     STATUS: "স্ট্যাটাস",
+    STORE_NOT_ACCEPTING: "এই দোকান সাময়িকভাবে অর্ডার গ্রহণ বন্ধ করেছে",
+    STORE_NOT_ACCEPTING_DESC: "এই দোকান সাময়িকভাবে অর্ডার গ্রহণ বন্ধ করেছে।",
+    WHATSAPP_MESSAGE: "হ্যালো! আমি {{storeName}}-এ নং {{orderId}} অর্ডার করেছি। মোট: {{amount}}",
   },
   STOREFRONT: {
     COLLECTION: "কালেকশন", ALL: "সব", NO_PRODUCTS: "এখনো কোনো পণ্য নেই",
@@ -745,6 +780,7 @@ const bn: TranslationMap = {
     FOR_LOCAL_ENTREPRENEURS: "স্থানীয় উদ্যোক্তাদের জন্য",
     REPORT_STORE: "দোকান রিপোর্ট করুন",
     UNDER_REVIEW_BANNER: "এই দোকানটি নিরাপত্তা পর্যালোচনাধীন",
+    PAUSED_BANNER: "দোকান সাময়িকভাবে অর্ডার গ্রহণ বন্ধ করেছে",
     RECOMMENDED: "ডিফল্ট", PRICE: "দাম",
     CATEGORY_EMPTY: "অপেক্ষা করুন — শীঘ্রই আরও পণ্য আসছে!",
     SORT_BY: "সাজান",
@@ -1011,6 +1047,28 @@ const bn: TranslationMap = {
     DESCRIPTION: "যদি আপনি মনে করেন এটি একটি ত্রুটি, অনুগ্রহ করে সাপোর্টে যোগাযোগ করুন।",
     CONTACT_SUPPORT: "সাপোর্টে যোগাযোগ করুন",
   },
+  COOKIE_CONSENT: {
+    MESSAGE: "Dokan শুধুমাত্র নিবন্ধন ও সেশন পরিচালনার জন্য প্রয়োজনীয় কুকি ব্যবহার করে।",
+    LEARN_MORE: "আরও জানুন",
+    ACCEPT: "গ্রহণ করুন",
+  },
+  DASHBOARD_BANNERS: {
+    ACTION_REQUIRED: "প্রয়োজনীয় পদক্ষেপ",
+    LIMIT_REACHED_DESC: "আপনার মাসিক লিমিট শেষ হয়েছে ({{earned}} / {{limit}})। বিক্রি চালিয়ে যেতে Pro-তে আপগ্রেড করুন।",
+    UPGRADE_TO_PRO: "Pro-তে আপগ্রেড করুন",
+    SECURITY_CHECK: "নিরাপত্তা পর্যালোচনা",
+    REVIEW_DESC: "আপনার দোকানে অভিযোগ জমা হয়েছে। পর্যালোচনা পাস করতে পরিচয়পত্র আপলোড করে ভেরিফিকেশন সম্পূর্ণ করুন।",
+    REVIEW_PRO_NOTE: "Pro ভেরিফায়েড দোকান স্বয়ংক্রিয়ভাবে ব্লক হয় না — শুধু অ্যাডমিন পর্যালোচনা করে।",
+    GET_VERIFIED: "ভেরিফিকেশন করুন",
+  },
+  IMAGE_UPLOAD: {
+    LABEL: "ছবি আপলোড করুন",
+    FILE_TOO_LARGE: "ফাইল 10MB-এর কম হতে হবে",
+    UPLOAD_ERROR: "আপলোড ত্রুটি: ",
+    OPTIMIZING: "অপটিমাইজ হচ্ছে...",
+    UPLOADING: "আপলোড হচ্ছে...",
+    CROP_UPLOAD: "ক্রপ ও আপলোড করুন",
+  },
   STORE_CREATION: {
     TITLE: "দোকান তৈরি করুন", STORE_NAME: "দোকানের নাম", SLUG: "Slug (লিংক)",
     DESCRIPTION: "বিবরণ", INSTAGRAM: "Instagram",
@@ -1157,6 +1215,8 @@ const bn: TranslationMap = {
     MONTH_NAMES: "জান,ফেব্রু,মার্চ,এপ্রিল,মে,জুন,জুলাই,আগস্ট,সেপ্ট,অক্টো,নভে,ডিসে",
     CSV_HEADERS: "Order ID,Store,Name,Phone,Address,Items,Subtotal,Discount,Promo Code,Tax Rate (%),Tax Paid,Total,Status,Reference Code,Date",
     COLOR_PRESETS: "কালো,সাদা,ধূসর,বেইজ,বাদামি,নীল,লাল",
+    LIGHT_MODE: "লাইট মোড",
+    DARK_MODE: "ডার্ক মোড",
   },
 };
 

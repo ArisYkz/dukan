@@ -3,6 +3,7 @@ import { Upload, X, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { optimizeImage, formatBytes } from "@/lib/imageOptimizer";
+import { useLabels } from "@/hooks/useLabels";
 
 interface ImageUploadProps {
   bucket: string;
@@ -22,11 +23,13 @@ const ImageUpload = ({
   value,
   onUpload,
   onRemove,
-  label = "Сурет жүктеу",
+  label,
   accept = "image/*",
   className = "",
   previewClass = "w-full h-40 object-cover rounded-sm",
 }: ImageUploadProps) => {
+  const { IMAGE_UPLOAD } = useLabels();
+  const resolvedLabel = label ?? IMAGE_UPLOAD.LABEL;
   const [uploading, setUploading] = useState(false);
   const [optimizing, setOptimizing] = useState(false);
   const [compressionStats, setCompressionStats] = useState<{ original: string; optimized: string; savings: string } | null>(null);
@@ -37,7 +40,7 @@ const ImageUpload = ({
     if (!file) return;
 
     if (file.size > 10 * 1024 * 1024) {
-      toast.error("Файл 10MB-дан аспауы керек");
+      toast.error(IMAGE_UPLOAD.FILE_TOO_LARGE);
       return;
     }
 
@@ -71,7 +74,7 @@ const ImageUpload = ({
       onUpload(data.publicUrl);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Unknown error";
-      toast.error("Жүктеу қатесі: " + message);
+      toast.error(IMAGE_UPLOAD.UPLOAD_ERROR + message);
     } finally {
       setUploading(false);
       setOptimizing(false);
@@ -105,7 +108,7 @@ const ImageUpload = ({
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
               <span className="text-xs tracking-wide uppercase">
-                {optimizing ? "🗜️ Оңтайландыру..." : "☁️ Жүктелуде..."}
+                {optimizing ? `🗜️ ${IMAGE_UPLOAD.OPTIMIZING}` : `☁️ ${IMAGE_UPLOAD.UPLOADING}`}
               </span>
               {compressionStats && (
                 <span className="text-[10px] text-muted-foreground">
@@ -116,7 +119,7 @@ const ImageUpload = ({
           ) : (
             <>
               <Upload className="w-5 h-5" />
-              <span className="text-xs tracking-wide uppercase">{label}</span>
+              <span className="text-xs tracking-wide uppercase">{resolvedLabel}</span>
             </>
           )}
         </button>

@@ -7,9 +7,11 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
 import { useLabels } from "@/hooks/useLabels";
+import { useTranslation } from "react-i18next";
 
 const SuccessPage = () => {
   const { SUCCESS } = useLabels();
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const storeSlug = searchParams.get("store");
   const orderId = searchParams.get("orderId");
@@ -60,13 +62,13 @@ const SuccessPage = () => {
 
         const orderDisplayId = order.public_order_id || order.reference_code || order.id?.slice(0, 8) || '';
         const message = encodeURIComponent(
-          `Сәлем!\n` +
-          `Жаңа тапсырыс: ${orderDisplayId}\n` +
-          `Дүкен: ${store.name}\n\n` +
-          `Тауарлар:\n${itemsList}\n\n` +
-          `Барлығы: ${formatPrice(order.total_price)}\n` +
-          `Реттеу коды: ${order.reference_code || 'жоқ'}\n\n` +
-          `Төлемді растаңыз.`
+          t("SUCCESS.WHATSAPP_MESSAGE", {
+            orderId: orderDisplayId,
+            storeName: store.name,
+            items: itemsList,
+            total: formatPrice(order.total_price),
+            reference: order.reference_code || SUCCESS.NO_REFERENCE,
+          })
         );
 
         return platform === "telegram" ? `https://t.me/${handle}` :

@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { formatPrice } from "@/lib/format";
 import { useLabels } from "@/hooks/useLabels";
+import { useTranslation } from "react-i18next";
 import StarRating from "@/components/StarRating";
 
 interface OrderData {
@@ -59,6 +60,7 @@ const formatCountdown = (ms: number) => {
 
 const OrderTracking = () => {
   const { TRACKING, ACTIONS, MESSAGES, STATUS_DISPLAY, ORDER_STEPS: ORDER_STEPS_RAW, ERRORS, RETURNS, CHECKOUT } = useLabels();
+  const { t } = useTranslation();
   const ORDER_STEPS = ORDER_STEP_KEYS.map(key => ({ key, label: (ORDER_STEPS_RAW as Record<string, string>)[key] || key }));
   const { id } = useParams<{ id: string }>();
   const [order, setOrder] = useState<OrderData | null>(null);
@@ -219,7 +221,7 @@ const OrderTracking = () => {
         
         const orderId = order.public_order_id || order.reference_code || order.id.slice(0, 8);
         const message = encodeURIComponent(
-          `Сәлем! Мен №${orderId} тапсырысын жасадым. Дүкен: ${store.name}. Сома: ${formatPrice(order.total_price)}`
+          t("TRACKING.WHATSAPP_MESSAGE", { orderId, storeName: store.name, amount: formatPrice(order.total_price) })
         );
         
         return platform === "telegram" ? `https://t.me/${handle}` :
@@ -481,9 +483,9 @@ const OrderTracking = () => {
             className="border border-destructive/30 bg-destructive/5 p-6 text-center space-y-3"
           >
             <AlertTriangle className="w-8 h-8 text-destructive mx-auto" />
-            <h3 className="font-mono text-lg font-bold text-destructive">Бұл дүкен уақытша тапсырыс қабылдамайды</h3>
+            <h3 className="font-mono text-lg font-bold text-destructive">{TRACKING.STORE_NOT_ACCEPTING}</h3>
             <p className="font-mono text-sm text-muted-foreground leading-relaxed">
-              This store is temporarily not accepting orders.
+              {TRACKING.STORE_NOT_ACCEPTING_DESC}
             </p>
           </motion.div>
         )}

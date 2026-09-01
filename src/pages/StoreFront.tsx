@@ -251,7 +251,7 @@ const StoreFront = () => {
     <div className={`min-h-screen relative bg-[hsl(var(--background))]${storePaused ? ' pt-8' : ''}`} style={themeStyle}>
       {storePaused && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-foreground text-background font-mono text-[10px] tracking-[0.3em] uppercase text-center py-2">
-          {isUnderReview ? STOREFRONT.UNDER_REVIEW_BANNER : "ДҮКЕН ТАПСЫРЫС ҚАБЫЛДАУДЫ УАҚЫТША ТОҚТАТТЫ"}
+          {isUnderReview ? STOREFRONT.UNDER_REVIEW_BANNER : STOREFRONT.PAUSED_BANNER}
         </div>
       )}
       <OGMetaTags
