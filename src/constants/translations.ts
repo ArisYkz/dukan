@@ -461,6 +461,11 @@ const en: TranslationMap = {
     UPLOADING: "Uploading...",
     CROP_UPLOAD: "Crop & Upload",
   },
+  VERIFICATION: {
+    PRODUCTS_BLOCKED_MISMATCH: "Product management is temporarily blocked: your store's verification data doesn't match our records.",
+    PRODUCTS_BLOCKED_SUSPENDED: "Product management is temporarily blocked: your store is suspended pending verification.",
+    GO_TO_VERIFICATION: "Go to Settings to complete seller verification.",
+  },
   STORE_CREATION: {
     TITLE: "Create Store", STORE_NAME: "Store Name", SLUG: "Slug (link)",
     DESCRIPTION: "Description", INSTAGRAM: "Instagram",
@@ -1068,6 +1073,11 @@ const bn: TranslationMap = {
     OPTIMIZING: "অপটিমাইজ হচ্ছে...",
     UPLOADING: "আপলোড হচ্ছে...",
     CROP_UPLOAD: "ক্রপ ও আপলোড করুন",
+  },
+  VERIFICATION: {
+    PRODUCTS_BLOCKED_MISMATCH: "পণ্য ব্যবস্থাপনা সাময়িকভাবে বন্ধ আছে: আপনার দোকানের যাচাইকরণ তথ্য আমাদের রেকর্ডের সাথে মেলে না।",
+    PRODUCTS_BLOCKED_SUSPENDED: "পণ্য ব্যবস্থাপনা সাময়িকভাবে বন্ধ আছে: যাচাইকরণের অপেক্ষায় আপনার দোকান স্থগিত রাখা হয়েছে।",
+    GO_TO_VERIFICATION: "বিক্রেতা যাচাইকরণ সম্পূর্ণ করতে Settings-এ যান।",
   },
   STORE_CREATION: {
     TITLE: "দোকান তৈরি করুন", STORE_NAME: "দোকানের নাম", SLUG: "Slug (লিংক)",
