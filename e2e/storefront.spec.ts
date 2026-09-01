@@ -247,7 +247,7 @@ test.describe("Storefront — Invalid & Error States", () => {
     await page.waitForLoadState("networkidle");
 
     // Look for a return link
-    const returnLink = page.getByRole("link", { name: /return|qalta|home|на главную/i }).first();
+    const returnLink = page.getByRole("link", { name: /return|dokan|home|на главную/i }).first();
     if (await returnLink.isVisible({ timeout: 3_000 }).catch(() => false)) {
       await returnLink.click();
       await page.waitForURL(/\/$/, { timeout: 10_000 });

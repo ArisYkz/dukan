@@ -208,7 +208,7 @@ const StoreFront = () => {
           <h1 className="font-mono text-2xl font-bold">{STOREFRONT.STORE_UNAVAILABLE}</h1>
           <p className="font-mono text-sm text-muted-foreground">{STOREFRONT.CONTACT_SUPPORT}</p>
           <a href="/" className="inline-block font-mono text-xs tracking-wide uppercase border border-border px-4 py-2 hover:bg-muted transition-colors">
-            {STOREFRONT.RETURN_TO_QALTA}
+            {STOREFRONT.RETURN_TO_DOKAN}
           </a>
         </div>
       </div>
