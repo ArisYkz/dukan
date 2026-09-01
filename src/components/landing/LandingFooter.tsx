@@ -16,7 +16,7 @@ const LandingFooter = () => {
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="text-center md:text-left">
-            <img src={dokanLogo} alt="Dokan" className="h-7 dark:invert" />
+            <img src={dokanLogo} alt="Dokan" className="h-7 invert" />
             <p className="font-body text-xs mt-1" style={{ color: "hsl(var(--footer-fg) / 0.6)" }}>Made with ❤️ in Dhaka, Bangladesh</p>
             <p className="font-mono text-[10px] tracking-wider mt-1 uppercase" style={{ color: "hsl(var(--footer-fg) / 0.4)" }}>Your brand, your link, anywhere.</p>
           </div>
