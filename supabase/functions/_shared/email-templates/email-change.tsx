@@ -28,10 +28,10 @@ export const EmailChangeEmail = ({
 }: EmailChangeEmailProps) => (
   <Html lang="en" dir="ltr">
     <Head />
-    <Preview>Confirm your email change — Dukan</Preview>
+    <Preview>Confirm your email change — Dokan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKAN</Text>
+        <Text style={brandLabel}>DOKAN</Text>
         <Heading style={title}>Hello!</Heading>
         <Text style={text}>
           We received a request to change your email address from {email} to {newEmail}. Click the button below to confirm:

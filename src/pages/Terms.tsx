@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 
 type Text = {
   title: string;
@@ -16,13 +16,13 @@ const EN: Text = {
     {
       heading: "1. Acceptance of Terms",
       paragraphs: [
-        "By accessing or using Dukan (\"the Platform\"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Platform.",
+        "By accessing or using Dokan (\"the Platform\"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Platform.",
       ],
     },
     {
       heading: "2. Description of Service",
       paragraphs: [
-        "Dukan provides an e-commerce platform enabling sellers to create online storefronts, list products, manage orders, and receive payments via QR codes. Buyers can browse storefronts, place orders, and track deliveries.",
+        "Dokan provides an e-commerce platform enabling sellers to create online storefronts, list products, manage orders, and receive payments via QR codes. Buyers can browse storefronts, place orders, and track deliveries.",
       ],
     },
     {
@@ -52,7 +52,7 @@ const EN: Text = {
     {
       heading: "7. Limitation of Liability",
       paragraphs: [
-        "Dukan is provided \"as is\" without warranties of any kind. We are not liable for disputes between buyers and sellers, losses from unauthorized account access, or service interruptions. Our total liability is limited to the amount you paid us in the 12 months preceding the claim.",
+        "Dokan is provided \"as is\" without warranties of any kind. We are not liable for disputes between buyers and sellers, losses from unauthorized account access, or service interruptions. Our total liability is limited to the amount you paid us in the 12 months preceding the claim.",
       ],
     },
     {
@@ -70,7 +70,7 @@ const EN: Text = {
     {
       heading: "10. Contact",
       paragraphs: [
-        "For questions about these terms: hello@dukan.example.com",
+        "For questions about these terms: hello@dokan.example.com",
       ],
     },
   ],
@@ -83,13 +83,13 @@ const BN: Text = {
     {
       heading: "১. শর্তাবলী গ্রহণ",
       paragraphs: [
-        "Dukan (\"প্ল্যাটফর্ম\") অ্যাক্সেস বা ব্যবহার করে, আপনি এই পরিষেবার শর্তাবলীতে আবদ্ধ হতে সম্মত হচ্ছেন। আপনি যদি সম্মত না হন, প্ল্যাটফর্ম ব্যবহার করবেন না।",
+        "Dokan (\"প্ল্যাটফর্ম\") অ্যাক্সেস বা ব্যবহার করে, আপনি এই পরিষেবার শর্তাবলীতে আবদ্ধ হতে সম্মত হচ্ছেন। আপনি যদি সম্মত না হন, প্ল্যাটফর্ম ব্যবহার করবেন না।",
       ],
     },
     {
       heading: "২. পরিষেবার বিবরণ",
       paragraphs: [
-        "Dukan একটি ই-কমার্স প্ল্যাটফর্ম প্রদান করে যা বিক্রেতাদের অনলাইন স্টোরফ্রন্ট তৈরি, পণ্য তালিকাভুক্ত, অর্ডার পরিচালনা এবং QR কোডের মাধ্যমে পেমেন্ট গ্রহণের সুযোগ দেয়। ক্রেতারা স্টোরফ্রন্ট ব্রাউজ করতে, অর্ডার দিতে এবং ডেলিভারি ট্র্যাক করতে পারেন।",
+        "Dokan একটি ই-কমার্স প্ল্যাটফর্ম প্রদান করে যা বিক্রেতাদের অনলাইন স্টোরফ্রন্ট তৈরি, পণ্য তালিকাভুক্ত, অর্ডার পরিচালনা এবং QR কোডের মাধ্যমে পেমেন্ট গ্রহণের সুযোগ দেয়। ক্রেতারা স্টোরফ্রন্ট ব্রাউজ করতে, অর্ডার দিতে এবং ডেলিভারি ট্র্যাক করতে পারেন।",
       ],
     },
     {
@@ -119,7 +119,7 @@ const BN: Text = {
     {
       heading: "৭. দায়বদ্ধতার সীমাবদ্ধতা",
       paragraphs: [
-        "Dukan কোনো ধরনের ওয়ারেন্টি ছাড়াই \"যেমন আছে তেমন\" প্রদান করা হয়। ক্রেতা ও বিক্রেতার মধ্যে বিবাদ, অননুমোদিত অ্যাকাউন্ট অ্যাক্সেসের কারণে ক্ষতি বা পরিষেবা বিঘ্নের জন্য আমরা দায়ী নই। দাবির পূর্ববর্তী ১২ মাসে আপনি আমাদের যে পরিমাণ অর্থ প্রদান করেছেন তার মধ্যে আমাদের মোট দায়বদ্ধতা সীমাবদ্ধ।",
+        "Dokan কোনো ধরনের ওয়ারেন্টি ছাড়াই \"যেমন আছে তেমন\" প্রদান করা হয়। ক্রেতা ও বিক্রেতার মধ্যে বিবাদ, অননুমোদিত অ্যাকাউন্ট অ্যাক্সেসের কারণে ক্ষতি বা পরিষেবা বিঘ্নের জন্য আমরা দায়ী নই। দাবির পূর্ববর্তী ১২ মাসে আপনি আমাদের যে পরিমাণ অর্থ প্রদান করেছেন তার মধ্যে আমাদের মোট দায়বদ্ধতা সীমাবদ্ধ।",
       ],
     },
     {
@@ -137,7 +137,7 @@ const BN: Text = {
     {
       heading: "১০. যোগাযোগ",
       paragraphs: [
-        "এই শর্তাবলী সম্পর্কে প্রশ্নের জন্য: hello@dukan.example.com",
+        "এই শর্তাবলী সম্পর্কে প্রশ্নের জন্য: hello@dokan.example.com",
       ],
     },
   ],
@@ -154,7 +154,7 @@ const Terms = () => {
           <ArrowLeft className="w-3.5 h-3.5" /> {language === "bn" ? "পিছনে" : "Back"}
         </Link>
         <div className="flex items-center gap-3 mb-10">
-          <img src={dukenLogo} alt="Dukan" className="h-8 dark:invert" />
+          <img src={dokanLogo} alt="Dokan" className="h-8 dark:invert" />
           <span className="text-xs font-mono text-muted-foreground tracking-wider uppercase">{text.title}</span>
         </div>
 

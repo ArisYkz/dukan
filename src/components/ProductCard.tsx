@@ -2,7 +2,7 @@ import { useState, memo } from "react";
 import { motion } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
 import type { Product } from "@/data/mockProducts";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 import { isPlaceholder, getPlaceholderImage } from "@/lib/placeholders";
 import { useLabels } from "@/hooks/useLabels";
 import SmartImage from "@/components/ui/SmartImage";
@@ -66,8 +66,8 @@ const ProductCard = memo(({ product, index, onSelect, onQuickAdd, isPaused }: Pr
             transitionDuration={700}
           />
           <div className="absolute bottom-1.5 right-1.5 flex items-center gap-0.5 bg-[hsl(var(--background)/0.7)] backdrop-blur-sm px-1.5 py-0.5 rounded-sm z-10">
-            <img src={dukenLogo} alt="" className="h-2.5 dark:invert opacity-50" />
-            <span className="text-[8px] font-mono tracking-wide text-[hsl(var(--muted-foreground)/0.7)] uppercase">Powered by Duken</span>
+            <img src={dokanLogo} alt="" className="h-2.5 dark:invert opacity-50" />
+            <span className="text-[8px] font-mono tracking-wide text-[hsl(var(--muted-foreground)/0.7)] uppercase">Powered by Dokan</span>
           </div>
         </div>
 

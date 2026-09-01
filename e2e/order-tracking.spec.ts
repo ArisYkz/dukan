@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 
 // ============================================================================
-// Duken Order Tracking — E2E Tests
+// Dokan Order Tracking — E2E Tests
 // ============================================================================
 // Tests the public order tracking page at /order/:id
 // Uses a known order from the test account's store.
@@ -17,7 +17,7 @@ test.use({ baseURL: "http://localhost:8082" });
 async function getFirstOrderId(page: Page): Promise<string | null> {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dokan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -343,7 +343,7 @@ test.describe("Order Tracking — Navigation & Contact", () => {
     await page.goto(`/order/${orderId}`);
     await page.waitForLoadState("networkidle");
 
-    // Header should display store name or "Duken"
+    // Header should display store name or "Dokan"
     const header = page.locator("header");
     await expect(header).toBeVisible({ timeout: 5_000 });
     const headerText = await header.innerText();

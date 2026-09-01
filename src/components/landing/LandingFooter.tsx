@@ -1,6 +1,6 @@
 import { Instagram } from "lucide-react";
 import { useLabels } from "@/hooks/useLabels";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -16,7 +16,7 @@ const LandingFooter = () => {
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="text-center md:text-left">
-            <img src={dukenLogo} alt="Dukan" className="h-7 dark:invert" />
+            <img src={dokanLogo} alt="Dokan" className="h-7 dark:invert" />
             <p className="font-body text-xs mt-1" style={{ color: "hsl(var(--footer-fg) / 0.6)" }}>Made with ❤️ in Dhaka, Bangladesh</p>
             <p className="font-mono text-[10px] tracking-wider mt-1 uppercase" style={{ color: "hsl(var(--footer-fg) / 0.4)" }}>Your brand, your link, anywhere.</p>
           </div>
@@ -24,13 +24,13 @@ const LandingFooter = () => {
             <a href="/auth" className="font-mono text-xs tracking-wider transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}>{LANDING.LOGIN}</a>
             <a href="/auth" className="font-mono text-xs tracking-wider transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}>{LANDING.SIGN_UP}</a>
             <div className="flex items-center gap-3">
-              <a href="https://instagram.com/dukan.example.com" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><Instagram className="w-4 h-4" /></a>
-              <a href="https://tiktok.com/@dukan.example.com" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><TikTokIcon className="w-4 h-4" /></a>
+              <a href="https://instagram.com/dokan.example.com" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><Instagram className="w-4 h-4" /></a>
+              <a href="https://tiktok.com/@dokan.example.com" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><TikTokIcon className="w-4 h-4" /></a>
             </div>
           </nav>
         </div>
         <div className="mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderTopColor: "hsl(var(--footer-fg) / 0.15)", borderTopWidth: "1px" }}>
-          <p className="font-mono text-[10px] tracking-wider uppercase" style={{ color: "hsl(var(--footer-fg) / 0.4)" }}>© {new Date().getFullYear()} Duken. {LANDING.ALL_RIGHTS}</p>
+          <p className="font-mono text-[10px] tracking-wider uppercase" style={{ color: "hsl(var(--footer-fg) / 0.4)" }}>© {new Date().getFullYear()} Dokan. {LANDING.ALL_RIGHTS}</p>
           <div className="flex items-center gap-6">
             <a href="/privacy" className="font-mono text-[10px] tracking-wider uppercase transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.5)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.5)")}>Privacy</a>
             <a href="/terms" className="font-mono text-[10px] tracking-wider uppercase transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.5)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.5)")}>Terms</a>

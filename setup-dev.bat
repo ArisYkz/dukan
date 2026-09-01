@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo  Duken - Lightweight Development Setup
+echo  Dokan - Lightweight Development Setup
 echo ========================================
 echo.
 echo This script installs dependencies WITHOUT Supabase CLI binary.

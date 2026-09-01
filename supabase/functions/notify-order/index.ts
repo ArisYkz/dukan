@@ -49,7 +49,7 @@ Deno.serve(async (req) => {
 
     if (body.message && body.message.chat) {
       const chatId = body.message.chat.id;
-      const reply = `✦  <b>Dukan</b>  ✦\n\n🆔  Your ID:\n<code>${chatId}</code>\n\nCopy this ID and paste it into your Store Branding settings to activate instant order alerts.`;
+      const reply = `✦  <b>Dokan</b>  ✦\n\n🆔  Your ID:\n<code>${chatId}</code>\n\nCopy this ID and paste it into your Store Branding settings to activate instant order alerts.`;
 
       await fetch(`${TELEGRAM_URL}/sendMessage`, {
         method: 'POST',

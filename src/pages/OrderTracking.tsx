@@ -270,7 +270,7 @@ const OrderTracking = () => {
       <div className="min-h-screen bg-background">
         <header className="border-b border-border">
           <div className="container flex items-center justify-between h-14">
-            <span className="font-mono text-lg">{store?.name || "Duken"}</span>
+            <span className="font-mono text-lg">{store?.name || "Dokan"}</span>
           </div>
         </header>
         <div className="container max-w-lg py-16 text-center space-y-6">
@@ -296,7 +296,7 @@ const OrderTracking = () => {
             </Link>
           )}
           <footer className="pt-8">
-            <p className="text-xs text-muted-foreground font-mono">Dukan · Dhaka, Bangladesh</p>
+            <p className="text-xs text-muted-foreground font-mono">Dokan · Dhaka, Bangladesh</p>
           </footer>
         </div>
       </div>
@@ -307,7 +307,7 @@ const OrderTracking = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
         <div className="container flex items-center justify-between h-14">
-          <span className="font-mono text-lg">{store?.name || "Duken"}</span>
+          <span className="font-mono text-lg">{store?.name || "Dokan"}</span>
           <div className="flex items-center gap-3">
             {canClaimPayment && order.status === "new" && remaining !== null && remaining > 0 && (
               <span className="font-mono text-sm font-bold tabular-nums text-muted-foreground flex items-center gap-1.5">
@@ -581,7 +581,7 @@ const OrderTracking = () => {
         {/* Return barcode — shown when seller has issued a return label */}
 
         <footer className="text-center pt-4">
-          <p className="text-xs text-muted-foreground font-mono">Dukan · Dhaka, Bangladesh</p>
+          <p className="text-xs text-muted-foreground font-mono">Dokan · Dhaka, Bangladesh</p>
         </footer>
       </div>
 

@@ -8,7 +8,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { useProductSorting, type SortConfig } from "@/hooks/useProductSorting";
 import { useProductSearch } from "@/hooks/useProductSearch";
 import { useCart, type CartProduct } from "@/hooks/useCart";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 import OGMetaTags from "@/components/OGMetaTags";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "@/components/LanguageToggle";
@@ -255,8 +255,8 @@ const StoreFront = () => {
         </div>
       )}
       <OGMetaTags
-        title={`${store.name} on Duken`}
-        description={store.hero_subtitle || `${store.name} — Duken store`}
+        title={`${store.name} on Dokan`}
+        description={store.hero_subtitle || `${store.name} — Dokan store`}
         image={ogImage || undefined}
       />
       {/* Header */}
@@ -264,7 +264,7 @@ const StoreFront = () => {
         <div className="container flex items-center justify-between h-14">
           <div className="flex items-center gap-3 shrink-0 min-w-0">
             <Link to="/" className="shrink-0">
-              <img src={dukenLogo} alt="Dukan" className="h-5 sm:h-6 dark:invert" />
+              <img src={dokanLogo} alt="Dokan" className="h-5 sm:h-6 dark:invert" />
             </Link>
             <span className="font-mono text-sm font-medium truncate max-w-[140px] sm:max-w-[200px]">{store.name}</span>
             {store.is_verified && (

@@ -24,10 +24,10 @@ export const MagicLinkEmail = ({
 }: MagicLinkEmailProps) => (
   <Html lang="en" dir="ltr">
     <Head />
-    <Preview>Your sign-in link — Dukan</Preview>
+    <Preview>Your sign-in link — Dokan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKAN</Text>
+        <Text style={brandLabel}>DOKAN</Text>
         <Heading style={title}>Hello!</Heading>
         <Text style={text}>Click the button below to sign in to your account:</Text>
         <Hr style={divider} />

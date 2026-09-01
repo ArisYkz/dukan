@@ -4,8 +4,8 @@
 -- Prerequisites (already applied):
 --   pg_cron extension  ✓
 --   pg_net  extension  ✓
---   vault.create_secret('dukan_supabase_url') ✓
---   vault.create_secret('dukan_anon_key')     ✓
+--   vault.create_secret('dokan_supabase_url') ✓
+--   vault.create_secret('dokan_anon_key')     ✓
 --
 -- Status: APPLIED via Management API / SQL editor
 -- ============================================================
@@ -45,12 +45,12 @@ declare
   anon_key text;
   req_id bigint;
 begin
-  url := cron_helper.vault_secret('dukan_supabase_url');
+  url := cron_helper.vault_secret('dokan_supabase_url');
   if url is null then
-    raise warning 'dukan_supabase_url not set — skipping %', function_name;
+    raise warning 'dokan_supabase_url not set — skipping %', function_name;
     return -1;
   end if;
-  anon_key := cron_helper.vault_secret('dukan_anon_key');
+  anon_key := cron_helper.vault_secret('dokan_anon_key');
   select net.http_post(
     url := url || '/functions/v1/' || function_name,
     headers := jsonb_build_object(

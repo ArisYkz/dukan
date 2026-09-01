@@ -19,10 +19,10 @@ interface ReauthenticationEmailProps {
 export const ReauthenticationEmail = ({ token }: ReauthenticationEmailProps) => (
   <Html lang="en" dir="ltr">
     <Head />
-    <Preview>Confirmation code — Dukan</Preview>
+    <Preview>Confirmation code — Dokan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKAN</Text>
+        <Text style={brandLabel}>DOKAN</Text>
         <Heading style={title}>Confirmation code</Heading>
         <Text style={text}>Use the code below to confirm your identity:</Text>
         <Text style={codeStyle}>{token}</Text>

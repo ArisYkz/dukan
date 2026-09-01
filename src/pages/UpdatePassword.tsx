@@ -98,7 +98,7 @@ export default function UpdatePassword() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Wallet className="w-6 h-6 text-foreground opacity-80" strokeWidth={1.5} />
-            <h1 className="font-display text-3xl font-bold tracking-tight">Duken</h1>
+            <h1 className="font-display text-3xl font-bold tracking-tight">Dokan</h1>
           </div>
           <p className="font-mono text-xs tracking-[0.2em] uppercase text-muted-foreground">
             {AUTH.TAGLINE}

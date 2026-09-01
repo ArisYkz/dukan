@@ -11,7 +11,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const STORAGE_KEY = "dukan-lang";
+const STORAGE_KEY = "dokan-lang";
 
 const getInitialLanguage = (): Language => {
   try {

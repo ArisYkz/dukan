@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { User } from "lucide-react";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "@/components/LanguageToggle";
 import LanguageDropdown from "@/components/LanguageDropdown";
@@ -30,7 +30,7 @@ const LandingNavbar = () => {
     <header className="sticky top-0 z-50 border-b border-border/20 backdrop-blur-md" style={{ backgroundColor: "hsl(var(--nav-bg) / 0.8)", color: "hsl(var(--nav-fg))" }}>
       <div className="container flex items-center justify-between h-14">
         <Link to="/" className="flex items-center group">
-          <img src={dukenLogo} alt="Dukan" className="h-8 dark:invert" />
+          <img src={dokanLogo} alt="Dokan" className="h-8 dark:invert" />
         </Link>
         <div className="flex items-center gap-1 shrink-0">
           {isMobile ? <LanguageDropdown /> : <LanguageToggle />}

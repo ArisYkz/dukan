@@ -79,7 +79,7 @@ const SuccessPage = () => {
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#eeebe2' }}>
       <header className="border-b" style={{ borderColor: '#d4d0c8' }}>
         <div className="container flex items-center justify-between h-14">
-          <span className="font-mono text-lg font-bold" style={{ color: '#1a1a1a' }}>Duken</span>
+          <span className="font-mono text-lg font-bold" style={{ color: '#1a1a1a' }}>Dokan</span>
           <ThemeToggle />
         </div>
       </header>

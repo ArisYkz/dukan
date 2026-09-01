@@ -272,7 +272,7 @@ const BrandingTab = ({
               </div>
               <div className="flex items-stretch border border-border/50 rounded-none bg-transparent has-[input:focus]:border-ring/50 has-[input:focus]:ring-1 has-[input:focus]:ring-ring/20 transition-all duration-150">
                 <span className="flex items-center pl-3 md:pl-3.5 py-2 md:py-2.5 text-xs md:text-sm text-muted-foreground/30 font-mono shrink-0 select-none pointer-events-none">
-                  dukan.example.com/
+                  dokan.example.com/
                 </span>
                 {slugEditable ? (
                   <input

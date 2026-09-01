@@ -26,13 +26,13 @@ export const SignupEmail = ({
 }: SignupEmailProps) => (
   <Html lang="en" dir="ltr">
     <Head />
-    <Preview>Confirm your email — Dukan</Preview>
+    <Preview>Confirm your email — Dokan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKAN</Text>
+        <Text style={brandLabel}>DOKAN</Text>
         <Heading style={title}>Hello!</Heading>
         <Text style={text}>
-          Welcome to Dukan! To finish setting up your store, please confirm your email address:
+          Welcome to Dokan! To finish setting up your store, please confirm your email address:
         </Text>
 
         <Hr style={divider} />

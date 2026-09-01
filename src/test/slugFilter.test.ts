@@ -23,7 +23,7 @@ describe("isSlugOffensive", () => {
   });
 
   it("blocks protected brand words", () => {
-    expect(isSlugOffensive("my-dukan-store")).toBe(true);
+    expect(isSlugOffensive("my-dokan-store")).toBe(true);
     expect(isSlugOffensive("login-page")).toBe(true);
     expect(isSlugOffensive("admin-panel")).toBe(true);
   });

@@ -6,12 +6,12 @@ const CookieConsent = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consented = localStorage.getItem("dukan_cookie_consent");
+    const consented = localStorage.getItem("dokan_cookie_consent");
     if (!consented) setVisible(true);
   }, []);
 
   const accept = () => {
-    localStorage.setItem("dukan_cookie_consent", "true");
+    localStorage.setItem("dokan_cookie_consent", "true");
     setVisible(false);
   };
 
@@ -21,7 +21,7 @@ const CookieConsent = () => {
     <div className="fixed bottom-0 left-0 right-0 z-[200] border-t border-border bg-background/95 backdrop-blur-sm">
       <div className="container max-w-6xl mx-auto py-4 px-4 flex items-center justify-between gap-4">
         <p className="font-mono text-[11px] text-muted-foreground leading-relaxed">
-          Duken тек тіркелу және сессияны басқару үшін қажетті cookie файлдарын пайдаланады.{" "}
+          Dokan тек тіркелу және сессияны басқару үшін қажетті cookie файлдарын пайдаланады.{" "}
           <Link to="/privacy" className="underline hover:text-foreground transition-colors">Толығырақ</Link>
         </p>
         <div className="flex items-center gap-2 shrink-0">

@@ -1,6 +1,6 @@
-# Duken - Lightweight Development Setup (PowerShell)
+# Dokan - Lightweight Development Setup (PowerShell)
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host " Duken - Lightweight Development Setup" -ForegroundColor Cyan
+Write-Host " Dokan - Lightweight Development Setup" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "This script installs dependencies WITHOUT Supabase CLI binary." -ForegroundColor Yellow

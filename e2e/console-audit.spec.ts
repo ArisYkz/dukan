@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 
 // ============================================================================
-// Duken Console Error Audit — Comprehensive Error Detection
+// Dokan Console Error Audit — Comprehensive Error Detection
 // ============================================================================
 // Visits EVERY route and tab and checks for console errors.
 // Bails on error at each page -- after logging in, if a page has console
@@ -17,7 +17,7 @@ import { test, expect, type Page } from "@playwright/test";
 async function login(page: Page) {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dokan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -209,7 +209,7 @@ test.describe("Console Audit -- Storefront", () => {
   async function getStoreSlug(page: Page): Promise<string | null> {
     await page.goto("/auth");
     await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-    await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
+    await page.locator('input[type="email"]').fill("playwright-test@dokan.com");
     await page.locator('input[type="password"]').fill("TestPass123!");
     await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
     await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
@@ -252,7 +252,7 @@ test.describe("Console Audit -- Order Tracking", () => {
   async function getFirstOrderId(page: Page): Promise<string | null> {
     await page.goto("/auth");
     await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
-    await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
+    await page.locator('input[type="email"]').fill("playwright-test@dokan.com");
     await page.locator('input[type="password"]').fill("TestPass123!");
     await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
     await page.waitForURL(/\/dashboard/, { timeout: 15_000 });

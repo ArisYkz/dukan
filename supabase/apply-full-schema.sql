@@ -1,4 +1,4 @@
--- DUKAN full schema + seed (generated 2026-08-26)
+-- DOKAN full schema + seed (generated 2026-08-26)
 -- Paste the ENTIRE file into the Supabase SQL Editor and Run once.
 -- Idempotent: resets public schema, then applies all migrations + demo seed.
 
@@ -4654,8 +4654,8 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_reports_store_id ON public.reports(s
 -- Prerequisites (already applied):
 --   pg_cron extension  ✓
 --   pg_net  extension  ✓
---   vault.create_secret('dukan_supabase_url') ✓
---   vault.create_secret('dukan_anon_key')     ✓
+--   vault.create_secret('dokan_supabase_url') ✓
+--   vault.create_secret('dokan_anon_key')     ✓
 --
 -- Status: APPLIED via Management API / SQL editor
 -- ============================================================
@@ -4701,12 +4701,12 @@ declare
   anon_key text;
   req_id bigint;
 begin
-  url := cron_helper.vault_secret('dukan_supabase_url');
+  url := cron_helper.vault_secret('dokan_supabase_url');
   if url is null then
-    raise warning 'dukan_supabase_url not set — skipping %', function_name;
+    raise warning 'dokan_supabase_url not set — skipping %', function_name;
     return -1;
   end if;
-  anon_key := cron_helper.vault_secret('dukan_anon_key');
+  anon_key := cron_helper.vault_secret('dokan_anon_key');
   select net.http_post(
     url := url || '/functions/v1/' || function_name,
     headers := jsonb_build_object(
@@ -5157,25 +5157,25 @@ DROP FUNCTION IF EXISTS get_user_emails;
 ----------------------------------------------
 -- Delete test user accounts (delete in dependency order since not all FK constraints are CASCADE)
 DELETE FROM public.store_members WHERE user_id IN (
-  SELECT id FROM auth.users WHERE email IN ('playwright-test@dukan.com', 'test-1778527363205@dukan.com', 'test-1778527330315@dukan.com')
+  SELECT id FROM auth.users WHERE email IN ('playwright-test@dokan.com', 'test-1778527363205@dokan.com', 'test-1778527330315@dokan.com')
 );
 
 
 DELETE FROM public.stores WHERE user_id IN (
-  SELECT id FROM auth.users WHERE email IN ('playwright-test@dukan.com', 'test-1778527363205@dukan.com', 'test-1778527330315@dukan.com')
+  SELECT id FROM auth.users WHERE email IN ('playwright-test@dokan.com', 'test-1778527363205@dokan.com', 'test-1778527330315@dokan.com')
 );
 
 
 DELETE FROM public.profiles WHERE user_id IN (
-  SELECT id FROM auth.users WHERE email IN ('playwright-test@dukan.com', 'test-1778527363205@dukan.com', 'test-1778527330315@dukan.com')
+  SELECT id FROM auth.users WHERE email IN ('playwright-test@dokan.com', 'test-1778527363205@dokan.com', 'test-1778527330315@dokan.com')
 );
 
 
 DELETE FROM auth.users
 WHERE email IN (
-  'playwright-test@dukan.com',
-  'test-1778527363205@dukan.com',
-  'test-1778527330315@dukan.com'
+  'playwright-test@dokan.com',
+  'test-1778527363205@dokan.com',
+  'test-1778527330315@dokan.com'
 );
 
 
@@ -5529,9 +5529,9 @@ GRANT EXECUTE ON FUNCTION analytics_aggregation(timestamptz, timestamptz, uuid, 
 
 
 ----------------------------------------------
--- SEED: seed_makeup_store.sql (testbyme@dukan.com / 123456)
+-- SEED: seed_makeup_store.sql (testbyme@dokan.com / 123456)
 ----------------------------------------------
--- Seed: GLAM BEAUTY makeup store for testbyme@dukan.com demo
+-- Seed: GLAM BEAUTY makeup store for testbyme@dokan.com demo
 -- User ID: 5ee8ca6a-020e-4284-a653-645402565934
 -- Password: 123456
 
@@ -5581,14 +5581,14 @@ BEGIN
       email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at
     ) VALUES (
       target_user_id, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-      'testbyme@dukan.com', crypt('123456', gen_salt('bf')),
+      'testbyme@dokan.com', crypt('123456', gen_salt('bf')),
       now(), '{"provider":"email","providers":["email"]}',
-      '{"email":"testbyme@dukan.com","email_verified":true}', now(), now()
+      '{"email":"testbyme@dokan.com","email_verified":true}', now(), now()
     );
     INSERT INTO auth.identities (id, user_id, provider_id, provider, identity_data, last_sign_in_at, created_at, updated_at)
     VALUES (
-      target_user_id, target_user_id, 'testbyme@dukan.com', 'email',
-      jsonb_build_object('sub', target_user_id::text, 'email', 'testbyme@dukan.com'),
+      target_user_id, target_user_id, 'testbyme@dokan.com', 'email',
+      jsonb_build_object('sub', target_user_id::text, 'email', 'testbyme@dokan.com'),
       now(), now(), now()
     );
   END IF;

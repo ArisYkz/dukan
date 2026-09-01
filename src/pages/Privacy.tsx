@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 
 type Text = {
   title: string;
@@ -16,14 +16,14 @@ const EN: Text = {
     {
       heading: "1. Information We Collect",
       paragraphs: [
-        "When you register for Dukan, we collect your email address and a password (stored as a salted hash). If you create a store, we collect the business information you provide: store name, slug, description, social media handles (Instagram, TikTok, Telegram), payment QR images, and product details including names, descriptions, prices, and images.",
+        "When you register for Dokan, we collect your email address and a password (stored as a salted hash). If you create a store, we collect the business information you provide: store name, slug, description, social media handles (Instagram, TikTok, Telegram), payment QR images, and product details including names, descriptions, prices, and images.",
         "When a customer places an order, we collect their name, phone number, and delivery address in order to process and fulfill that order.",
       ],
     },
     {
       heading: "2. How We Use Your Information",
       paragraphs: [
-        "We use your information to operate the Dukan platform: display your store and products to visitors, process orders, send Telegram notifications (if configured), and manage your subscription. We do not sell your personal data to third parties.",
+        "We use your information to operate the Dokan platform: display your store and products to visitors, process orders, send Telegram notifications (if configured), and manage your subscription. We do not sell your personal data to third parties.",
       ],
     },
     {
@@ -53,7 +53,7 @@ const EN: Text = {
     {
       heading: "7. Contact",
       paragraphs: [
-        "For privacy-related inquiries: hello@dukan.example.com",
+        "For privacy-related inquiries: hello@dokan.example.com",
       ],
     },
   ],
@@ -66,14 +66,14 @@ const BN: Text = {
     {
       heading: "১. আমরা কী তথ্য সংগ্রহ করি",
       paragraphs: [
-        "আপনি যখন Dukan-এ নিবন্ধন করেন, আমরা আপনার ইমেইল ঠিকানা এবং একটি পাসওয়ার্ড (সল্টেড হ্যাশ আকারে সংরক্ষিত) সংগ্রহ করি। আপনি যদি একটি দোকান তৈরি করেন, আমরা আপনার দেওয়া ব্যবসায়িক তথ্য সংগ্রহ করি: দোকানের নাম, slug, বিবরণ, সামাজিক যোগাযোগ মাধ্যমের হ্যান্ডেল (Instagram, TikTok, Telegram), পেমেন্ট QR ছবি এবং পণ্যের বিবরণ (নাম, বিবরণ, দাম ও ছবি)।",
+        "আপনি যখন Dokan-এ নিবন্ধন করেন, আমরা আপনার ইমেইল ঠিকানা এবং একটি পাসওয়ার্ড (সল্টেড হ্যাশ আকারে সংরক্ষিত) সংগ্রহ করি। আপনি যদি একটি দোকান তৈরি করেন, আমরা আপনার দেওয়া ব্যবসায়িক তথ্য সংগ্রহ করি: দোকানের নাম, slug, বিবরণ, সামাজিক যোগাযোগ মাধ্যমের হ্যান্ডেল (Instagram, TikTok, Telegram), পেমেন্ট QR ছবি এবং পণ্যের বিবরণ (নাম, বিবরণ, দাম ও ছবি)।",
         "গ্রাহক যখন একটি অর্ডার দেন, তখন আমরা তাদের নাম, ফোন নম্বর এবং ডেলিভারি ঠিকানা সংগ্রহ করি যাতে সেই অর্ডার প্রক্রিয়া ও সম্পন্ন করা যায়।",
       ],
     },
     {
       heading: "২. আমরা আপনার তথ্য কীভাবে ব্যবহার করি",
       paragraphs: [
-        "আমরা Dukan প্ল্যাটফর্ম পরিচালনার জন্য আপনার তথ্য ব্যবহার করি: দর্শনার্থীদের কাছে আপনার দোকান ও পণ্য প্রদর্শন, অর্ডার প্রক্রিয়াকরণ, Telegram নোটিফিকেশন পাঠানো (যদি কনফিগার করা থাকে) এবং আপনার সাবস্ক্রিপশন পরিচালনা। আমরা আপনার ব্যক্তিগত তথ্য তৃতীয় পক্ষের কাছে বিক্রি করি না।",
+        "আমরা Dokan প্ল্যাটফর্ম পরিচালনার জন্য আপনার তথ্য ব্যবহার করি: দর্শনার্থীদের কাছে আপনার দোকান ও পণ্য প্রদর্শন, অর্ডার প্রক্রিয়াকরণ, Telegram নোটিফিকেশন পাঠানো (যদি কনফিগার করা থাকে) এবং আপনার সাবস্ক্রিপশন পরিচালনা। আমরা আপনার ব্যক্তিগত তথ্য তৃতীয় পক্ষের কাছে বিক্রি করি না।",
       ],
     },
     {
@@ -103,7 +103,7 @@ const BN: Text = {
     {
       heading: "৭. যোগাযোগ",
       paragraphs: [
-        "গোপনীয়তা সংক্রান্ত প্রশ্নের জন্য: hello@dukan.example.com",
+        "গোপনীয়তা সংক্রান্ত প্রশ্নের জন্য: hello@dokan.example.com",
       ],
     },
   ],
@@ -120,7 +120,7 @@ const Privacy = () => {
           <ArrowLeft className="w-3.5 h-3.5" /> {language === "bn" ? "পিছনে" : "Back"}
         </Link>
         <div className="flex items-center gap-3 mb-10">
-          <img src={dukenLogo} alt="Dukan" className="h-8 dark:invert" />
+          <img src={dokanLogo} alt="Dokan" className="h-8 dark:invert" />
           <span className="text-xs font-mono text-muted-foreground tracking-wider uppercase">{text.title}</span>
         </div>
 

@@ -74,7 +74,7 @@ const OrdersTab = React.memo(({ orders, filteredOrders, orderFilter, setOrderFil
             <Tooltip>
               <TooltipTrigger asChild>{csvButton}</TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-[200px] text-center">
-                <p className="text-xs">{ORDERS_TAB.CSV_PRO_TOOLTIP || "Get your tax-ready report instantly with Duken PRO."}</p>
+                <p className="text-xs">{ORDERS_TAB.CSV_PRO_TOOLTIP || "Get your tax-ready report instantly with Dokan PRO."}</p>
               </TooltipContent>
             </Tooltip>
           )}

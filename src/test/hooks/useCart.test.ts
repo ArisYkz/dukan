@@ -327,7 +327,7 @@ describe("useCart", () => {
         result.current.clearCart();
       });
 
-      expect(localStorageMock.removeItem).toHaveBeenCalledWith("dukan_cart");
+      expect(localStorageMock.removeItem).toHaveBeenCalledWith("dokan_cart");
     });
   });
 
@@ -412,7 +412,7 @@ describe("useCart", () => {
       });
 
       expect(localStorageMock.setItem).toHaveBeenCalledWith(
-        "dukan_cart",
+        "dokan_cart",
         expect.any(String),
       );
       const saved = JSON.parse(
@@ -424,7 +424,7 @@ describe("useCart", () => {
     });
 
     it("restores cart from localStorage on mount", () => {
-      store["dukan_cart"] = JSON.stringify([
+      store["dokan_cart"] = JSON.stringify([
         { product: sampleProduct, quantity: 2 },
       ]);
 
@@ -435,7 +435,7 @@ describe("useCart", () => {
     });
 
     it("handles invalid localStorage JSON gracefully", () => {
-      store["dukan_cart"] = "invalid json {{{";
+      store["dokan_cart"] = "invalid json {{{";
 
       const { result } = renderHook(() => useCart());
 

@@ -4,7 +4,7 @@ import { Download, Lock, Crown } from "lucide-react";
 import { useLabels } from "@/hooks/useLabels";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 
 const QRCodeSVG = lazy(() =>
   import("qrcode.react").then((m) => ({ default: m.QRCodeSVG }))
@@ -24,7 +24,7 @@ const QrMarketingCard = ({ storeSlug, storeName, isPro, onUpgrade }: QrMarketing
 
   const hasSlug = storeSlug.length > 0;
   const canToggle = isPro && hasSlug;
-  const storeUrl = `https://dukan.example.com/s/${storeSlug}`;
+  const storeUrl = `https://dokan.example.com/s/${storeSlug}`;
 
   const handleSwitchClick = () => {
     if (!hasSlug) return; // tooltip handles messaging
@@ -135,8 +135,8 @@ const QrMarketingCard = ({ storeSlug, storeName, isPro, onUpgrade }: QrMarketing
               >
                 {/* Logo */}
                 <img
-                  src={dukenLogo}
-                  alt="Dukan"
+                  src={dokanLogo}
+                  alt="Dokan"
                   className="h-5 object-contain opacity-80"
                   style={{ filter: "grayscale(100%)" }}
                 />
@@ -161,7 +161,7 @@ const QrMarketingCard = ({ storeSlug, storeName, isPro, onUpgrade }: QrMarketing
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="bg-white p-1 rounded-sm">
                       <img
-                        src={dukenLogo}
+                        src={dokanLogo}
                         alt=""
                         className="h-4 w-4 object-contain"
                         style={{ filter: "grayscale(100%)" }}

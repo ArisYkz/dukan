@@ -416,7 +416,7 @@ const Dashboard = () => {
           <footer style={{ backgroundColor: "hsl(var(--footer-bg))", color: "hsl(var(--footer-fg))" }} className="py-3 md:py-6 mt-auto">
             <div className="container text-center space-y-2">
               <p className="font-mono text-[10px] tracking-[0.2em] uppercase" style={{ color: "hsl(var(--footer-fg) / 0.6)" }}>
-                Duken — 2026
+                Dokan — 2026
               </p>
               <p className="font-mono text-[10px] tracking-wide" style={{ color: "hsl(var(--footer-fg) / 0.3)" }}>
                 For local entrepreneurs

@@ -1,9 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
 
 // ============================================================================
-// Duken Dashboard — Functional Test Suite
+// Dokan Dashboard — Functional Test Suite
 // ============================================================================
-// Test account: playwright-test@dukan.com / TestPass123!
+// Test account: playwright-test@dokan.com / TestPass123!
 // Base URL:     http://localhost:8082
 // ============================================================================
 
@@ -17,7 +17,7 @@ async function login(page: Page) {
   await page.goto("/auth");
   await page.waitForSelector('input[type="email"]', { timeout: 10_000 });
 
-  await page.locator('input[type="email"]').fill("playwright-test@dukan.com");
+  await page.locator('input[type="email"]').fill("playwright-test@dokan.com");
   await page.locator('input[type="password"]').fill("TestPass123!");
   await page.locator("form").getByRole("button", { name: /log in|войти|кіру/i }).click();
 

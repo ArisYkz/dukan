@@ -8,7 +8,7 @@ import { Eye, EyeOff } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { useLabels } from "@/hooks/useLabels";
 import { validatePassword, isPasswordValid, PasswordRulesChecklist, type PasswordRules } from "@/lib/passwordValidation";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 
 const Auth = () => {
   const { AUTH } = useLabels();
@@ -162,8 +162,8 @@ const Auth = () => {
             className="flex items-center justify-center mb-4"
           >
             <img
-              src={dukenLogo}
-              alt="Dukan"
+              src={dokanLogo}
+              alt="Dokan"
               className="h-12 max-w-[120px] object-contain dark:invert"
             />
           </motion.div>

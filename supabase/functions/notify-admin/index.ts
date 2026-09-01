@@ -39,7 +39,7 @@ Deno.serve(async (req) => {
 
     if (payload.message && payload.message.chat) {
       const chatId = payload.message.chat.id;
-      const reply = `✦  <b>Dukan Admin</b>  ✦\n\n🆔  Your ID:\n<code>${chatId}</code>`;
+      const reply = `✦  <b>Dokan Admin</b>  ✦\n\n🆔  Your ID:\n<code>${chatId}</code>`;
       await sendTelegramMessage(chatId, reply);
       return ok();
     }
@@ -143,7 +143,7 @@ Deno.serve(async (req) => {
     const planDisplay = plan_type === 'pro_year' ? '🏆 Yearly (Pro Year)' : '⚡ Monthly (Pro Month)';
 
     const caption = `
-🚀 <b>Dukan Pro subscription request</b>
+🚀 <b>Dokan Pro subscription request</b>
 ━━━━━━━━━━━━━━━━━━
 👤 <b>User ID:</b> <code>${user_id}</code>
 💰 <b>Amount:</b> ${amount || 'N/A'} ৳

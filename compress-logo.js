@@ -2,7 +2,7 @@
 
 /**
  * Automated Logo Compression Script
- * Compresses duken-logo.png from 307KB to ~20KB
+ * Compresses dokan-logo.png from 307KB to ~20KB
  * 
  * Usage: node compress-logo.js
  */
@@ -15,10 +15,10 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
 
-const LOGO_PATH = join(__dirname, 'src', 'assets', 'duken-logo.png');
-const OUTPUT_PATH = join(__dirname, 'src', 'assets', 'duken-logo-compressed.png');
+const LOGO_PATH = join(__dirname, 'src', 'assets', 'dokan-logo.png');
+const OUTPUT_PATH = join(__dirname, 'src', 'assets', 'dokan-logo-compressed.png');
 
-console.log('🖼️  Duken Logo Compression Tool\n');
+console.log('🖼️  Dokan Logo Compression Tool\n');
 
 // Check if sharp is installed
 let sharp;
@@ -32,12 +32,12 @@ try {
   console.log('📋 MANUAL INSTRUCTIONS:');
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
   console.log('1. Go to: https://squoosh.app/\n');
-  console.log('2. Upload: src/assets/duken-logo.png\n');
+  console.log('2. Upload: src/assets/dokan-logo.png\n');
   console.log('3. Settings:');
   console.log('   - Resize: 200px width');
   console.log('   - Format: WebP');
   console.log('   - Quality: 80\n');
-  console.log('4. Download and replace: src/assets/duken-logo.png\n');
+  console.log('4. Download and replace: src/assets/dokan-logo.png\n');
   console.log('5. Expected size: ~15-20KB (was 307KB)\n');
   console.log('6. Then run: npm run build\n');
   process.exit(0);
@@ -92,7 +92,7 @@ async function compressLogo() {
 
     console.log('Next steps:');
     console.log('  1. Verify compressed logo looks good');
-    console.log('  2. Replace original: mv src/assets/duken-logo-compressed.png src/assets/duken-logo.png');
+    console.log('  2. Replace original: mv src/assets/dokan-logo-compressed.png src/assets/dokan-logo.png');
     console.log('  3. Rebuild: npm run build');
     console.log('  4. Test: npm run preview\n');
 

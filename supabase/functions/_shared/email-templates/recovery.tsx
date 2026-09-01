@@ -24,10 +24,10 @@ export const RecoveryEmail = ({
 }: RecoveryEmailProps) => (
   <Html lang="en" dir="ltr">
     <Head />
-    <Preview>Reset your password — Dukan</Preview>
+    <Preview>Reset your password — Dokan</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brandLabel}>DUKAN</Text>
+        <Text style={brandLabel}>DOKAN</Text>
         <Heading style={title}>Hello!</Heading>
         <Text style={text}>
           We received a request to reset your password. Click the button below to set a new one:

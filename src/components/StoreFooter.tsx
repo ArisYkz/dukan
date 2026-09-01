@@ -16,7 +16,7 @@ const StoreFooter = ({ storeName, STOREFRONT, onReportClick }: StoreFooterProps)
       <p className="font-mono text-xs tracking-[0.2em] uppercase" style={{ color: "hsl(var(--footer-fg) / 0.6)" }}>
         {storeName} ·{" "}
         <Link to="/" className="hover:border-b hover:border-current transition-all" style={{ color: "hsl(var(--footer-fg) / 0.6)" }}>
-          Duken
+          Dokan
         </Link>
       </p>
       <p className="font-mono text-xs tracking-wide" style={{ color: "hsl(var(--footer-fg) / 0.4)" }}>Dhaka, Bangladesh</p>

@@ -1,4 +1,4 @@
-# Dukan
+# Dokan
 
 SaaS platform for Bangladeshi entrepreneurs to create mobile-friendly online storefronts. Supports QR payments, Telegram notifications, WhatsApp, Instagram/TikTok integration, and a bilingual UI (English, Bengali).
 

@@ -10,7 +10,7 @@ import type { DashboardTab } from "@/components/dashboard/DashboardTabs";
 import { FREE_PRODUCT_LIMIT } from "@/lib/format";
 import { useLabels } from "@/hooks/useLabels";
 import { useLanguage, type Language } from "@/contexts/LanguageContext";
-import dukenLogo from "@/assets/duken-logo.webp";
+import dokanLogo from "@/assets/dokan-logo.webp";
 import { Link } from "react-router-dom";
 
 const LANG_OPTIONS: { value: Language; label: string }[] = [
@@ -61,9 +61,9 @@ const DashboardSidebar = ({
       {/* Logo area — minimal, breathing */}
       <SidebarHeader className="px-0 pt-0">
         <Link to="/" className="flex items-center gap-2.5 px-4 pt-5 pb-6 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2">
-          <img src={dukenLogo} alt="Dukan" className="h-5 dark:invert shrink-0" />
+          <img src={dokanLogo} alt="Dokan" className="h-5 dark:invert shrink-0" />
           <span className="font-mono text-xs tracking-[0.25em] uppercase text-foreground/50 group-data-[collapsible=icon]:hidden">
-            Duken
+            Dokan
           </span>
         </Link>
       </SidebarHeader>

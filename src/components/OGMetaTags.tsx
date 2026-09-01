@@ -42,7 +42,7 @@ const OGMetaTags = ({ title, description, image }: OGMetaTagsProps) => {
     setNameMeta("twitter:card", "summary_large_image");
 
     return () => {
-      document.title = "Duken";
+      document.title = "Dokan";
     };
   }, [title, description, image]);
 
