@@ -11,13 +11,14 @@ const createOrderSchema = z.object({
   storeId: z.string().uuid(),
   customerName: z.string().trim().min(1).max(100),
   customerPhone: z.string().trim().min(6).max(20),
-  customerAddress: z.string().trim().min(3).max(300),
+  customerAddress: z.string().trim().min(3).max(250),
   items: z.array(z.object({
     productId: z.string().uuid(),
     quantity: z.number().int().min(1).max(50),
   })).min(1).max(100),
   promoCode: z.string().optional(),
   discountAmount: z.number().int().min(0).optional(),
+  paymentMethod: z.enum(["bkash", "nagad", "rocket", "upay", "bank", "cod", "contact_us"]).optional(),
 });
 
 const normalizePhone = (p: string) => p.replace(/\D/g, "");
@@ -94,7 +95,7 @@ Deno.serve(async (req) => {
     // Fetch store — check is_paused + tax settings
     const { data: store } = await supabase
       .from("stores")
-      .select("id, payment_qr_image, is_paused, tax_enabled, tax_percent")
+      .select("id, payment_qr_image, payment_phone, payment_name, payment_methods, is_paused, tax_enabled, tax_percent")
       .eq("id", input.storeId)
       .single();
 
@@ -110,6 +111,43 @@ Deno.serve(async (req) => {
         status: 403,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
+    }
+
+    // ── Validate chosen payment method against store config ────────────────
+    const METHODS_NEEDING_PAYMENT = new Set(["bkash", "nagad", "rocket", "upay", "bank"]);
+    let methodInfo: { phone: string | null; qr_url: string | null; name: string | null } = {
+      phone: null, qr_url: null, name: null,
+    };
+
+    if (input.paymentMethod) {
+      const pm = (store.payment_methods && typeof store.payment_methods === "object")
+        ? store.payment_methods as Record<string, any>
+        : {};
+      const method = input.paymentMethod;
+      let enabled = false;
+
+      if (["bkash", "nagad", "rocket", "upay"].includes(method)) {
+        const w = pm.wallets?.[method];
+        enabled = Boolean(w?.enabled && ((w.phone && String(w.phone).trim() !== "") || w.qr_url));
+        if (enabled) {
+          methodInfo = { phone: String(w.phone || ""), qr_url: w.qr_url || null, name: null };
+        }
+      } else if (method === "bank") {
+        enabled = pm.bank?.enabled === true || (pm.bank === undefined && Object.keys(pm).length === 0 && !!store.payment_qr_image);
+        if (enabled) {
+          methodInfo = { phone: store.payment_phone || null, qr_url: store.payment_qr_image || null, name: store.payment_name || null };
+        }
+      } else {
+        // cod / contact_us
+        enabled = pm[method]?.enabled === true;
+      }
+
+      if (!enabled) {
+        return new Response(JSON.stringify({ error: "This payment method is not available." }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
     }
 
     // ── Validate promo code & discount ──────────────────────────────────────
@@ -187,6 +225,8 @@ Deno.serve(async (req) => {
     const taxAmount = store.tax_enabled ? Math.round(subtotalAfterDiscount * (store.tax_percent || 0) / 100) : 0;
     const finalPrice = subtotalAfterDiscount + taxAmount;
 
+    const isNoPayMethod = input.paymentMethod === "cod" || input.paymentMethod === "contact_us";
+
     const { data: order, error: oErr } = await supabase.from("orders").insert({
       store_id: store.id,
       customer_name: input.customerName,
@@ -196,7 +236,8 @@ Deno.serve(async (req) => {
       subtotal: totalPrice,
       tax_amount: taxAmount,
       total_price: finalPrice,
-      status: "awaiting_verification",
+      status: isNoPayMethod ? "confirmed" : "awaiting_verification",
+      payment_method: input.paymentMethod || null,
       reference_code: refCode,
       promo_code: input.promoCode || null,
       discount_amount: discount,
@@ -243,7 +284,10 @@ Deno.serve(async (req) => {
       order_id: order.id,
       public_order_id: order.public_order_id,
       reference_code: refCode,
-      qr_image_url: store.payment_qr_image,
+      qr_image_url: input.paymentMethod && input.paymentMethod !== "bank" ? methodInfo.qr_url : store.payment_qr_image,
+      payment_phone: methodInfo.phone,
+      payment_name: methodInfo.name,
+      payment_method: input.paymentMethod || null,
       total_amount: finalPrice,
     }), {
       status: 200,
