@@ -6,6 +6,8 @@ interface PaymentViewProps {
     public_order_id?: string;
     reference_code?: string;
     qr_image_url?: string;
+    payment_phone?: string | null;
+    payment_method?: string | null;
   };
   total: number;
   timeLeft: number;
@@ -14,9 +16,11 @@ interface PaymentViewProps {
   ACTIONS: Record<string, string>;
   onIAmPaid: () => void;
   onCopy: (val: string) => void;
+  methodLabel?: string;
+  methodLogo?: string | null;
 }
 
-const PaymentView = ({ order, total, timeLeft, loading, CHECKOUT, ACTIONS, onIAmPaid, onCopy }: PaymentViewProps) => (
+const PaymentView = ({ order, total, timeLeft, loading, CHECKOUT, ACTIONS, onIAmPaid, onCopy, methodLabel, methodLogo }: PaymentViewProps) => (
   <div className="p-6 space-y-6 bg-background">
     <div className="bg-amber-50 border border-amber-200 p-4 flex justify-between items-center text-amber-800">
       <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-tighter">
@@ -26,6 +30,13 @@ const PaymentView = ({ order, total, timeLeft, loading, CHECKOUT, ACTIONS, onIAm
         {Math.floor(timeLeft / 60000)}:{(Math.floor(timeLeft / 1000) % 60).toString().padStart(2, "0")}
       </span>
     </div>
+
+    {methodLabel && (
+      <div className="flex items-center gap-2">
+        {methodLogo && <img src={methodLogo} alt="" className="w-6 h-6 rounded-sm" />}
+        <p className="text-xs font-bold uppercase tracking-wider text-foreground">{methodLabel}</p>
+      </div>
+    )}
 
     <div className="text-center space-y-1">
       <p className="text-[10px] font-medium uppercase tracking-widest text-foreground">
@@ -55,6 +66,21 @@ const PaymentView = ({ order, total, timeLeft, loading, CHECKOUT, ACTIONS, onIAm
           </button>
         </div>
       </div>
+
+      {order.payment_phone && (
+        <div className="p-5 border-2 border-foreground rounded-sm flex justify-between items-center gap-3 bg-card">
+          <div className="space-y-1">
+            <p className="text-[10px] font-medium uppercase tracking-wide text-foreground">{CHECKOUT.PHONE}</p>
+            <p className="text-sm font-mono font-bold text-foreground">{order.payment_phone}</p>
+          </div>
+          <button
+            onClick={() => onCopy(order.payment_phone || "")}
+            className="px-4 py-2 text-xs font-bold uppercase tracking-wide border-2 border-foreground text-foreground bg-card hover:bg-muted transition-colors"
+          >
+            {ACTIONS.COPY}
+          </button>
+        </div>
+      )}
 
       {order.qr_image_url && (
         <div className="space-y-2">

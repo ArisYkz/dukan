@@ -399,7 +399,6 @@ const StoreFront = () => {
             deliveryCarriers={store.delivery_carriers}
             paymentQrImage={store.payment_qr_image}
             paymentPhone={store.payment_phone}
-            paymentName={store.payment_name}
           />
         )}
       </AnimatePresence>

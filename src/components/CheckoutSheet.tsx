@@ -42,7 +42,6 @@ interface CheckoutSheetProps {
   deliveryCarriers?: unknown;
   paymentQrImage?: string | null;
   paymentPhone?: string | null;
-  paymentName?: string | null;
 }
 
 import { PAYMENT_WINDOW_MS } from "@/constants/business";
@@ -520,6 +519,8 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
                 ACTIONS={ACTIONS}
                 onIAmPaid={handleIAmPaid}
                 onCopy={copy}
+                methodLabel={selectedMethod && selectedMethod !== "bank" ? PAYMENT_METHOD_LABELS[selectedMethod] : undefined}
+                methodLogo={{ bkash: bkashLogo, nagad: nagadLogo, rocket: rocketLogo, upay: upayLogo }[selectedMethod as "bkash" | "nagad" | "rocket" | "upay"] ?? null}
               />
             )}
 
