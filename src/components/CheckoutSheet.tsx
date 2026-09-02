@@ -524,7 +524,12 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
             )}
 
             {step === "done" && (
-              <OrderConfirmation CHECKOUT={CHECKOUT} ACTIONS={ACTIONS} onClose={onClose} />
+              <OrderConfirmation
+                CHECKOUT={CHECKOUT}
+                ACTIONS={ACTIONS}
+                onClose={onClose}
+                message={selectedMethod === "cod" ? CHECKOUT.COD_CONFIRMATION : selectedMethod === "contact_us" ? CHECKOUT.CONTACT_CONFIRMATION : undefined}
+              />
             )}
           </div>
         </motion.div>
