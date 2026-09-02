@@ -23,7 +23,6 @@ import HelpButton from "@/components/dashboard/HelpButton";
 import { isSlugOffensive } from "@/lib/slugFilter";
 
 const WALLET_LOGOS: Record<WalletKey, string> = { bkash: bkashLogo, nagad: nagadLogo, rocket: rocketLogo, upay: upayLogo };
-const PAYMENT_METHOD_LABEL_NAME = (key: WalletKey) => PAYMENT_METHOD_LABELS[key];
 
 interface BrandingTabProps {
   store: StoreRow;
@@ -614,8 +613,8 @@ const BrandingTab = ({
                   <div key={key} className="rounded-none border border-border/30 p-3 space-y-3">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2 min-w-0">
-                        <img src={WALLET_LOGOS[key]} alt={key} className="w-6 h-6 rounded-sm shrink-0" />
-                        <span className="text-xs md:text-sm font-medium text-foreground/80 truncate">{PAYMENT_METHOD_LABEL_NAME(key)}</span>
+                        <img src={WALLET_LOGOS[key]} alt="" className="w-6 h-6 rounded-sm shrink-0" />
+                        <span className="text-xs md:text-sm font-medium text-foreground/80 truncate">{PAYMENT_METHOD_LABELS[key]}</span>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <span className="text-xs text-muted-foreground/40 uppercase tracking-wider">{PAYMENT_METHODS.ENABLE}</span>

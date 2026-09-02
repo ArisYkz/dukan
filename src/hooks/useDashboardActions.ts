@@ -6,6 +6,8 @@ import { isSlugOffensive } from "@/lib/slugFilter";
 import { normalizeSlug } from "@/lib/normalizeSlug";
 import { ERROR_CODES, useFormatError } from "@/lib/errorCodes";
 import { FREE_CONFIRMED_LIMIT, OrderStatus } from "@/constants/business";
+import { WALLET_KEYS, walletIsUsable, PAYMENT_METHOD_LABELS } from "@/constants/paymentMethods";
+import { useLabels } from "@/hooks/useLabels";
 import type { OrderRow, BrandFormState, ProductRow, StoreRow } from "@/types/store";
 
 interface UseDashboardActionsProps {
@@ -47,6 +49,7 @@ export const useDashboardActions = ({
   updateProductOptimistic,
 }: UseDashboardActionsProps) => {
   const formatError = useFormatError();
+  const { PAYMENT_METHODS } = useLabels();
 
   /**
    * Update order status with optimistic UI and payment resolution.
@@ -172,6 +175,14 @@ export const useDashboardActions = ({
         return false;
       }
 
+      for (const key of WALLET_KEYS) {
+        const w = brandForm.payment_methods.wallets[key];
+        if (w?.enabled && !walletIsUsable(w)) {
+          toast.error(`${PAYMENT_METHOD_LABELS[key]}: ${PAYMENT_METHODS.WALLET_REQUIRED}`);
+          return false;
+        }
+      }
+
       // Format WhatsApp phone
       let formattedWhatsapp = brandForm.whatsapp_phone.replace(/\D/g, "");
       if (formattedWhatsapp.startsWith("8")) {
@@ -219,7 +230,7 @@ export const useDashboardActions = ({
       reload();
       return true;
     },
-    [MESSAGES, reload, formatError]
+    [MESSAGES, PAYMENT_METHODS, reload, formatError]
   );
 
   /**
