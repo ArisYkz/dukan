@@ -49,7 +49,7 @@ export const useDashboardActions = ({
   updateProductOptimistic,
 }: UseDashboardActionsProps) => {
   const formatError = useFormatError();
-  const { PAYMENT_METHODS } = useLabels();
+  const { PAYMENT_METHODS, PRODUCTS_TAB } = useLabels();
 
   /**
    * Update order status with optimistic UI and payment resolution.
@@ -64,7 +64,7 @@ export const useDashboardActions = ({
       const order = orders.find((o) => o.id === orderId);
       if (order && totalConfirmed + order.total_price > FREE_CONFIRMED_LIMIT) {
         toast.error(
-          MESSAGES.FREE_CONFIRMED_LIMIT ||
+          PRODUCTS_TAB.FREE_CONFIRMED_LIMIT ||
             "Free plan allows up to ৳50,000 in confirmed payments. Upgrade to Pro for unlimited."
         );
         return false; // Indicate limit reached
@@ -93,7 +93,7 @@ export const useDashboardActions = ({
     }
 
     return true;
-  }, [isPro, orders, totalConfirmed, updateOrderOptimistic, rollbackOrder, reload, MESSAGES, ERRORS]);
+  }, [isPro, orders, totalConfirmed, updateOrderOptimistic, rollbackOrder, reload, MESSAGES, ERRORS, PRODUCTS_TAB]);
 
   /**
    * Export orders to CSV file.
@@ -298,9 +298,9 @@ export const useDashboardActions = ({
       return false;
     }
     
-    toast.success(MESSAGES.CATEGORY_UPDATED || "Category updated successfully");
+    toast.success(PRODUCTS_TAB.CATEGORY_UPDATED || "Category updated successfully");
     return true;
-  }, [products, categories, updateProductOptimistic, MESSAGES, formatError, ERROR_CODES]);
+  }, [products, categories, updateProductOptimistic, PRODUCTS_TAB, formatError, ERROR_CODES]);
 
   /**
    * Bulk delete products permanently with optimistic removal.
@@ -334,9 +334,9 @@ export const useDashboardActions = ({
       return false;
     }
     
-    toast.success(MESSAGES.PRODUCTS_DELETED || "Products deleted permanently");
+    toast.success(PRODUCTS_TAB.PRODUCTS_DELETED || "Products deleted permanently");
     return true;
-  }, [products, updateProductOptimistic, MESSAGES, ERRORS]);
+  }, [products, updateProductOptimistic, PRODUCTS_TAB, ERRORS]);
 
   /**
    * Bulk update price with optimistic UI.
@@ -369,9 +369,9 @@ export const useDashboardActions = ({
       return false;
     }
     
-    toast.success(MESSAGES.PRICE_UPDATED || "Price updated successfully");
+    toast.success(PRODUCTS_TAB.PRICE_UPDATED || "Price updated successfully");
     return true;
-  }, [products, updateProductOptimistic, MESSAGES, formatError, ERROR_CODES]);
+  }, [products, updateProductOptimistic, PRODUCTS_TAB, formatError, ERROR_CODES]);
 
   /**
    * Bulk update stock with optimistic UI.
@@ -404,9 +404,9 @@ export const useDashboardActions = ({
       return false;
     }
 
-    toast.success(MESSAGES.STOCK_UPDATED || "Stock updated successfully");
+    toast.success(PRODUCTS_TAB.STOCK_UPDATED || "Stock updated successfully");
     return true;
-  }, [products, updateProductOptimistic, MESSAGES, formatError, ERROR_CODES]);
+  }, [products, updateProductOptimistic, PRODUCTS_TAB, formatError, ERROR_CODES]);
 
   return {
     updateOrderStatus,

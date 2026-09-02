@@ -364,7 +364,7 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
                     {/* Country (pre-selected) */}
                     <div className="border-b border-border py-3">
                       <p className="text-[10px] uppercase tracking-wider mb-1 text-muted-foreground">{CHECKOUT.COUNTRY}</p>
-                      <p className="text-sm font-medium text-foreground">{CHECKOUT.KAZAKHSTAN}</p>
+                      <p className="text-sm font-medium text-foreground">{CHECKOUT.BANGLADESH}</p>
                     </div>
 
                     {/* City dropdown */}
