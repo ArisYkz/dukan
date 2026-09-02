@@ -65,6 +65,7 @@ const App = () => (
                 <Route path="/privacy" element={<RouteBoundary><Privacy /></RouteBoundary>} />
                 <Route path="/terms" element={<RouteBoundary><Terms /></RouteBoundary>} />
                 <Route path="/test-performance" element={<RouteBoundary><TestPerformance /></RouteBoundary>} />
+                <Route path="/:slug" element={<RouteBoundary><StoreFront /></RouteBoundary>} />
                 <Route path="*" element={<RouteBoundary><NotFound /></RouteBoundary>} />
               </Routes>
             </Suspense>

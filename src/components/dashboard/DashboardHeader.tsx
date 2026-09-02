@@ -23,7 +23,7 @@ interface DashboardHeaderProps {
 const DashboardHeader = ({ store, stores, currentStoreId, onStoreChange, onCreateStore, isPro, isAdmin, onLogout }: DashboardHeaderProps) => {
   const { MESSAGES } = useLabels();
   const copyStoreLink = () => {
-    const url = `https://dokan.example.com/s/${store.slug}`;
+    const url = `https://dokan.example.com/${store.slug}`;
     navigator.clipboard.writeText(url);
     toast.success(MESSAGES.LINK_COPIED, { className: "font-mono" });
   };
@@ -61,7 +61,7 @@ const DashboardHeader = ({ store, stores, currentStoreId, onStoreChange, onCreat
           <button onClick={copyStoreLink} className="p-2 rounded-sm transition-colors opacity-70 hover:opacity-100" title="Copy store link">
             <Copy className="w-4 h-4" />
           </button>
-          <a href={`/s/${store.slug}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-sm transition-colors opacity-70 hover:opacity-100" title="View store">
+          <a href={`/${store.slug}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-sm transition-colors opacity-70 hover:opacity-100" title="View store">
             <ExternalLink className="w-4 h-4" />
           </a>
           <div className="hidden sm:block"><LanguageDropdown /></div>

@@ -179,7 +179,7 @@ const SuccessPage = () => {
           )}
 
           <Link
-            to={storeSlug ? `/s/${storeSlug}` : "/"}
+            to={storeSlug ? `/${storeSlug}` : "/"}
             className="inline-block w-full border-2 py-3 text-xs font-mono tracking-[0.15em] uppercase transition-all active:scale-[0.98] hover:opacity-80 text-center"
             style={{ borderColor: '#1a1a1a', color: '#1a1a1a' }}
           >

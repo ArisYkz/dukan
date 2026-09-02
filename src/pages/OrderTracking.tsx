@@ -305,7 +305,7 @@ const OrderTracking = () => {
           </motion.div>
           {store?.slug && (
             <Link
-              to={`/s/${store.slug}`}
+              to={`/${store.slug}`}
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground text-sm tracking-wide uppercase rounded-none hover:opacity-90 transition-opacity active:scale-[0.98]"
             >
               <RotateCcw className="w-4 h-4" />

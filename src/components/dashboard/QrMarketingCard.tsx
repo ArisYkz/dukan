@@ -24,7 +24,7 @@ const QrMarketingCard = ({ storeSlug, storeName, isPro, onUpgrade }: QrMarketing
 
   const hasSlug = storeSlug.length > 0;
   const canToggle = isPro && hasSlug;
-  const storeUrl = `https://dokan.example.com/s/${storeSlug}`;
+  const storeUrl = `https://dokan.example.com/${storeSlug}`;
 
   const handleSwitchClick = () => {
     if (!hasSlug) return; // tooltip handles messaging

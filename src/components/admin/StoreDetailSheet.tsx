@@ -97,7 +97,7 @@ const StoreDetailSheet = ({ storeId, onClose }: StoreDetailSheetProps) => {
 
           <div className="space-y-2 pt-4 border-t border-border">
             <a
-              href={`/s/${store.slug}`}
+              href={`/${store.slug}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 font-mono text-[10px] tracking-wider uppercase px-4 py-2.5 border border-border hover:bg-muted transition-colors w-full"
