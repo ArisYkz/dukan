@@ -61,6 +61,7 @@ const en: TranslationMap = {
     paid_confirmed: "Payment Confirmed",
     payment_rejected: "Payment not received — please pay again",
     shipped: "Order Shipped", delivered: "Delivered", cancelled: "Cancelled",
+    confirmed: "Order Confirmed",
     returned: "Returned by customer", refunded: "Refunded",
   },
   ORDER_STEPS: {
@@ -713,6 +714,7 @@ const bn: TranslationMap = {
     paid_confirmed: "পেমেন্ট নিশ্চিত",
     payment_rejected: "পেমেন্ট পাওয়া যায়নি — আবার পেমেন্ট করুন",
     shipped: "অর্ডার পাঠানো হয়েছে", delivered: "ডেলিভারি সম্পন্ন", cancelled: "বাতিল",
+    confirmed: "অর্ডার নিশ্চিত হয়েছে",
     returned: "গ্রাহকের দ্বারা ফেরত", refunded: "রিফান্ড করা হয়েছে",
   },
   ORDER_STEPS: {

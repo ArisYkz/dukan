@@ -8,7 +8,7 @@ import { formatPrice } from "@/lib/format";
 import { useLabels } from "@/hooks/useLabels";
 import { useTranslation } from "react-i18next";
 import StarRating from "@/components/StarRating";
-import { normalizePaymentMethods } from "@/constants/paymentMethods";
+import { normalizePaymentMethods, WALLET_KEYS, type WalletKey } from "@/constants/paymentMethods";
 
 interface OrderData {
   id: string;
@@ -267,8 +267,8 @@ const OrderTracking = () => {
   const canClaimPayment = ["new", "payment_rejected"].includes(order.status);
   const pmConfig = normalizePaymentMethods(store?.payment_methods);
   const orderMethod = order.payment_method;
-  const methodWallet = orderMethod && ["bkash", "nagad", "rocket", "upay"].includes(orderMethod)
-    ? pmConfig.wallets[orderMethod as "bkash" | "nagad" | "rocket" | "upay"]
+  const methodWallet = orderMethod && WALLET_KEYS.includes(orderMethod as WalletKey)
+    ? pmConfig.wallets[orderMethod as WalletKey]
     : undefined;
   const recipientPhone = (orderMethod && methodWallet?.phone) ? methodWallet.phone : store?.payment_phone || null;
   const recipientName = store?.payment_name || null;
@@ -439,7 +439,7 @@ const OrderTracking = () => {
                       {ACTIONS.COPY}
                     </button>
                   </div>
-                  <p className="font-mono text-sm font-bold text-foreground">{recipientName}</p>
+                  {recipientName && <p className="font-mono text-sm font-bold text-foreground">{recipientName}</p>}
                 </div>
               </div>
             )}
