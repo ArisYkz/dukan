@@ -797,6 +797,7 @@ export type Database = {
           created_at: string
           default_language: string
           description: string | null
+          facebook: string | null
           hero_image_url: string | null
           hero_subtitle: string | null
           hero_title: string | null
@@ -814,6 +815,7 @@ export type Database = {
           report_count: number | null
           review_count: number | null
           show_banner: boolean | null
+          show_facebook: boolean | null
           show_instagram: boolean | null
           show_telegram: boolean | null
           show_tiktok: boolean | null
@@ -844,6 +846,7 @@ export type Database = {
           hero_subtitle?: string | null
           hero_title?: string | null
           id?: string
+          facebook?: string | null
           instagram?: string | null
           is_paused?: boolean | null
           is_verified?: boolean
@@ -857,6 +860,7 @@ export type Database = {
           report_count?: number | null
           review_count?: number | null
           show_banner?: boolean | null
+          show_facebook?: boolean | null
           show_instagram?: boolean | null
           show_telegram?: boolean | null
           show_tiktok?: boolean | null
@@ -887,6 +891,7 @@ export type Database = {
           hero_subtitle?: string | null
           hero_title?: string | null
           id?: string
+          facebook?: string | null
           instagram?: string | null
           is_paused?: boolean | null
           is_verified?: boolean
@@ -900,6 +905,7 @@ export type Database = {
           report_count?: number | null
           review_count?: number | null
           show_banner?: boolean | null
+          show_facebook?: boolean | null
           show_instagram?: boolean | null
           show_telegram?: boolean | null
           show_tiktok?: boolean | null

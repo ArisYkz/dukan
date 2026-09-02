@@ -1,7 +1,7 @@
 ﻿import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
-  AlertTriangle, Instagram, MessageCircle, Bell, Crown,
+  AlertTriangle, Facebook, Instagram, MessageCircle, Bell, Crown,
   Info, Lock, Check, ChevronDown, Globe, Link as LinkIcon,
   Smartphone, User, Percent, Store, Banknote, Phone,
 } from "lucide-react";
@@ -442,6 +442,23 @@ const BrandingTab = ({
                 onChange={(e) => set("telegram_chat_id", e.target.value)}
                 className={inputClass}
                 placeholder="@channel or Chat ID"
+              />
+            </PlatformRow>
+
+            {/* Facebook */}
+            <PlatformRow
+              icon={<Facebook className="w-3.5 h-3.5" />}
+              name="Facebook"
+              isPrimary={brandForm.social_platform === "facebook"}
+              onSetPrimary={() => set("social_platform", "facebook")}
+              showToggle={brandForm.show_facebook}
+              onToggleShow={() => set("show_facebook", !brandForm.show_facebook)}
+            >
+              <input
+                value={brandForm.facebook}
+                onChange={(e) => set("facebook", e.target.value)}
+                className={inputClass}
+                placeholder="@username"
               />
             </PlatformRow>
           </SectionCard>

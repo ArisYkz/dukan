@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef, lazy, Suspense } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, Instagram, MessageCircle, Loader2 } from "lucide-react";
+import { ShoppingBag, Facebook, Instagram, MessageCircle, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getThemeStyleVars } from "@/lib/storeThemes";
 import { useTheme } from "@/hooks/useTheme";
@@ -160,6 +160,7 @@ const StoreFront = () => {
   const instagramLink = `https://instagram.com/${(store?.instagram || "").replace("@", "")}`;
   const tiktokLink = `https://tiktok.com/@${(store?.tiktok_handle || store?.instagram || "").replace("@", "")}`;
   const telegramLink = `https://t.me/${(store?.telegram_chat_id || "").replace("@", "")}`;
+  const facebookLink = `https://m.me/${(store?.facebook || "").replace("@", "")}`;
 
   if (loading) {
     return (
@@ -284,6 +285,11 @@ const StoreFront = () => {
               {store.show_telegram && store.telegram_chat_id && (
                 <a href={telegramLink} target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity">
                   <MessageCircle className="w-4 h-4" strokeWidth={1} />
+                </a>
+              )}
+              {store.show_facebook && store.facebook && (
+                <a href={facebookLink} target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity">
+                  <Facebook className="w-4 h-4" strokeWidth={1} />
                 </a>
               )}
             </div>

@@ -111,13 +111,13 @@ const Dashboard = () => {
   const [storeForm, setStoreForm] = useState({ name: "", slug: "", instagram: "" });
 
   const [brandForm, setBrandForm] = useState<BrandFormState>({
-    name: "", slug: "", instagram: "", tiktok_handle: "", telegram_chat_id: "",
+    name: "", slug: "", instagram: "", tiktok_handle: "", telegram_chat_id: "", facebook: "",
     hero_image_url: null, hero_title: "", hero_subtitle: "",
     payment_qr_image: null,
     payment_phone: "", payment_name: "",
     whatsapp_phone: "",
     social_platform: "whatsapp",
-    show_instagram: true, show_tiktok: false, show_telegram: false,
+    show_instagram: true, show_tiktok: false, show_telegram: false, show_facebook: false,
     show_banner: true,
     default_language: "en",
     tax_enabled: false,
@@ -135,6 +135,7 @@ const Dashboard = () => {
       slug: store.slug || "",
       instagram: store.instagram || "",
       tiktok_handle: store.tiktok_handle || "",
+      facebook: store.facebook || "",
       telegram_chat_id: store.telegram_chat_id || "",
       hero_image_url: store.hero_image_url || null,
       hero_title: store.hero_title || "",
@@ -146,6 +147,7 @@ const Dashboard = () => {
       social_platform: store.social_platform || "whatsapp",
       show_instagram: store.show_instagram ?? true,
       show_tiktok: store.show_tiktok ?? false,
+      show_facebook: store.show_facebook ?? false,
       show_telegram: store.show_telegram ?? false,
       show_banner: store.show_banner ?? true,
       default_language: store.default_language || "en",
