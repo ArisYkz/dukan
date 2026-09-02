@@ -452,7 +452,7 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
                         required
                       />
                       <p className="text-[10px] italic mt-1 text-muted-foreground">
-                        {CHECKOUT.ADDRESS_CHAR_COUNT.replace("{count}", String(form.street.length))}
+                        {CHECKOUT.ADDRESS_CHAR_COUNT.replace("{count}", String(buildFullAddress(form).length))}
                       </p>
                       <p className="text-[10px] italic mt-1 text-muted-foreground">{CHECKOUT.STREET_HINT}</p>
                     </div>
@@ -472,7 +472,7 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
                       <div className="py-4 space-y-2">
                         <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{CHECKOUT.CHOOSE_METHOD}</p>
                         {methodList.map((m) => {
-                          const wallet = m !== "bank" && m !== "cod" && m !== "contact_us" ? pmConfig.wallets[m as "bkash" | "nagad" | "rocket" | "upay"] : undefined;
+                          const wallet = m !== "bank" && m !== "cod" && m !== "contact_us" ? pmConfig.wallets[m] : undefined;
                           const active = selectedMethod === m;
                           return (
                             <button
@@ -491,7 +491,7 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
                                 <MessageCircle className="w-6 h-6 text-foreground" />
                               )}
                               <span className="text-sm font-medium text-foreground">
-                                {m === "cod" ? CHECKOUT.COD_LABEL : m === "contact_us" ? CHECKOUT.CONTACT_LABEL : PAYMENT_METHOD_LABELS[m as PaymentMethodKey]}
+                                {m === "cod" ? CHECKOUT.COD_LABEL : m === "contact_us" ? CHECKOUT.CONTACT_LABEL : PAYMENT_METHOD_LABELS[m]}
                               </span>
                             </button>
                           );
