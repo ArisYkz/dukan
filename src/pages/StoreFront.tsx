@@ -395,6 +395,11 @@ const StoreFront = () => {
             storeName={store.name}
             taxEnabled={store.tax_enabled}
             taxPercent={store.tax_percent}
+            paymentMethods={store.payment_methods}
+            deliveryCarriers={store.delivery_carriers}
+            paymentQrImage={store.payment_qr_image}
+            paymentPhone={store.payment_phone}
+            paymentName={store.payment_name}
           />
         )}
       </AnimatePresence>

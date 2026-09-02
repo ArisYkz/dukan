@@ -790,7 +790,7 @@ const bn: TranslationMap = {
     CONTACT_LABEL: "অন্যান্য — বিক্রেতার সাথে যোগাযোগ",
     CONTACT_CONFIRMATION: "আপনার অর্ডার গৃহীত হয়েছে। পেমেন্টের ব্যবস্থা করতে বিক্রেতা আপনার সাথে যোগাযোগ করবেন। অতিরিক্ত চার্জ প্রযোজ্য।",
     COD_CONFIRMATION: "আপনার অর্ডার গৃহীত হয়েছে। ডেলিভারির সময় কুরিয়ারকে টাকা পরিশোধ করুন।",
-    ADDRESS_CHAR_COUNT: "{count}/২৫০",
+    ADDRESS_CHAR_COUNT: "{count}/250",
     ADDRESS_TOO_LONG: "ঠিকানা ২৫০ অক্ষরের মধ্যে হতে হবে",
   },
   PAYMENT_METHODS: {

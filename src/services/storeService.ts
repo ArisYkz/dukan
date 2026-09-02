@@ -8,6 +8,7 @@ export const fetchStoreBySlug = async (slug: string) => {
       instagram, tiktok_handle, telegram_chat_id,
       hero_image_url, hero_title, hero_subtitle,
       payment_qr_image, is_verified,
+      payment_methods, delivery_carriers, payment_phone, payment_name,
       is_paused, total_earned, report_count,
       show_instagram, show_tiktok, show_telegram, show_banner,
       default_language, theme_preset,

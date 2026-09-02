@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Minus, Plus } from "lucide-react";
+import { X, Minus, Plus, Banknote, MessageCircle, Wallet as WalletIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { formatPrice } from "@/lib/format";
@@ -15,6 +15,17 @@ import OrderConfirmation from "@/components/OrderConfirmation";
 import type { CartItem } from "@/types/store";
 import { checkStorePaused } from "@/services/storeService";
 import { fetchStorePromoCode } from "@/services/orderService";
+import {
+  normalizePaymentMethods, getEnabledMethods, methodNeedsPayment,
+  PAYMENT_METHOD_LABELS,
+  type PaymentMethodKey,
+} from "@/constants/paymentMethods";
+import { normalizeCarriers } from "@/constants/delivery";
+import { buildFullAddress, isAddressTooLong } from "@/lib/address";
+import bkashLogo from "@/assets/wallets/bkash.svg";
+import nagadLogo from "@/assets/wallets/nagad.svg";
+import rocketLogo from "@/assets/wallets/rocket.svg";
+import upayLogo from "@/assets/wallets/upay.svg";
 
 interface CheckoutSheetProps {
   cart: CartItem[];
@@ -27,6 +38,11 @@ interface CheckoutSheetProps {
   storeName?: string;
   taxEnabled?: boolean;
   taxPercent?: number;
+  paymentMethods?: unknown;
+  deliveryCarriers?: unknown;
+  paymentQrImage?: string | null;
+  paymentPhone?: string | null;
+  paymentName?: string | null;
 }
 
 import { PAYMENT_WINDOW_MS } from "@/constants/business";
@@ -34,7 +50,7 @@ import { PAYMENT_WINDOW_MS } from "@/constants/business";
 const PAYMENT_WINDOW = PAYMENT_WINDOW_MS;
 
 const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
-  ({ cart, onClose, onUpdateQuantity, onRemove, clearCart, onOrderComplete, storeId, storeName, taxEnabled, taxPercent = 0 }, ref) => {
+  ({ cart, onClose, onUpdateQuantity, onRemove, clearCart, onOrderComplete, storeId, storeName, taxEnabled, taxPercent = 0, paymentMethods, deliveryCarriers, paymentQrImage, paymentPhone }, ref) => {
     const { CHECKOUT, MESSAGES, ACTIONS } = useLabels();
     const { language } = useLanguage();
     const [step, setStep] = useState<"cart" | "pay" | "done">("cart");
@@ -47,6 +63,24 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
     const [promoApplied, setPromoApplied] = useState(false);
     const [promoLoading, setPromoLoading] = useState(false);
     const [sellerLimitReached, setSellerLimitReached] = useState(false);
+
+    const pmConfig = useMemo(() => normalizePaymentMethods(paymentMethods), [paymentMethods]);
+    const carriers = useMemo(() => normalizeCarriers(deliveryCarriers), [deliveryCarriers]);
+    const methodList = useMemo(() => {
+      const list = getEnabledMethods(pmConfig);
+      // Legacy stores: nothing configured → fall back to the generic QR if present
+      if (list.length === 0 && (paymentQrImage || paymentPhone)) return ["bank" as PaymentMethodKey];
+      // bank is only usable with its QR/phone
+      return list.filter((m) => m !== "bank" || !!(paymentQrImage || paymentPhone));
+    }, [pmConfig, paymentQrImage, paymentPhone]);
+    const methodListKey = methodList.join("|");
+    const [selectedMethod, setSelectedMethod] = useState<PaymentMethodKey | null>(null);
+
+    // Reset on (re)open; auto-select when exactly one method exists
+    useEffect(() => {
+      setSelectedMethod(methodList.length === 1 ? methodList[0] : null);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [storeId, methodListKey]);
 
     useEffect(() => {
       if (!storeId) return;
@@ -136,7 +170,9 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
       e.preventDefault();
       if (!form.name || form.phone.length < 10 || !form.city || !form.street) return toast.error(MESSAGES.FILL_ALL_FIELDS);
 
-      const fullAddress = `${form.city}, ${form.zip ? `ZIP ${form.zip}, ` : ""}${form.street}${form.house ? `, ${form.house}` : ""}`;
+      const fullAddress = buildFullAddress(form);
+      if (isAddressTooLong(fullAddress)) return toast.error(CHECKOUT.ADDRESS_TOO_LONG);
+      if (methodList.length > 0 && !selectedMethod) return toast.error(CHECKOUT.CHOOSE_METHOD);
 
       setLoading(true);
       try {
@@ -161,6 +197,7 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
               items: cart.map((i) => ({ productId: i.product.id, quantity: i.quantity, selectedVariants: i.selectedVariants })),
               promoCode: promoApplied ? promoCode : undefined,
               discountAmount: promoApplied ? discountAmount : 0,
+              paymentMethod: selectedMethod ?? undefined,
             }),
           },
         );
@@ -175,7 +212,13 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
         }
 
         setOrder({ ...result, createdAt: Date.now() });
-        setStep("pay");
+        if (selectedMethod && !methodNeedsPayment(selectedMethod)) {
+          // COD / contact-us: order lands "confirmed" server-side; no payment step
+          if (clearCart) clearCart();
+          setStep("done");
+        } else {
+          setStep("pay");
+        }
       } catch (err: any) {
         toast.error(`${MESSAGES.SYSTEM_ERROR}: ${err.message}`);
       } finally {
@@ -361,6 +404,13 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
                       required
                     />
                     <p className="text-[10px] italic text-muted-foreground">{CHECKOUT.PHONE_HINT}</p>
+                    {carriers.length > 0 && (
+                      <div className="border-b border-border py-3">
+                        <p className="text-[10px] uppercase tracking-wider mb-1 text-muted-foreground">{CHECKOUT.DELIVERY_VIA}</p>
+                        <p className="text-sm font-medium text-foreground">{carriers.map((c) => c.name).join(", ")}</p>
+                      </div>
+                    )}
+
                     {/* Country (pre-selected) */}
                     <div className="border-b border-border py-3">
                       <p className="text-[10px] uppercase tracking-wider mb-1 text-muted-foreground">{CHECKOUT.COUNTRY}</p>
@@ -398,8 +448,12 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
                         className="w-full border-b border-border py-3 outline-none focus:border-ring transition-colors bg-transparent text-foreground"
                         value={form.street}
                         onChange={(e) => setForm({ ...form, street: e.target.value })}
+                        maxLength={250}
                         required
                       />
+                      <p className="text-[10px] italic mt-1 text-muted-foreground">
+                        {CHECKOUT.ADDRESS_CHAR_COUNT.replace("{count}", String(form.street.length))}
+                      </p>
                       <p className="text-[10px] italic mt-1 text-muted-foreground">{CHECKOUT.STREET_HINT}</p>
                     </div>
 
@@ -413,6 +467,38 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
                       />
                       <p className="text-[10px] italic mt-1 text-muted-foreground">{CHECKOUT.HOUSE_HINT}</p>
                     </div>
+
+                    {methodList.length > 1 && (
+                      <div className="py-4 space-y-2">
+                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{CHECKOUT.CHOOSE_METHOD}</p>
+                        {methodList.map((m) => {
+                          const wallet = m !== "bank" && m !== "cod" && m !== "contact_us" ? pmConfig.wallets[m as "bkash" | "nagad" | "rocket" | "upay"] : undefined;
+                          const active = selectedMethod === m;
+                          return (
+                            <button
+                              key={m}
+                              type="button"
+                              onClick={() => setSelectedMethod(m)}
+                              className={`w-full flex items-center gap-3 border p-4 text-left transition-colors ${active ? "border-foreground bg-muted/50" : "border-border hover:border-foreground/60"}`}
+                            >
+                              {wallet ? (
+                                <img src={{ bkash: bkashLogo, nagad: nagadLogo, rocket: rocketLogo, upay: upayLogo }[m as "bkash" | "nagad" | "rocket" | "upay"]} alt="" className="w-8 h-8 rounded-sm" />
+                              ) : m === "bank" ? (
+                                <WalletIcon className="w-6 h-6 text-foreground" />
+                              ) : m === "cod" ? (
+                                <Banknote className="w-6 h-6 text-foreground" />
+                              ) : (
+                                <MessageCircle className="w-6 h-6 text-foreground" />
+                              )}
+                              <span className="text-sm font-medium text-foreground">
+                                {m === "cod" ? CHECKOUT.COD_LABEL : m === "contact_us" ? CHECKOUT.CONTACT_LABEL : PAYMENT_METHOD_LABELS[m as PaymentMethodKey]}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
                     <button
                       disabled={loading || cart.length === 0}
                       className="w-full py-4 mt-4 font-bold uppercase tracking-widest hover:opacity-90 disabled:opacity-30 transition-opacity bg-primary text-primary-foreground"
