@@ -215,6 +215,7 @@ const BrandingTab = ({
     if (rawSlug.length > 2) {
       if (isSlugOffensive(rawSlug) || isSlugReserved(rawSlug)) {
         setIsSlugTaken(true);
+        setIsCheckingSlug(false);
         return;
       }
       setIsCheckingSlug(true);
