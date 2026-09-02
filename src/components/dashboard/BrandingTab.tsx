@@ -21,7 +21,7 @@ import { checkSlugAvailability } from "@/services/storeService";
 import { useLabels } from "@/hooks/useLabels";
 import QrMarketingCard from "@/components/dashboard/QrMarketingCard";
 import HelpButton from "@/components/dashboard/HelpButton";
-import { isSlugOffensive } from "@/lib/slugFilter";
+import { isSlugOffensive, isSlugReserved } from "@/lib/slugFilter";
 
 const WALLET_LOGOS: Record<WalletKey, string> = { bkash: bkashLogo, nagad: nagadLogo, rocket: rocketLogo, upay: upayLogo };
 
@@ -213,7 +213,7 @@ const BrandingTab = ({
     if (slugTimerRef.current) clearTimeout(slugTimerRef.current);
 
     if (rawSlug.length > 2) {
-      if (isSlugOffensive(rawSlug)) {
+      if (isSlugOffensive(rawSlug) || isSlugReserved(rawSlug)) {
         setIsSlugTaken(true);
         return;
       }

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 import { updateOrderStatus as updateOrderStatusService, resolvePaymentAttempts } from "@/services/orderService";
 import { updateStoreBranding } from "@/services/storeService";
-import { isSlugOffensive } from "@/lib/slugFilter";
+import { isSlugOffensive, isSlugReserved } from "@/lib/slugFilter";
 import { normalizeSlug } from "@/lib/normalizeSlug";
 import { ERROR_CODES, useFormatError } from "@/lib/errorCodes";
 import { FREE_CONFIRMED_LIMIT, OrderStatus } from "@/constants/business";
@@ -245,6 +245,8 @@ export const useDashboardActions = ({
     async (userId: string, storeName: string, createStoreService: any) => {
       const base = normalizeSlug(storeName);
       let finalSlug = base;
+      // Reserved app route — fall through to the suffix ladder
+      if (isSlugReserved(finalSlug)) finalSlug = `${base}-bd`;
 
       for (let attempt = 0; attempt < 10; attempt++) {
         const { error } = await createStoreService(userId, storeName, finalSlug);
