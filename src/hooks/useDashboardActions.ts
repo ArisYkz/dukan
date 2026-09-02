@@ -200,6 +200,8 @@ export const useDashboardActions = ({
         tax_enabled: brandForm.tax_enabled,
         tax_percent: parseFloat(brandForm.tax_percent || "0"),
         theme_preset: brandForm.theme_preset,
+        payment_methods: brandForm.payment_methods,
+        delivery_carriers: brandForm.delivery_carriers,
       };
 
       // Track slug customization for free users (1-change limit)

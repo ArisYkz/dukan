@@ -12,6 +12,8 @@ import {
   type OrderFilter,
 } from "@/lib/format";
 import { FREE_CONFIRMED_LIMIT, OrderStatus } from "@/constants/business";
+import { EMPTY_PAYMENT_METHODS, normalizePaymentMethods } from "@/constants/paymentMethods";
+import { normalizeCarriers } from "@/constants/delivery";
 import { ERROR_CODES, useFormatError } from "@/lib/errorCodes";
 import { useLabels } from "@/hooks/useLabels";
 import { useTranslation } from "react-i18next";
@@ -121,6 +123,8 @@ const Dashboard = () => {
     tax_enabled: false,
     tax_percent: "0",
     theme_preset: "classic",
+    payment_methods: EMPTY_PAYMENT_METHODS,
+    delivery_carriers: [],
   });
   const [savingBrand, setSavingBrand] = useState(false);
 
@@ -148,6 +152,8 @@ const Dashboard = () => {
       tax_enabled: store.tax_enabled ?? false,
       tax_percent: String(store.tax_percent ?? 0),
       theme_preset: store.theme_preset || "classic",
+      payment_methods: normalizePaymentMethods(store.payment_methods),
+      delivery_carriers: normalizeCarriers(store.delivery_carriers),
     });
   }, [store]);
 
