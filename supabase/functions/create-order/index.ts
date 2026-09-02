@@ -132,7 +132,7 @@ Deno.serve(async (req) => {
           methodInfo = { phone: (w.phone && String(w.phone).trim() !== "") ? String(w.phone) : null, qr_url: typeof w.qr_url === "string" && w.qr_url ? w.qr_url : null, name: null };
         }
       } else if (method === "bank") {
-        enabled = pm.bank?.enabled === true || (pm.bank === undefined && Object.keys(pm).length === 0 && !!store.payment_qr_image);
+        enabled = pm.bank?.enabled === true || (pm.bank === undefined && Object.keys(pm).length === 0 && (!!store.payment_qr_image || !!store.payment_phone));
         if (enabled) {
           methodInfo = { phone: store.payment_phone || null, qr_url: store.payment_qr_image || null, name: store.payment_name || null };
         }

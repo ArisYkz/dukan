@@ -10,7 +10,7 @@ import { useLabels } from "@/hooks/useLabels";
 import { useTranslation } from "react-i18next";
 
 const SuccessPage = () => {
-  const { SUCCESS } = useLabels();
+  const { SUCCESS, CHECKOUT } = useLabels();
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const storeSlug = searchParams.get("store");
@@ -119,6 +119,16 @@ const SuccessPage = () => {
             <p className="font-mono text-xs" style={{ color: '#1a1a1a', opacity: 0.6 }}>
               {SUCCESS.SELLER_WILL_CONTACT}
             </p>
+            {!loading && order?.payment_method === "cod" && (
+              <p className="font-mono text-xs" style={{ color: '#1a1a1a', opacity: 0.6 }}>
+                {CHECKOUT.COD_CONFIRMATION}
+              </p>
+            )}
+            {!loading && order?.payment_method === "contact_us" && (
+              <p className="font-mono text-xs" style={{ color: '#1a1a1a', opacity: 0.6 }}>
+                {CHECKOUT.CONTACT_CONFIRMATION}
+              </p>
+            )}
             {orderId && (
               <p className="font-mono text-[10px] font-bold tracking-wide uppercase" style={{ color: '#c0392b' }}>
                 {SUCCESS.KEEP_LINK || "Save this link to track your order status later:"}

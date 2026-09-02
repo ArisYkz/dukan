@@ -202,6 +202,8 @@ export const useDashboardActions = ({
         hero_title: brandForm.hero_title,
         hero_subtitle: brandForm.hero_subtitle,
         payment_qr_image: brandForm.payment_qr_image,
+        payment_phone: brandForm.payment_phone,
+        payment_name: brandForm.payment_name,
         social_platform: brandForm.social_platform,
         show_instagram: brandForm.show_instagram,
         show_tiktok: brandForm.show_tiktok,

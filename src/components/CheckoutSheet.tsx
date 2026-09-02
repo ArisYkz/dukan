@@ -214,7 +214,11 @@ const CheckoutSheet = forwardRef<HTMLDivElement, CheckoutSheetProps>(
         if (selectedMethod && !methodNeedsPayment(selectedMethod)) {
           // COD / contact-us: order lands "confirmed" server-side; no payment step
           if (clearCart) clearCart();
-          setStep("done");
+          if (onOrderComplete) {
+            onOrderComplete(order.order_id);
+          } else {
+            setStep("done");
+          }
         } else {
           setStep("pay");
         }
