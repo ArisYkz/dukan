@@ -8,6 +8,7 @@ import { formatPrice } from "@/lib/format";
 import { useLabels } from "@/hooks/useLabels";
 import { useTranslation } from "react-i18next";
 import StarRating from "@/components/StarRating";
+import { normalizePaymentMethods } from "@/constants/paymentMethods";
 
 interface OrderData {
   id: string;
@@ -23,6 +24,7 @@ interface OrderData {
   reference_code: string | null;
   promo_code: string | null;
   discount_amount: number | null;
+  payment_method: string | null;
   order_items: { product_name: string; quantity: number; product_price: number; product_id: string }[];
 }
 
@@ -33,6 +35,7 @@ interface StoreData {
   is_verified: boolean;
   payment_phone: string | null;
   payment_name: string | null;
+  payment_methods: unknown;
   whatsapp_phone: string | null;
   social_platform: string | null;
   telegram_chat_id: string | null;
@@ -117,7 +120,7 @@ const OrderTracking = () => {
 
     const { data: storeData } = await supabase
       .from("stores")
-      .select("name, slug, payment_qr_image, is_verified, payment_phone, payment_name, whatsapp_phone, social_platform, telegram_chat_id, instagram")
+      .select("name, slug, payment_qr_image, is_verified, payment_phone, payment_name, payment_methods, whatsapp_phone, social_platform, telegram_chat_id, instagram")
       .eq("id", orderData.store_id)
       .single();
 
@@ -262,8 +265,16 @@ const OrderTracking = () => {
   const isCancelled = order.status === "cancelled";
   const isRejected = order.status === "payment_rejected";
   const canClaimPayment = ["new", "payment_rejected"].includes(order.status);
-  const hasQR = !!store?.payment_qr_image;
-  const hasPayment = !!(store?.payment_phone && store?.payment_name);
+  const pmConfig = normalizePaymentMethods(store?.payment_methods);
+  const orderMethod = order.payment_method;
+  const methodWallet = orderMethod && ["bkash", "nagad", "rocket", "upay"].includes(orderMethod)
+    ? pmConfig.wallets[orderMethod as "bkash" | "nagad" | "rocket" | "upay"]
+    : undefined;
+  const recipientPhone = (orderMethod && methodWallet?.phone) ? methodWallet.phone : store?.payment_phone || null;
+  const recipientName = store?.payment_name || null;
+  const recipientQr = (orderMethod && methodWallet?.qr_url) ? methodWallet.qr_url : store?.payment_qr_image || null;
+  const hasQR = !!recipientQr;
+  const hasPayment = !!(recipientPhone && (methodWallet || store?.payment_name));
   const isExpired = order.status === "new" && remaining !== null && remaining <= 0;
 
   // Expired state
@@ -419,16 +430,16 @@ const OrderTracking = () => {
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <p className="font-mono text-xl font-bold">{store!.payment_phone}</p>
+                    <p className="font-mono text-xl font-bold">{recipientPhone}</p>
                     <button
-                      onClick={() => copyToClipboard(store!.payment_phone!, "Number")}
+                      onClick={() => copyToClipboard(recipientPhone!, "Number")}
                       className="flex items-center gap-1.5 px-3 py-1.5 text-xs tracking-wide uppercase border border-border rounded-none hover:bg-muted transition-colors text-muted-foreground hover:text-foreground font-mono"
                     >
                       <Copy className="w-3 h-3" />
                       {ACTIONS.COPY}
                     </button>
                   </div>
-                  <p className="font-mono text-sm font-bold text-foreground">{store!.payment_name}</p>
+                  <p className="font-mono text-sm font-bold text-foreground">{recipientName}</p>
                 </div>
               </div>
             )}
@@ -460,7 +471,7 @@ const OrderTracking = () => {
             {hasQR && (
               <div className="border border-border rounded-none p-4 space-y-3">
                 <p className="font-mono text-xs tracking-[0.15em] uppercase text-muted-foreground">{TRACKING.PAY_VIA_QR}</p>
-                <img src={store!.payment_qr_image!} alt="Payment QR" className="w-full rounded-none border border-border object-cover max-h-80" loading="lazy" />
+                <img src={recipientQr!} alt="Payment QR" className="w-full rounded-none border border-border object-cover max-h-80" loading="lazy" />
               </div>
             )}
 
@@ -474,6 +485,15 @@ const OrderTracking = () => {
                 {claiming ? TRACKING.SENDING : CHECKOUT.I_HAVE_PAID}
               </button>
             </div>
+          </motion.div>
+        )}
+
+        {/* COD notice */}
+        {order.payment_method === "cod" && (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+            className="border border-border rounded-none p-4"
+          >
+            <p className="font-mono text-sm text-foreground">{CHECKOUT.COD_PAY_ON_DELIVERY}</p>
           </motion.div>
         )}
 
