@@ -114,7 +114,6 @@ Deno.serve(async (req) => {
     }
 
     // ── Validate chosen payment method against store config ────────────────
-    const METHODS_NEEDING_PAYMENT = new Set(["bkash", "nagad", "rocket", "upay", "bank"]);
     let methodInfo: { phone: string | null; qr_url: string | null; name: string | null } = {
       phone: null, qr_url: null, name: null,
     };
@@ -128,9 +127,9 @@ Deno.serve(async (req) => {
 
       if (["bkash", "nagad", "rocket", "upay"].includes(method)) {
         const w = pm.wallets?.[method];
-        enabled = Boolean(w?.enabled && ((w.phone && String(w.phone).trim() !== "") || w.qr_url));
+        enabled = Boolean(w?.enabled && ((w.phone && String(w.phone).trim() !== "") || (typeof w.qr_url === "string" && w.qr_url)));
         if (enabled) {
-          methodInfo = { phone: String(w.phone || ""), qr_url: w.qr_url || null, name: null };
+          methodInfo = { phone: (w.phone && String(w.phone).trim() !== "") ? String(w.phone) : null, qr_url: typeof w.qr_url === "string" && w.qr_url ? w.qr_url : null, name: null };
         }
       } else if (method === "bank") {
         enabled = pm.bank?.enabled === true || (pm.bank === undefined && Object.keys(pm).length === 0 && !!store.payment_qr_image);
