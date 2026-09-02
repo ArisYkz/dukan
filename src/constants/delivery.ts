@@ -1,8 +1,8 @@
 /** Delivery carriers stored in stores.delivery_carriers (jsonb). */
-export interface CarrierEntry {
+export type CarrierEntry = {
   name: string;
   custom?: boolean;
-}
+};
 
 /** Known BD carriers — informational only, extensible later. */
 export const KNOWN_CARRIERS: string[] = [

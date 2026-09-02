@@ -13,6 +13,7 @@ import {
   WALLET_KEYS, type WalletKey, type PaymentMethodsConfig,
   walletIsUsable, PAYMENT_METHOD_LABELS,
 } from "@/constants/paymentMethods";
+import { KNOWN_CARRIERS, type CarrierEntry } from "@/constants/delivery";
 import { STORE_THEMES } from "@/lib/storeThemes";
 import ImageCropUpload from "@/components/ImageCropUpload";
 import type { StoreRow, BrandFormState } from "@/types/store";
@@ -241,6 +242,21 @@ const BrandingTab = ({
         [key]: { enabled: false, phone: "", qr_url: null, ...prev.wallets[key], ...patch },
       },
     }));
+
+  const setCarriers = (updater: (prev: CarrierEntry[]) => CarrierEntry[]) =>
+    setBrandForm((prev) => ({ ...prev, delivery_carriers: updater(prev.delivery_carriers) }));
+
+  const [customCarrier, setCustomCarrier] = useState("");
+  const addCustomCarrier = () => {
+    const name = customCarrier.trim();
+    if (!name) return;
+    setCarriers((prev) =>
+      prev.some((c) => c.name.toLowerCase() === name.toLowerCase())
+        ? prev
+        : [...prev, { name, custom: true }],
+    );
+    setCustomCarrier("");
+  };
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
@@ -730,6 +746,61 @@ const BrandingTab = ({
                   </div>
                 </motion.div>
               )}
+            </div>
+          </SectionCard>
+
+          {/* ── Card: Delivery ── */}
+          <SectionCard title={PAYMENT_METHODS.CARRIERS_TITLE} description={PAYMENT_METHODS.CARRIERS_DESC}>
+            <div className="space-y-2">
+              {KNOWN_CARRIERS.map((name) => {
+                const checked = brandForm.delivery_carriers.some((c) => c.name === name);
+                return (
+                  <label key={name} className="flex items-center gap-3 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() =>
+                        setCarriers((prev) =>
+                          checked ? prev.filter((c) => c.name !== name) : [...prev, { name }],
+                        )
+                      }
+                      className="accent-primary"
+                    />
+                    <span className="text-xs md:text-sm text-foreground/80">{name}</span>
+                  </label>
+                );
+              })}
+            </div>
+            <div className="space-y-2">
+              {brandForm.delivery_carriers.filter((c) => c.custom).map((c) => (
+                <div key={c.name} className="flex items-center justify-between border border-border/30 px-3 py-1.5">
+                  <span className="text-xs md:text-sm text-foreground/80">{c.name}</span>
+                  <button
+                    type="button"
+                    onClick={() => setCarriers((prev) => prev.filter((x) => x.name !== c.name))}
+                    className="text-xs uppercase tracking-wider text-muted-foreground/50 hover:text-destructive"
+                  >
+                    {ACTIONS.DELETE || "Remove"}
+                  </button>
+                </div>
+              ))}
+              <div className="flex gap-2">
+                <input
+                  value={customCarrier}
+                  onChange={(e) => setCustomCarrier(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addCustomCarrier(); } }}
+                  className={inputClass}
+                  placeholder={PAYMENT_METHODS.CUSTOM_PLACEHOLDER}
+                />
+                <button
+                  type="button"
+                  onClick={addCustomCarrier}
+                  disabled={!customCarrier.trim()}
+                  className="px-4 h-9 md:h-10 text-xs font-medium uppercase tracking-wide border border-foreground/60 text-foreground hover:bg-foreground hover:text-background transition-colors disabled:opacity-30"
+                >
+                  {PAYMENT_METHODS.CUSTOM_ADD}
+                </button>
+              </div>
             </div>
           </SectionCard>
 
