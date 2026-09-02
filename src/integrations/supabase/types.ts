@@ -244,6 +244,7 @@ export type Database = {
           customer_phone: string
           customer_phone_hash: string
           discount_amount: number | null
+          payment_method: string | null
           id: string
           promo_code: string | null
           public_order_id: string
@@ -262,6 +263,7 @@ export type Database = {
           customer_phone: string
           customer_phone_hash: string
           discount_amount?: number | null
+          payment_method?: string | null
           id?: string
           promo_code?: string | null
           public_order_id: string
@@ -280,6 +282,7 @@ export type Database = {
           customer_phone?: string
           customer_phone_hash?: string
           discount_amount?: number | null
+          payment_method?: string | null
           id?: string
           promo_code?: string | null
           public_order_id?: string
@@ -805,6 +808,8 @@ export type Database = {
           payment_qr_image: string | null
           payment_name: string | null
           payment_phone: string | null
+          payment_methods: Json | null
+          delivery_carriers: Json | null
           plan_type: string
           report_count: number | null
           review_count: number | null
@@ -846,6 +851,8 @@ export type Database = {
           payment_qr_image?: string | null
           payment_name?: string | null
           payment_phone?: string | null
+          payment_methods?: Json | null
+          delivery_carriers?: Json | null
           plan_type?: string
           report_count?: number | null
           review_count?: number | null
@@ -887,6 +894,8 @@ export type Database = {
           payment_qr_image?: string | null
           payment_name?: string | null
           payment_phone?: string | null
+          payment_methods?: Json | null
+          delivery_carriers?: Json | null
           plan_type?: string
           report_count?: number | null
           review_count?: number | null

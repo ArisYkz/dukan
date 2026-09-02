@@ -12,6 +12,8 @@ export interface StoreRow {
   hero_subtitle: string | null;
   payment_phone: string | null;
   payment_name: string | null;
+  payment_methods: Record<string, unknown> | null;
+  delivery_carriers: Array<{ name: string; custom?: boolean }> | null;
   whatsapp_phone: string | null;
   plan_type: string;
   subscription_active: boolean;
@@ -83,6 +85,7 @@ export interface OrderRow {
   reference_code: string | null;
   promo_code: string | null;
   discount_amount: number;
+  payment_method: string | null;
   order_items: { product_name: string; quantity: number; product_price: number }[];
 }
 
@@ -126,6 +129,8 @@ export interface BrandFormState {
   tax_enabled: boolean;
   tax_percent: string;
   theme_preset: string;
+  payment_methods: import("@/constants/paymentMethods").PaymentMethodsConfig;
+  delivery_carriers: Array<{ name: string; custom?: boolean }>;
 }
 
 export interface ProductFormState {
