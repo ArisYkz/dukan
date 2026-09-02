@@ -3,8 +3,16 @@ import { motion } from "framer-motion";
 import {
   AlertTriangle, Instagram, MessageCircle, Bell, Crown,
   Info, Lock, Check, ChevronDown, Globe, Link as LinkIcon,
-  Smartphone, User, Percent, Store,
+  Smartphone, User, Percent, Store, Banknote, Phone,
 } from "lucide-react";
+import bkashLogo from "@/assets/wallets/bkash.svg";
+import nagadLogo from "@/assets/wallets/nagad.svg";
+import rocketLogo from "@/assets/wallets/rocket.svg";
+import upayLogo from "@/assets/wallets/upay.svg";
+import {
+  WALLET_KEYS, type WalletKey, type PaymentMethodsConfig,
+  walletIsUsable, PAYMENT_METHOD_LABELS,
+} from "@/constants/paymentMethods";
 import { STORE_THEMES } from "@/lib/storeThemes";
 import ImageCropUpload from "@/components/ImageCropUpload";
 import type { StoreRow, BrandFormState } from "@/types/store";
@@ -13,6 +21,9 @@ import { useLabels } from "@/hooks/useLabels";
 import QrMarketingCard from "@/components/dashboard/QrMarketingCard";
 import HelpButton from "@/components/dashboard/HelpButton";
 import { isSlugOffensive } from "@/lib/slugFilter";
+
+const WALLET_LOGOS: Record<WalletKey, string> = { bkash: bkashLogo, nagad: nagadLogo, rocket: rocketLogo, upay: upayLogo };
+const PAYMENT_METHOD_LABEL_NAME = (key: WalletKey) => PAYMENT_METHOD_LABELS[key];
 
 interface BrandingTabProps {
   store: StoreRow;
@@ -187,7 +198,7 @@ const BrandingTab = ({
   isSlugTaken, isCheckingSlug, setIsSlugTaken, setIsCheckingSlug,
   isPro = false, onShowUpgrade,
 }: BrandingTabProps) => {
-  const { BRANDING, ACTIONS } = useLabels();
+  const { BRANDING, ACTIONS, PAYMENT_METHODS } = useLabels();
   const [themeExpanded, setThemeExpanded] = useState(false);
   const slugTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -219,6 +230,18 @@ const BrandingTab = ({
 
   const set = (field: keyof BrandFormState, value: any) =>
     setBrandForm((prev) => ({ ...prev, [field]: value }));
+
+  const setMethods = (fn: (prev: PaymentMethodsConfig) => PaymentMethodsConfig) =>
+    setBrandForm((prev) => ({ ...prev, payment_methods: fn(prev.payment_methods) }));
+
+  const setWallet = (key: WalletKey, patch: Partial<{ enabled: boolean; phone: string; qr_url: string | null }>) =>
+    setMethods((prev) => ({
+      ...prev,
+      wallets: {
+        ...prev.wallets,
+        [key]: { enabled: false, phone: "", qr_url: null, ...prev.wallets[key], ...patch },
+      },
+    }));
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 md:space-y-8">
@@ -577,39 +600,137 @@ const BrandingTab = ({
           </SectionCard>
 
           {/* ── Card: Payment Methods ── */}
-          <SectionCard title={BRANDING.PAYMENT_QR} description={BRANDING.PAYMENT_QR_DESC}>
-            <div className="space-y-3">
-              <ImageCropUpload
-                bucket="qr-codes"
-                folder={userId}
-                value={brandForm.payment_qr_image}
-                onUpload={(url) => set("payment_qr_image", url)}
-                onRemove={() => set("payment_qr_image", null)}
-                label={BRANDING.UPLOAD_QR}
-                previewClass="w-36 h-36 object-contain rounded-none border border-border/20"
-                aspectRatio={1}
-                maxWidth={800}
-                maxHeight={800}
-              />
-              <p className="text-xs md:text-sm text-muted-foreground/50">{BRANDING.NO_QR_FALLBACK}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <Field label={BRANDING.PHONE_NUMBER} icon={<Smartphone className="w-3.5 h-3.5" />}>
-                  <input
-                    value={brandForm.payment_phone}
-                    onChange={(e) => set("payment_phone", e.target.value)}
-                    className={inputClass}
-                    placeholder="+880 1XXX-XXXXXX"
-                  />
-                </Field>
-                <Field label={BRANDING.OWNER_NAME} icon={<User className="w-3.5 h-3.5" />}>
-                  <input
-                    value={brandForm.payment_name}
-                    onChange={(e) => set("payment_name", e.target.value)}
-                    className={inputClass}
-                    placeholder="Owner Name"
-                  />
-                </Field>
+          <SectionCard title={PAYMENT_METHODS.TITLE} description={PAYMENT_METHODS.DESC}>
+            {/* Wallets */}
+            <div className="space-y-4">
+              <div className="space-y-0.5">
+                <h4 className="text-xs md:text-sm font-semibold tracking-[0.15em] uppercase text-foreground/80">{PAYMENT_METHODS.WALLET_TITLE}</h4>
+                <p className="text-xs md:text-sm text-muted-foreground/50">{PAYMENT_METHODS.WALLET_DESC}</p>
               </div>
+              {WALLET_KEYS.map((key) => {
+                const w = brandForm.payment_methods.wallets[key];
+                const unusable = w?.enabled && !walletIsUsable(w);
+                return (
+                  <div key={key} className="rounded-none border border-border/30 p-3 space-y-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <img src={WALLET_LOGOS[key]} alt={key} className="w-6 h-6 rounded-sm shrink-0" />
+                        <span className="text-xs md:text-sm font-medium text-foreground/80 truncate">{PAYMENT_METHOD_LABEL_NAME(key)}</span>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-xs text-muted-foreground/40 uppercase tracking-wider">{PAYMENT_METHODS.ENABLE}</span>
+                        <Toggle enabled={!!w?.enabled} onChange={() => setWallet(key, { enabled: !w?.enabled })} />
+                      </div>
+                    </div>
+                    {w?.enabled && (
+                      <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className="space-y-3">
+                        <Field label={PAYMENT_METHODS.PHONE_LABEL} icon={<Phone className="w-3.5 h-3.5" />}>
+                          <input
+                            value={w.phone}
+                            onChange={(e) => setWallet(key, { phone: e.target.value })}
+                            className={inputClass}
+                            placeholder="01XXXXXXXXX"
+                          />
+                        </Field>
+                        <ImageCropUpload
+                          bucket="qr-codes"
+                          folder={`${userId}/wallets/${key}`}
+                          value={w.qr_url}
+                          onUpload={(url) => setWallet(key, { qr_url: url })}
+                          onRemove={() => setWallet(key, { qr_url: null })}
+                          label={PAYMENT_METHODS.QR_UPLOAD}
+                          previewClass="w-28 h-28 object-contain rounded-none border border-border/20"
+                          aspectRatio={1}
+                        />
+                        {unusable && <p className="text-xs text-destructive/80">{PAYMENT_METHODS.WALLET_REQUIRED}</p>}
+                      </motion.div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="border-t border-border/20" />
+
+            {/* COD */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <Banknote className="w-3.5 h-3.5 text-muted-foreground/50" />
+                  <span className="text-xs md:text-sm font-medium text-foreground/80">{PAYMENT_METHODS.COD_TITLE}</span>
+                </div>
+                <p className="text-xs md:text-sm text-muted-foreground/50">{PAYMENT_METHODS.COD_DESC}</p>
+              </div>
+              <Toggle
+                enabled={!!brandForm.payment_methods.cod?.enabled}
+                onChange={() => setMethods((prev) => ({ ...prev, cod: { enabled: !prev.cod?.enabled } }))}
+              />
+            </div>
+
+            {/* Contact us */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <MessageCircle className="w-3.5 h-3.5 text-muted-foreground/50" />
+                  <span className="text-xs md:text-sm font-medium text-foreground/80">{PAYMENT_METHODS.CONTACT_TITLE}</span>
+                </div>
+                <p className="text-xs md:text-sm text-muted-foreground/50">{PAYMENT_METHODS.CONTACT_DESC}</p>
+              </div>
+              <Toggle
+                enabled={!!brandForm.payment_methods.contact_us?.enabled}
+                onChange={() => setMethods((prev) => ({ ...prev, contact_us: { enabled: !prev.contact_us?.enabled } }))}
+              />
+            </div>
+
+            <div className="border-t border-border/20" />
+
+            {/* Bank QR (legacy fields, now toggleable) */}
+            <div className="space-y-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="space-y-0.5">
+                  <span className="text-xs md:text-sm font-medium text-foreground/80">{PAYMENT_METHODS.BANK_TITLE}</span>
+                  <p className="text-xs md:text-sm text-muted-foreground/50">{PAYMENT_METHODS.BANK_DESC}</p>
+                </div>
+                <Toggle
+                  enabled={!!brandForm.payment_methods.bank?.enabled}
+                  onChange={() => setMethods((prev) => ({ ...prev, bank: { enabled: !prev.bank?.enabled } }))}
+                />
+              </div>
+              {brandForm.payment_methods.bank?.enabled && (
+                <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className="space-y-3">
+                  <ImageCropUpload
+                    bucket="qr-codes"
+                    folder={userId}
+                    value={brandForm.payment_qr_image}
+                    onUpload={(url) => set("payment_qr_image", url)}
+                    onRemove={() => set("payment_qr_image", null)}
+                    label={BRANDING.UPLOAD_QR}
+                    previewClass="w-36 h-36 object-contain rounded-none border border-border/20"
+                    aspectRatio={1}
+                    maxWidth={800}
+                    maxHeight={800}
+                  />
+                  <p className="text-xs md:text-sm text-muted-foreground/50">{BRANDING.NO_QR_FALLBACK}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <Field label={BRANDING.PHONE_NUMBER} icon={<Smartphone className="w-3.5 h-3.5" />}>
+                      <input
+                        value={brandForm.payment_phone}
+                        onChange={(e) => set("payment_phone", e.target.value)}
+                        className={inputClass}
+                        placeholder="+880 1XXX-XXXXXX"
+                      />
+                    </Field>
+                    <Field label={BRANDING.OWNER_NAME} icon={<User className="w-3.5 h-3.5" />}>
+                      <input
+                        value={brandForm.payment_name}
+                        onChange={(e) => set("payment_name", e.target.value)}
+                        className={inputClass}
+                        placeholder="Owner Name"
+                      />
+                    </Field>
+                  </div>
+                </motion.div>
+              )}
             </div>
           </SectionCard>
 
