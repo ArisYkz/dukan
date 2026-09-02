@@ -250,12 +250,15 @@ const BrandingTab = ({
   const addCustomCarrier = () => {
     const name = customCarrier.trim();
     if (!name) return;
-    setCarriers((prev) =>
-      prev.some((c) => c.name.toLowerCase() === name.toLowerCase())
-        ? prev
-        : [...prev, { name, custom: true }],
+    // Duplicate check against committed state: functional updaters don't run
+    // synchronously, so they can't report back whether the add happened.
+    const exists = brandForm.delivery_carriers.some(
+      (c) => c.name.toLowerCase() === name.toLowerCase(),
     );
-    setCustomCarrier("");
+    if (!exists) {
+      setCarriers((prev) => [...prev, { name, custom: true }]);
+      setCustomCarrier("");
+    }
   };
 
   return (
@@ -788,7 +791,7 @@ const BrandingTab = ({
                 <input
                   value={customCarrier}
                   onChange={(e) => setCustomCarrier(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addCustomCarrier(); } }}
+                  onKeyDown={(e) => { if (e.key === "Enter" && !e.nativeEvent.isComposing) { e.preventDefault(); addCustomCarrier(); } }}
                   className={inputClass}
                   placeholder={PAYMENT_METHODS.CUSTOM_PLACEHOLDER}
                 />
