@@ -124,7 +124,7 @@ Deno.serve(async (req) => {
           console.error('Store approve error:', error.message);
           statusText = `⚠️ Error: ${error.message}`;
         } else {
-          statusText = `✅ Approved (${requestedPlan === 'pro_year' ? 'Yearly' : 'Monthly'})`;
+          statusText = `✅ Approved (${requestedPlan === 'pro_year' ? 'Yearly' : 'Standard'})`;
         }
       } else if (action === 'ban') {
         const storeId = parts[1];
@@ -207,7 +207,7 @@ Deno.serve(async (req) => {
       .single();
 
     console.log('notify-order store info:', JSON.stringify(store));
-    const proPlans = ['pro', 'pro_monthly', 'pro_year'];
+    const proPlans = ['standard', 'pro', 'pro_monthly', 'pro_year'];
     if (!store || !proPlans.includes(store.plan_type)) return ok({ success: true, message: 'Not a Pro plan, skipped' });
     if (!store.telegram_chat_id) return ok({ success: true, message: 'No Telegram connected' });
 

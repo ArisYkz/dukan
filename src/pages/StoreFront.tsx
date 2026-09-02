@@ -26,6 +26,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { FREE_CONFIRMED_LIMIT } from "@/constants/business";
 import { incrementStoreViews } from "@/services/storeService";
+import { isPaidPlan } from "@/lib/billing";
 import { useStorefrontStore, useStorefrontProducts } from "@/hooks/queries/useStorefront";
 
 // Lazy-load heavy components
@@ -217,9 +218,8 @@ const StoreFront = () => {
 
   const totalEarned = Number(store.total_earned ?? 0);
   const reportCount = Number(store.report_count ?? 0);
-  const planType = String(ownerProfile?.plan_type ?? 'free');
   const subExpiry = ownerProfile?.subscription_expiry ? new Date(ownerProfile.subscription_expiry) : null;
-  const isPro = (planType === 'pro' || planType === 'pro_year' || planType === 'pro_monthly') &&
+  const isPro = isPaidPlan(ownerProfile?.plan_type, ownerProfile?.subscription_status) &&
     (!subExpiry || subExpiry > new Date());
   const isOverLimit = !isPro && Number.isFinite(totalEarned) && totalEarned >= FREE_CONFIRMED_LIMIT;
   const isUnderReview = !store.is_verified && reportCount >= 5;

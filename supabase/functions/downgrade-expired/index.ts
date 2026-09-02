@@ -21,7 +21,7 @@ Deno.serve(async (req) => {
     const { data: expired, error: fetchErr } = await supabase
       .from('profiles')
       .select('user_id, plan_type, subscription_expiry')
-      .in('plan_type', ['pro_month', 'pro_year', 'pro', 'pro_monthly'])
+      .in('plan_type', ['standard', 'pro_month', 'pro_year', 'pro', 'pro_monthly'])
       .lt('subscription_expiry', now);
 
     if (fetchErr) throw fetchErr;

@@ -5,6 +5,7 @@ import { useStoreQuery } from "@/hooks/queries/useStoreQuery";
 import { useProductsQuery } from "@/hooks/queries/useProductsQuery";
 import { useOrdersQuery } from "@/hooks/queries/useOrdersQuery";
 import { supabase } from "@/integrations/supabase/client";
+import { isPaidPlan } from "@/lib/billing";
 
 const STORE_ID_KEY = "dokan_current_store_id";
 
@@ -119,11 +120,7 @@ export const useStoreData = () => {
       const expiry = new Date(profile.subscription_expiry);
       if (expiry <= new Date()) return false;
     }
-    const plan = (profile.plan_type || "").toLowerCase();
-    return (
-      (plan.includes("pro") || profile.subscription_status === "pre_authorized") &&
-      profile.subscription_status !== "banned"
-    );
+    return isPaidPlan(profile.plan_type, profile.subscription_status);
   }, [profile]);
 
   return {

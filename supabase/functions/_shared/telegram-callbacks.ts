@@ -71,7 +71,7 @@ export async function processStoreApprove(
 
   return {
     error: null,
-    statusText: `✅ Approved (${isYear ? "Yearly" : "Monthly"})`,
+    statusText: `✅ Approved (${isYear ? "Yearly" : "Standard"})`,
   };
 }
 

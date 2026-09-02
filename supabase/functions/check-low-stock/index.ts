@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
         .single();
 
       if (!store?.telegram_chat_id) continue;
-      if (!['pro', 'pro_monthly', 'pro_year'].includes(store.plan_type)) continue;
+      if (!['standard', 'pro', 'pro_monthly', 'pro_year'].includes(store.plan_type)) continue;
       if (!TELEGRAM_URL) continue;
 
       // Build message

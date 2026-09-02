@@ -38,7 +38,6 @@ const UpgradeModal = ({ open, onOpenChange, onUpgrade }: UpgradeModalProps) => {
             <p className="text-2xl font-mono font-semibold tracking-tight text-foreground">
               15,000 ৳ <span className="text-xs font-normal text-muted-foreground uppercase">{BILLING.PER_MONTH}</span>
             </p>
-            <p className="text-[10px] font-mono text-accent uppercase tracking-tighter">{BILLING.SAVE_WITH_YEARLY}</p>
           </div>
           <div className="flex flex-col gap-2 pt-2">
             <button onClick={onUpgrade} className="w-full text-center bg-foreground text-background py-4 text-xs tracking-[0.2em] uppercase rounded-none hover:opacity-90 transition-opacity active:scale-[0.98] font-bold">{BILLING.SELECT_PLAN}</button>
