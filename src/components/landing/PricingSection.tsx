@@ -29,7 +29,7 @@ const PricingSection = () => {
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="bg-foreground text-background p-8 md:p-12 flex flex-col relative">
             <span className="font-mono text-xs tracking-[0.2em] uppercase text-background/60 mb-6">{LANDING.STANDARD}</span>
             <div className="mb-8">
-              <span className="font-heading text-4xl md:text-5xl text-background">15,000 ৳</span>
+              <span className="font-heading text-4xl md:text-5xl text-background">2,000 ৳</span>
               <span className="font-body text-background/50 text-sm ml-2">/ {LANDING.PER_MONTH}</span>
             </div>
             <ul className="space-y-4 mb-10 flex-1">

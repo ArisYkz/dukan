@@ -36,7 +36,7 @@ const UpgradeModal = ({ open, onOpenChange, onUpgrade }: UpgradeModalProps) => {
           </ul>
           <div className="space-y-1">
             <p className="text-2xl font-mono font-semibold tracking-tight text-foreground">
-              15,000 ৳ <span className="text-xs font-normal text-muted-foreground uppercase">{BILLING.PER_MONTH}</span>
+              2,000 ৳ <span className="text-xs font-normal text-muted-foreground uppercase">{BILLING.PER_MONTH}</span>
             </p>
           </div>
           <div className="flex flex-col gap-2 pt-2">

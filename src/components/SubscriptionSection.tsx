@@ -136,9 +136,9 @@ const SubscriptionSection = ({ userId, profile, isPro, onDataChange }: Subscript
           <div className="pt-3 md:pt-4 border-t border-border/40">
             <div className="text-right mb-3 md:mb-4">
               {promoApplied && promoDiscount > 0 && (
-                <p className="font-mono text-[9px] md:text-[10px] text-muted-foreground line-through">{formatPrice(15000)}</p>
+                <p className="font-mono text-[9px] md:text-[10px] text-muted-foreground line-through">{formatPrice(2000)}</p>
               )}
-              <p className="font-mono text-[11px] md:text-sm text-foreground/80">{formatPrice(getDiscountedPrice(15000))}</p>
+              <p className="font-mono text-[11px] md:text-sm text-foreground/80">{formatPrice(getDiscountedPrice(2000))}</p>
             </div>
             {!isActive && !isPending ? (
               <button
@@ -168,7 +168,7 @@ const SubscriptionSection = ({ userId, profile, isPro, onDataChange }: Subscript
             {promoApplied && promoDiscount > 0 && (
               <div className="mb-4 p-3 border border-accent/30 bg-accent/5 text-center">
                 <p className="font-mono text-[10px] text-accent uppercase tracking-wider">
-                  Promo: {promoCode} • {promoDiscount}% off → {formatPrice(getDiscountedPrice(15000))}
+                  Promo: {promoCode} • {promoDiscount}% off → {formatPrice(getDiscountedPrice(2000))}
                 </p>
               </div>
             )}
@@ -198,7 +198,7 @@ const SubscriptionSection = ({ userId, profile, isPro, onDataChange }: Subscript
               <div className="space-y-6">
                 <div className="border border-border p-1 bg-muted/50"><img src={screenshotUrl} className="w-full h-32 object-contain grayscale" /></div>
                 <button onClick={async () => {
-                    await supabase.functions.invoke('notify-admin', { body: { user_id: userId, plan_type: "standard", screenshot_url: screenshotUrl, amount: formatPrice(getDiscountedPrice(15000)), promo_code: promoApplied ? promoCode : null } });
+                    await supabase.functions.invoke('notify-admin', { body: { user_id: userId, plan_type: "standard", screenshot_url: screenshotUrl, amount: formatPrice(getDiscountedPrice(2000)), promo_code: promoApplied ? promoCode : null } });
                     setShowModal(false);
                     toast.success(MESSAGES.PAYMENT_SENT);
                   }} className="w-full bg-foreground text-background py-4 font-body text-[10px] tracking-[0.2em] uppercase font-bold hover:opacity-90 active:scale-[0.98] transition-all">

@@ -11,7 +11,7 @@ const PLAN_LABELS: Record<string, string> = {
 };
 
 const PLAN_PRICES: Record<string, string> = {
-  pro_month: "15,000 ৳/mo",
+  pro_month: "2,000 ৳/mo",
   pro_year: "150,000 ৳/yr",
 };
 
@@ -64,7 +64,7 @@ const SubscriptionsTab = () => {
             Monthly Revenue
           </p>
           <p className="font-mono text-2xl">
-            {active.filter((p: any) => p.plan_type === "pro_month").length * 15000 +
+            {active.filter((p: any) => p.plan_type === "pro_month").length * 2000 +
              active.filter((p: any) => p.plan_type === "pro_year").length * 12500}
             <span className="text-xs text-muted-foreground ml-1">৳</span>
           </p>

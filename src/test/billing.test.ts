@@ -3,9 +3,9 @@ import { applyPercentDiscount, isPaidPlan } from "@/lib/billing";
 
 describe("applyPercentDiscount", () => {
   it("applies a percent discount to the Standard price", () => {
-    expect(applyPercentDiscount(15000, 0)).toBe(15000);
-    expect(applyPercentDiscount(15000, 10)).toBe(13500);
-    expect(applyPercentDiscount(15000, 100)).toBe(0);
+    expect(applyPercentDiscount(2000, 0)).toBe(2000);
+    expect(applyPercentDiscount(2000, 10)).toBe(1800);
+    expect(applyPercentDiscount(2000, 100)).toBe(0);
   });
 });
 
