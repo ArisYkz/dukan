@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Trash2, X, Image as ImageIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
-import ImageUpload from "@/components/ImageUpload";
+import ImageCropUpload from "@/components/ImageCropUpload";
 import VariantManager, { type VariantItem } from "@/components/VariantManager";
 import ConfirmModal from "@/components/dashboard/ConfirmModal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -550,12 +550,13 @@ const ProductEditModal = ({
                   </div>
                 ))}
                 {tempProductImages.length < imageLimit && (
-                  <ImageUpload
+                  <ImageCropUpload
                     bucket="product-images"
                     folder={userId}
                     onUpload={(url) => setTempProductImages((prev) => [...prev, url])}
                     label={PRODUCTS_TAB.ADD_IMAGE}
-                    className="aspect-square flex items-center justify-center border-2 border-dashed border-[hsl(var(--border)/0.3)] hover:border-[hsl(var(--highlight))] transition-colors"
+                    aspectRatio={5 / 7}
+                    className="aspect-[5/7] flex items-center justify-center border-2 border-dashed border-[hsl(var(--border)/0.3)] hover:border-[hsl(var(--highlight))] transition-colors"
                     previewClass="hidden"
                   />
                 )}
