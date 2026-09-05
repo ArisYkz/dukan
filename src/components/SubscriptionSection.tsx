@@ -7,7 +7,7 @@ import { formatPrice } from "@/lib/format";
 import { applyPercentDiscount } from "@/lib/billing";
 import { useLabels } from "@/hooks/useLabels";
 
-const QR_IMAGE_URL = `https://jdcsyjukrxtgzduzhngh.supabase.co/storage/v1/object/public/qr-codes/IPQR.png`;
+const QR_IMAGE_URL = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/qr-codes/IPQR.png`;
 
 interface SubscriptionSectionProps {
   userId: string;
