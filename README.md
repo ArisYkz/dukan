@@ -20,7 +20,7 @@ SaaS platform for Bangladeshi entrepreneurs to create mobile-friendly online sto
 - Supabase account (for auth, DB, storage)
 - Vercel account (for deployment)
 
-> Pre-launch: the app currently runs without a live database. Supabase keys are placeholders until the Bangladesh project is provisioned.
+> The app connects to a live Supabase project. Local keys live in `.env.local`; production keys are set as Vercel environment variables.
 
 ## Setup
 
