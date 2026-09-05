@@ -53,7 +53,7 @@ const EN: Text = {
     {
       heading: "7. Contact",
       paragraphs: [
-        "For privacy-related inquiries: hello@dokan.example.com",
+        "For privacy-related inquiries: dokan.mybd@gmail.com or +8801863413654",
       ],
     },
   ],
@@ -103,7 +103,7 @@ const BN: Text = {
     {
       heading: "৭. যোগাযোগ",
       paragraphs: [
-        "গোপনীয়তা সংক্রান্ত প্রশ্নের জন্য: hello@dokan.example.com",
+        "গোপনীয়তা সংক্রান্ত প্রশ্নের জন্য: dokan.mybd@gmail.com অথবা +8801863413654",
       ],
     },
   ],

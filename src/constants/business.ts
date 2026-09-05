@@ -70,4 +70,7 @@ export const DASHBOARD_ORDER_LIMIT = 200;
 export const PAYMENT_WINDOW_MS = 30 * 60 * 1000;
 
 // ─── External Links ────────────────────────────────────────────
+export const SUPPORT_EMAIL = "dokan.mybd@gmail.com";
+export const SUPPORT_PHONE = "+8801863413654";
+export const SUPPORT_INSTAGRAM = "https://www.instagram.com/dokan.my";
 export const SUPPORT_TELEGRAM = "https://t.me/dokan_support";

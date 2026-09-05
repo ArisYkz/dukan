@@ -1,12 +1,7 @@
-import { Instagram } from "lucide-react";
+import { Instagram, Mail, Phone } from "lucide-react";
 import { useLabels } from "@/hooks/useLabels";
+import { SUPPORT_EMAIL, SUPPORT_INSTAGRAM, SUPPORT_PHONE } from "@/constants/business";
 import dokanLogo from "@/assets/dokan-logo.webp";
-
-const TikTokIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-  </svg>
-);
 
 const LandingFooter = () => {
   const { LANDING } = useLabels();
@@ -24,8 +19,9 @@ const LandingFooter = () => {
             <a href="/auth" className="font-mono text-xs tracking-wider transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}>{LANDING.LOGIN}</a>
             <a href="/auth" className="font-mono text-xs tracking-wider transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}>{LANDING.SIGN_UP}</a>
             <div className="flex items-center gap-3">
-              <a href="https://instagram.com/dokan.example.com" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><Instagram className="w-4 h-4" /></a>
-              <a href="https://tiktok.com/@dokan.example.com" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><TikTokIcon className="w-4 h-4" /></a>
+              <a href={SUPPORT_INSTAGRAM} target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><Instagram className="w-4 h-4" /></a>
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><Mail className="w-4 h-4" /></a>
+              <a href={`tel:${SUPPORT_PHONE}`} className="transition-colors" style={{ color: "hsl(var(--footer-fg) / 0.6)" }} onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg))")} onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--footer-fg) / 0.6)")}><Phone className="w-4 h-4" /></a>
             </div>
           </nav>
         </div>
