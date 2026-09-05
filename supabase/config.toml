@@ -1,4 +1,4 @@
-project_id = "bot"
+project_id = "dokan"
 
 [analytics]
   backend = "postgres"
